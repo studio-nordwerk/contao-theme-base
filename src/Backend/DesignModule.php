@@ -44,7 +44,7 @@ class DesignModule extends BackendModule
         if ($request?->isMethod('POST') && 'save-design' === $request->request->getString('themeAction')) {
             try {
                 $logo = $request->request->getString('logo');
-                $binary = \is_string($logo) && preg_match('/^[a-f0-9]{32}$/D', $logo) ? hex2bin($logo) : null;
+                $binary = preg_match('/^[a-f0-9]{32}$/D', $logo) ? hex2bin($logo) : null;
                 $settings = new DesignSettings($request->request->getString('accent'), $request->request->getString('surface'), $request->request->getString('fontPair'), $binary ?: null);
                 $repository->save($theme, $settings);
                 Controller::redirect($actionUrl.'&saved=1');
