@@ -13,6 +13,7 @@ use Contao\System;
 use Doctrine\DBAL\Connection;
 use Nordwerk\ThemeBaseBundle\Design\DesignRepository;
 use Nordwerk\ThemeBaseBundle\Design\DesignSettings;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -34,17 +35,21 @@ class DesignModule extends BackendModule
         $repository = System::getContainer()->get(DesignRepository::class);
         $themes = $connection->fetchAllAssociative('SELECT id, name FROM tl_theme ORDER BY id');
         $theme = (int) (Input::get('theme') ?: ($themes[0]['id'] ?? 0));
+        /** @var RequestStack $requestStack */
+        $requestStack = System::getContainer()->get('request_stack');
+        $request = $requestStack->getCurrentRequest();
         $error = '';
         $notice = '1' === Input::get('saved') ? 'Gestaltung gespeichert.' : '';
         $actionUrl = ('mini_shop_setup' === Input::get('do') ? 'contao?do=mini_shop_setup&step=design&theme=' : 'contao?do=nw_theme_design&theme=').$theme;
-        if (Input::isPost() && 'save-design' === Input::post('themeAction')) {
+        if ($request?->isMethod('POST') && 'save-design' === $request->request->getString('themeAction')) {
             try {
-                $logo = Input::post('logo');
+                $logo = $request->request->getString('logo');
                 $binary = \is_string($logo) && preg_match('/^[a-f0-9]{32}$/D', $logo) ? hex2bin($logo) : null;
-                $settings = new DesignSettings(\is_string(Input::post('accent')) ? Input::post('accent') : '', \is_string(Input::post('surface')) ? Input::post('surface') : '', \is_string(Input::post('fontPair')) ? Input::post('fontPair') : '', $binary ?: null);
+                $settings = new DesignSettings($request->request->getString('accent'), $request->request->getString('surface'), $request->request->getString('fontPair'), $binary ?: null);
                 $repository->save($theme, $settings);
                 Controller::redirect($actionUrl.'&saved=1');
             } catch (\InvalidArgumentException $exception) {
+                $request->attributes->set('_contao_widget_error', true);
                 $error = $exception->getMessage();
             }
         }

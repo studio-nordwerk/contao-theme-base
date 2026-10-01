@@ -91,6 +91,7 @@ final class DemoImporterTest extends TestCase
         ;
 
         $provider
+            ->expects($this->once())
             ->method('assertCanImport')
             ->willThrowException(new \RuntimeException('Collision'))
         ;
