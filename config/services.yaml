@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+    Nordwerk\ThemeBaseBundle\Design\DesignRepository:
+        public: true
+    Nordwerk\ThemeBaseBundle\Design\LayoutContext: ~
+    Nordwerk\ThemeBaseBundle\Design\DesignCallbacks: ~
+    Nordwerk\ThemeBaseBundle\Demo\DemoImporter:
+        public: true

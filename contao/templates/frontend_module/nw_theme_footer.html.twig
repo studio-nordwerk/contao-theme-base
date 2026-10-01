@@ -1,0 +1,8 @@
+{% extends '@Contao/frontend_module/_base.html.twig' %}
+{% block content %}
+    <div class="nw-footer">
+        <div><h2>{{ brand }}</h2>{% block contact %}{% endblock %}</div>
+        {% block footer_navigation %}{% endblock %}
+        <p class="nw-demo-note">Demo-Shop einer fiktiven Marke. Betreiberangaben, Produkte und Rechtstexte vor dem Verkauf ersetzen.</p>
+    </div>
+{% endblock %}

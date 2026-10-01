@@ -1,0 +1,19 @@
+{
+    "name": "nordwerk/contao-theme-base",
+    "description": "Shared layouts, design settings and safe demo imports for Nordwerk Contao themes",
+    "license": "MIT",
+    "type": "contao-bundle",
+    "require": {
+        "php": "^8.3",
+        "contao/core-bundle": "^5.7.12",
+        "contao/manager-plugin": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nordwerk\\ThemeBaseBundle\\": "src/"
+        }
+    },
+    "extra": {
+        "contao-manager-plugin": "Nordwerk\\ThemeBaseBundle\\ContaoManager\\Plugin"
+    }
+}

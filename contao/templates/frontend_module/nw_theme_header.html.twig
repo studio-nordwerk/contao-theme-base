@@ -1,0 +1,10 @@
+{% extends '@Contao/frontend_module/_base.html.twig' %}
+{% block content %}
+    <style nonce="{{ csp_nonce('style-src') }}">.nw-theme { --nw-accent: {{ design.accent }}; --nw-accent-contrast: {{ design.accentText }}; --nw-surface: {{ design.surface }}; --theme-surface-ink: {{ design.surfaceText }}; --theme-heading-font: '{{ headingFont }}'; --theme-body-font: '{{ bodyFont }}'; }</style>
+    <a class="nw-skip" href="#main">Zum Inhalt</a>
+    <div class="nw-header">
+        <a class="nw-brand" href="{{ links.start|default('/') }}" aria-label="{{ brand }}, Startseite">{% if logoPath %}<img src="{{ asset(logoPath) }}" alt="{{ brand }}" width="180" height="64">{% else %}<span class="nw-brand-seal" aria-hidden="true">S</span><span>{{ brand }}</span>{% endif %}</a>
+        {% block navigation %}{% endblock %}
+        {% block actions %}{% endblock %}
+    </div>
+{% endblock %}
