@@ -92,11 +92,16 @@
 .nw-menu-toggle { display: none; width: 2.75rem; min-height: 2.75rem; padding: 0; border: 0; border-radius: 999px; background: transparent; color: inherit; }
 .nw-menu-toggle:hover { background: color-mix(in srgb, currentColor 8%, transparent); }
 .nw-header-icon { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
-.nw-footer { display: grid; grid-template-columns: 1fr 1.3fr; gap: 1.5rem 4rem; padding: 3rem 0 2rem; }
+/* Footer: brand and contact, then one column per link group. */
+.nw-footer { display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr)); gap: 2rem 3rem; padding: 3.5rem 0 2rem; }
 .nw-footer h2 { font-size: 1.5rem; margin: 0 0 1rem; }
 .nw-footer p { margin: .5rem 0; }
-.nw-footer nav { display: flex; flex-wrap: wrap; align-content: start; gap: .5rem 1.5rem; }
-.nw-demo-note { grid-column: 1 / -1; font-size: .9rem; }
+.nw-footer > div > p { color: var(--theme-muted); }
+.nw-footer nav { display: flex; flex-direction: column; align-items: flex-start; gap: .55rem; }
+.nw-theme .nw-footer__nav h3 { margin: 0 0 .4rem; font-family: var(--theme-body-font), sans-serif; font-size: .8rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--theme-muted); }
+.nw-footer nav a { text-decoration: none; }
+.nw-footer nav a:hover { text-decoration: underline; }
+.nw-footer .nw-demo-note { grid-column: 1 / -1; max-width: none; padding-top: 1.5rem; border-top: 1px solid var(--nw-border); font-size: .85rem; color: var(--theme-muted); }
 .nw-theme #footer { border-top: 1px solid var(--nw-border); }
 .nw-placeholder { max-width: 680px; border-left: 4px solid var(--nw-focus); padding: .2rem 1.2rem; background: var(--nw-surface); color: var(--theme-surface-ink); }
 @media (max-width: 767px) {
@@ -117,7 +122,107 @@
   .nw-theme { font-size: 1.0625rem; --nw-space-lg: 1.25rem; }
   .nw-theme #header .inside, .nw-theme #footer .inside, .nw-theme #main > .inside { width: min(100% - 2rem, 1180px); }
   .nw-theme #main > .inside { padding-top: 1.5rem; }
-  .nw-footer { grid-template-columns: 1fr; }
+  .nw-footer { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nw-footer > div:first-child { grid-column: 1 / -1; }
+}
+/*
+ * Page sections shared by all Nordwerk themes: hero, promises, section head, picture and text,
+ * quote cards, FAQ accordion and the closing callout. Themes set colors through the --theme-* tokens.
+ */
+.nw-theme {
+  --theme-section-space: clamp(3.5rem, 8vw, 6rem);
+  --theme-tile: color-mix(in srgb, var(--theme-ink) 7%, var(--theme-paper));
+  --theme-callout: color-mix(in srgb, var(--nw-focus) 14%, var(--theme-paper));
+  --theme-success: #2f6b4f;
+  --theme-stars: #a24d16;
+}
+/* One even rhythm between the sections of a page; zero specificity, so a section can opt out. */
+.nw-theme .mod_article > :where([class*="content-"], [class*="mod_"], section, ul.nw-usps, .nw-section-head) + :where([class*="content-"], [class*="mod_"], section, ul.nw-usps, .nw-section-head) { margin-top: var(--theme-section-space); }
+.nw-theme .mod_article > :is(.content-nw-shop-usps, ul.nw-usps, .mod_breadcrumb + *, .nw-section-head + *) { margin-top: 0; }
+.nw-theme .mod_article > :is([class*="content-"], [class*="mod_"]) > h2 { margin: 0 0 1.5rem; font-size: clamp(1.75rem, 3vw, 2.3rem); }
+
+.nw-eyebrow { margin: 0 0 .9rem; font-size: .95rem; color: var(--theme-muted); }
+.nw-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: center; gap: clamp(1.5rem, 4vw, 3.5rem); padding-block: clamp(.5rem, 2vw, 1.5rem) clamp(1.5rem, 3vw, 2.5rem); }
+.nw-hero__copy { min-width: 0; }
+.nw-hero :is(h1, h2) { max-width: 11ch; margin: 0 0 1.2rem; font-size: clamp(2.6rem, 5.4vw, 4.4rem); line-height: 1.02; }
+.nw-hero__copy p { max-width: 38ch; margin: 0 0 1.8rem; font-size: 1.15rem; color: var(--theme-muted); }
+.nw-hero__copy .nw-eyebrow { margin-bottom: .9rem; font-size: .95rem; }
+.nw-hero__actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+.nw-hero__copy p.nw-hero__actions { max-width: none; }
+.nw-button--secondary, .nw-button-secondary { background: transparent; color: inherit; border-color: color-mix(in srgb, currentColor 30%, transparent); }
+.nw-button--secondary:hover, .nw-button-secondary:hover { background: color-mix(in srgb, currentColor 7%, transparent); filter: none; }
+.nw-hero__image { aspect-ratio: 5 / 4; max-width: 100%; overflow: hidden; border-radius: 20px; background: var(--theme-tile); }
+.nw-hero__image :is(picture, img) { display: block; width: 100%; height: 100%; }
+.nw-hero__image img { object-fit: cover; }
+
+.nw-usps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 0; padding: 1rem 0; list-style: none; border-block: 1px solid var(--nw-border); font-size: .95rem; color: var(--theme-muted); text-align: center; }
+.nw-usps__item::before { content: "✓" / ""; margin-inline-end: .45rem; color: var(--theme-success); font-weight: 700; }
+
+.nw-section-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .5rem 1.5rem; margin-bottom: 1.5rem; }
+.nw-theme .nw-section-head h2 { margin: 0; font-size: clamp(1.75rem, 3vw, 2.3rem); }
+.nw-section-link { margin-inline-start: auto; font-size: .875rem; font-weight: 600; text-underline-offset: .25em; }
+.nw-section-link::after { content: " →" / ""; }
+
+/* Picture and text side by side: a Contao text element with image (class nw-split) or a plain section. */
+.nw-theme .nw-split.media { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "image heading" "image text"; align-items: center; column-gap: clamp(1.5rem, 4vw, 3.5rem); row-gap: 0; }
+.nw-theme .nw-split.media > h2 { grid-area: heading; align-self: end; margin-bottom: 1rem; }
+.nw-theme .nw-split.media > figure { grid-area: image; }
+.nw-theme .nw-split.media > .rte { grid-area: text; align-self: start; }
+.nw-theme section.nw-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: clamp(1.5rem, 4vw, 3.5rem); }
+.nw-theme section.nw-split--reverse > figure { order: 2; }
+.nw-theme .nw-split > figure { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 20px; background: var(--theme-tile); }
+.nw-theme .nw-split > figure img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.nw-theme .nw-split :is(.rte, .nw-split__text) { color: var(--theme-muted); }
+.nw-theme .nw-split :is(.rte, .nw-split__text) h2 { color: var(--theme-ink); margin: 0 0 1rem; }
+.nw-theme .nw-split :is(.rte, .nw-split__text) a { color: var(--theme-ink); font-weight: 600; }
+
+/* Quote cards: the teaser element's testimonials and plain quotes look the same. */
+.nw-quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.nw-theme .nw-teasers { gap: 1rem; }
+.nw-theme :is(.nw-teaser-card, .nw-quote) { display: flex; flex-direction: column; gap: .75rem; height: 100%; margin: 0; padding: 1.5rem; border: 1px solid var(--nw-border); border-radius: var(--nw-radius-card); background: var(--nw-surface); color: var(--theme-surface-ink); }
+.nw-theme .nw-teaser-card > *, .nw-quote blockquote, .nw-quote p { margin: 0; }
+.nw-theme .nw-teaser-stars { order: -2; color: var(--theme-stars); letter-spacing: .12em; font-size: .95rem; }
+.nw-theme :is(.nw-teaser-text, .nw-quote blockquote) { order: -1; font-family: var(--theme-heading-font), serif; font-size: 1.2rem; line-height: 1.45; }
+.nw-theme .nw-teaser-text::before { content: "„"; }
+.nw-theme .nw-teaser-text::after { content: "“"; }
+.nw-theme .nw-teaser-card h3 { margin-top: auto; padding-top: .25rem; font-family: var(--theme-body-font), sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: 0; }
+.nw-quote figcaption { display: grid; margin-top: auto; padding-top: .25rem; font-weight: 600; font-size: 1rem; }
+.nw-theme :is(.nw-teaser-card .nw-teaser-meta, .nw-quote figcaption small) { margin-top: -.6rem; font-size: .875rem; font-weight: 400; color: var(--theme-muted); }
+.nw-quote figcaption small { margin-top: 0; }
+/* Quotes speak for themselves; a date only adds noise on a start page. */
+.nw-theme .nw-teaser-card time { display: none; }
+.nw-theme .nw-teasers-note, .nw-quotes-note { margin: 1rem 0 0; font-size: .875rem; color: var(--theme-muted); }
+
+/* FAQ accordion (template mod_faqpage_nw or plain details). */
+.nw-faq { max-width: 52rem; }
+.nw-faq > h2 { margin: 0 0 1.25rem; font-size: clamp(1.75rem, 3vw, 2.3rem); }
+.nw-faq__item { border-bottom: 1px solid var(--nw-border); }
+.nw-faq > h2 + .nw-faq__item, .nw-faq__item:first-child { border-top: 1px solid var(--nw-border); }
+.nw-faq__item > summary { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem 0; font-weight: 600; cursor: pointer; list-style: none; }
+.nw-faq__item > summary::-webkit-details-marker { display: none; }
+.nw-faq__item > summary::after { content: ""; flex: none; width: .5rem; height: .5rem; border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor; transform: translateY(-3px) rotate(45deg); transition: transform .2s; }
+.nw-faq__item[open] > summary::after { transform: translateY(2px) rotate(-135deg); }
+.nw-faq__answer { padding-bottom: 1.1rem; color: var(--theme-muted); }
+.nw-faq__answer > :first-child { margin-top: 0; }
+.nw-faq__answer > :last-child { margin-bottom: 0; }
+.nw-theme .mod_faqpage :is(.info, .toplink) { display: none; }
+
+/* Closing callout: one tinted tile with a button. */
+.nw-theme .nw-callout { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1rem 2rem; padding: clamp(1.5rem, 3vw, 2.25rem); border-radius: 18px; background: var(--theme-callout); color: var(--theme-ink); }
+.nw-theme .nw-callout > h2 { grid-column: 1; margin: 0; font-size: clamp(1.4rem, 2.4vw, 1.8rem); }
+.nw-theme .nw-callout > .rte { display: contents; }
+.nw-theme .nw-callout .rte p:first-child { grid-column: 1; margin: 0; color: var(--theme-muted); }
+.nw-theme .nw-callout .rte p:last-child { grid-column: 2; grid-row: 1 / span 2; margin: 0; }
+.nw-theme .nw-callout .rte p:last-child a { display: inline-flex; align-items: center; min-height: var(--nw-control-height); padding: .5rem 1.4rem; border-radius: 999px; background: var(--nw-accent); color: var(--nw-accent-contrast); font-weight: 600; text-decoration: none; }
+
+@media (max-width: 760px) {
+  .nw-hero, .nw-theme .nw-split.media, .nw-theme section.nw-split { grid-template-columns: 1fr; grid-template-areas: "image" "heading" "text"; }
+  .nw-hero__image, .nw-theme section.nw-split > figure { order: -1; }
+  .nw-hero :is(h1, h2) { font-size: clamp(2.4rem, 10vw, 3.4rem); }
+  .nw-theme .nw-split.media > h2 { margin-top: 1.25rem; }
+  .nw-usps { grid-template-columns: 1fr; text-align: start; }
+  .nw-theme .nw-callout { grid-template-columns: 1fr; }
+  .nw-theme .nw-callout .rte p:last-child { grid-column: 1; grid-row: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   .nw-theme *, .nw-theme *::before, .nw-theme *::after { scroll-behavior: auto !important; }
