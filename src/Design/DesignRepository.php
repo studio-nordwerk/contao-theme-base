@@ -8,6 +8,7 @@ use Contao\Automator;
 use Contao\File;
 use Contao\FilesModel;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 
 final readonly class DesignRepository
 {
@@ -17,12 +18,19 @@ final readonly class DesignRepository
 
     public function load(int $theme): DesignSettings
     {
-        $row = $this->connection->fetchAssociative('SELECT nwAccent, nwSurface, nwFontPair, nwLogo FROM tl_theme WHERE id = ?', [$theme]);
+        try {
+            $row = $this->connection->fetchAssociative('SELECT nwAccent, nwSurface, nwFontPair, nwLogo, nwHeaderStyle, nwAnnouncement FROM tl_theme WHERE id = ?', [$theme]);
+        } catch (Exception) {
+            // Before the database update the new columns are missing: keep the page working.
+            $row = $this->connection->fetchAssociative('SELECT nwAccent, nwSurface, nwFontPair, nwLogo FROM tl_theme WHERE id = ?', [$theme]);
+        }
         if (false === $row) {
             return new DesignSettings();
         }
 
-        return new DesignSettings((string) $row['nwAccent'], (string) $row['nwSurface'], (string) $row['nwFontPair'], \is_string($row['nwLogo']) ? $row['nwLogo'] : null);
+        $headerStyle = (string) ($row['nwHeaderStyle'] ?? 'clear');
+
+        return new DesignSettings((string) $row['nwAccent'], (string) $row['nwSurface'], (string) $row['nwFontPair'], \is_string($row['nwLogo']) ? $row['nwLogo'] : null, isset(DesignSettings::HEADER_STYLES[$headerStyle]) ? $headerStyle : 'clear', mb_substr((string) ($row['nwAnnouncement'] ?? ''), 0, 120));
     }
 
     public function save(int $theme, DesignSettings $settings): void
@@ -36,7 +44,7 @@ final readonly class DesignRepository
         if (null !== $settings->logo && null === $this->logoPath($settings)) {
             throw new \InvalidArgumentException('Bitte geben Sie das Logo in der Dateiverwaltung öffentlich frei.');
         }
-        $this->connection->update('tl_theme', ['nwAccent' => $settings->accent, 'nwSurface' => $settings->surface, 'nwFontPair' => $settings->fontPair, 'nwLogo' => $settings->logo], ['id' => $theme]);
+        $this->connection->update('tl_theme', ['nwAccent' => $settings->accent, 'nwSurface' => $settings->surface, 'nwFontPair' => $settings->fontPair, 'nwLogo' => $settings->logo, 'nwHeaderStyle' => $settings->headerStyle, 'nwAnnouncement' => $settings->announcement], ['id' => $theme]);
         (new Automator())->purgePageCache();
     }
 

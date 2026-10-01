@@ -8,11 +8,19 @@ final readonly class DesignSettings
 {
     public const FONT_PAIRS = ['lora-source' => ['Lora', 'Source Sans 3'], 'newsreader-source' => ['Newsreader', 'Source Sans 3'], 'nunito' => ['Nunito Sans', 'Nunito Sans']];
 
+    /**
+     * Header layouts: clear (brand left, menu centered), centered (menu left, brand
+     * centered) and floating (a rounded bar below the top edge).
+     */
+    public const HEADER_STYLES = ['clear' => 'Klar: Wortmarke links, Menü mittig', 'centered' => 'Zentriert: Menü links, Wortmarke mittig', 'floating' => 'Schwebend: runde Leiste'];
+
     public function __construct(
         public string $accent = '#382f3d',
         public string $surface = '#fffaf7',
         public string $fontPair = 'lora-source',
         public string|null $logo = null,
+        public string $headerStyle = 'clear',
+        public string $announcement = '',
     ) {
         foreach ([$accent, $surface] as $color) {
             if (!preg_match('/^#[0-9a-fA-F]{6}$/D', $color)) {
@@ -21,6 +29,12 @@ final readonly class DesignSettings
         }
         if (!isset(self::FONT_PAIRS[$fontPair])) {
             throw new \InvalidArgumentException('Bitte wählen Sie eines der mitgelieferten Schriftpaare.');
+        }
+        if (!isset(self::HEADER_STYLES[$headerStyle])) {
+            throw new \InvalidArgumentException('Bitte wählen Sie eine der Kopfzeilen.');
+        }
+        if (mb_strlen($announcement) > 120) {
+            throw new \InvalidArgumentException('Die Hinweisleiste hat Platz für höchstens 120 Zeichen.');
         }
     }
 

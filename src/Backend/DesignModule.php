@@ -45,7 +45,7 @@ class DesignModule extends BackendModule
             try {
                 $logo = $request->request->getString('logo');
                 $binary = preg_match('/^[a-f0-9]{32}$/D', $logo) ? hex2bin($logo) : null;
-                $settings = new DesignSettings($request->request->getString('accent'), $request->request->getString('surface'), $request->request->getString('fontPair'), $binary ?: null);
+                $settings = new DesignSettings($request->request->getString('accent'), $request->request->getString('surface'), $request->request->getString('fontPair'), $binary ?: null, $request->request->getString('headerStyle', 'clear'), trim($request->request->getString('announcement')));
                 $repository->save($theme, $settings);
                 Controller::redirect($actionUrl.'&saved=1');
             } catch (\InvalidArgumentException $exception) {
@@ -55,6 +55,6 @@ class DesignModule extends BackendModule
         }
         $settings = $repository->load($theme);
         $files = $connection->fetchAllAssociative("SELECT uuid, path FROM tl_files WHERE type = 'file' AND extension IN ('jpg', 'jpeg', 'png', 'webp') ORDER BY path");
-        $this->Template->setData(['themes' => $themes, 'themeId' => $theme, 'settings' => $settings, 'files' => $files, 'notice' => $notice, 'error' => $error, 'fontPairs' => DesignSettings::FONT_PAIRS, 'previewUrl' => '/', 'actionUrl' => $actionUrl]);
+        $this->Template->setData(['themes' => $themes, 'themeId' => $theme, 'settings' => $settings, 'files' => $files, 'notice' => $notice, 'error' => $error, 'fontPairs' => DesignSettings::FONT_PAIRS, 'headerStyles' => DesignSettings::HEADER_STYLES, 'previewUrl' => '/', 'actionUrl' => $actionUrl]);
     }
 }

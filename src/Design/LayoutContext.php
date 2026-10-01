@@ -8,6 +8,7 @@ use Contao\CoreBundle\Routing\ContentUrlGenerator;
 use Contao\ModuleModel;
 use Contao\PageModel;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 final readonly class LayoutContext
 {
@@ -15,6 +16,7 @@ final readonly class LayoutContext
         private Connection $connection,
         private DesignRepository $design,
         private ContentUrlGenerator $urls,
+        private RequestStack $requests = new RequestStack(),
     ) {
     }
 
@@ -37,10 +39,13 @@ final readonly class LayoutContext
         }
 
         $navigation = [];
+        // The current page and its parents mark the active menu item.
+        $current = $this->requests->getMainRequest()?->attributes->get('pageModel');
+        $trail = $current instanceof PageModel ? array_map('intval', [...((array) $current->trail), (int) $current->id]) : [];
 
         foreach (PageModel::findPublishedByPid((int) ($manifest['root'] ?? 0)) ?? [] as $page) {
             if (!$page->hide && !$page->protected && 'regular' === $page->type) {
-                $navigation[] = ['title' => (string) $page->title, 'url' => $this->urls->generate($page)];
+                $navigation[] = ['title' => (string) $page->title, 'url' => $this->urls->generate($page), 'active' => \in_array((int) $page->id, $trail, true)];
             }
         }
 
