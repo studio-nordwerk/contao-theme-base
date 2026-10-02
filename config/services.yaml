@@ -10,3 +10,5 @@ services:
     Nordwerk\ThemeBaseBundle\Demo\DemoImporter:
         public: true
     Nordwerk\ThemeBaseBundle\Migration\ThemeAuthorMigration: ~
+    Nordwerk\ThemeBaseBundle\Backend\EmptySite:
+        public: true
