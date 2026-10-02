@@ -2,7 +2,7 @@
 
 Contao-Bundle für Contao 5.7.12 oder neuer innerhalb 5.7. Installation über Composer oder die versionierte Manager-ZIP.
 
-Gemeinsame Layoutvorlagen, lokale OFL-Schriften, Gestaltung unter **Layout → Gestaltung** und sichere Demo-Import-Mechanik für weitere Nordwerk-Themes. Das Paket verlangt keinen Mini-Shop.
+Gemeinsame Layoutvorlagen, lokale OFL-Schriften, Gestaltung unter **Layout → Themes → Theme bearbeiten → Gestaltung** und sichere Demo-Import-Mechanik für weitere Nordwerk-Themes. Das Paket verlangt keinen Mini-Shop.
 
 Ein `DemoProvider` liefert `key()`, `title()`, `assertCanImport()` und `apply()`. `DemoImporter` schützt den Import durch eine Datenbank-Sperre und Transaktion. Ohne ausdrücklich bestätigte Ersetzung bleibt ein vorhandener Import unverändert.
 
