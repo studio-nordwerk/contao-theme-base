@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nordwerk\ThemeBaseBundle\Backend;
 
 use Contao\BackendTemplate;
+use Contao\CoreBundle\Csrf\ContaoCsrfTokenManager;
 use Contao\System;
 
 /**
@@ -19,12 +20,14 @@ final class DemoWelcome
      */
     public static function generate(string $action, string $product, array $contents): string
     {
+        /** @var ContaoCsrfTokenManager $tokens */
+        $tokens = System::getContainer()->get('contao.csrf.token_manager');
         $template = new BackendTemplate('be_nw_demo_welcome');
         $template->setData([
             'action' => $action,
             'product' => $product,
             'contents' => $contents,
-            'requestToken' => System::getContainer()->get('contao.csrf.token_manager')?->getDefaultTokenValue(),
+            'requestToken' => $tokens->getDefaultTokenValue(),
         ]);
 
         return $template->parse();
