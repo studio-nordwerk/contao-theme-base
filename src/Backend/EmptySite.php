@@ -6,14 +6,18 @@ namespace Nordwerk\ThemeBaseBundle\Backend;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBagInterface;
 
 /**
  * Detects a fresh installation, so the backend can offer the theme demo first.
  */
 final readonly class EmptySite
 {
-    public function __construct(private Connection $connection)
-    {
+    public function __construct(
+        private Connection $connection,
+        private RequestStack $requests = new RequestStack(),
+    ) {
     }
 
     /**
@@ -34,6 +38,24 @@ final readonly class EmptySite
     }
 
     /**
+     * True while the setup should open with the welcome question: fresh site and not
+     * declined in this backend session.
+     */
+    public function offerDemo(string $themeKey): bool
+    {
+        return $this->needsDemo($themeKey) && !($this->bag()?->get('nw_demo_declined_'.$themeKey) ?? false);
+    }
+
+    /**
+     * Remembers "start without the demo" in the backend session (Contao stores it
+     * with the user).
+     */
+    public function declineDemo(string $themeKey): void
+    {
+        $this->bag()?->set('nw_demo_declined_'.$themeKey, true);
+    }
+
+    /**
      * Backend start page notice with a link to the demo import, or an empty string.
      */
     public function message(string $themeKey, string $offer, string $url): string
@@ -47,5 +69,13 @@ final readonly class EmptySite
             htmlspecialchars($offer, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
             htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
         );
+    }
+
+    private function bag(): AttributeBagInterface|null
+    {
+        $session = $this->requests->getCurrentRequest()?->hasSession() ? $this->requests->getSession() : null;
+        $bag = $session?->getBag('contao_backend');
+
+        return $bag instanceof AttributeBagInterface ? $bag : null;
     }
 }

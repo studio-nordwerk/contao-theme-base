@@ -8,6 +8,11 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\TableNotFoundException;
 use Nordwerk\ThemeBaseBundle\Backend\EmptySite;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 final class EmptySiteTest extends TestCase
 {
@@ -25,6 +30,26 @@ final class EmptySiteTest extends TestCase
         $this->assertFalse((new EmptySite($this->connection(1, false)))->needsDemo('seminar'));
         $this->assertFalse((new EmptySite($this->connection(false, 3)))->needsDemo('seminar'));
         $this->assertSame('', (new EmptySite($this->connection(1, false)))->message('seminar', 'x', '#'));
+    }
+
+    public function testDecliningTheDemoIsRememberedPerThemeInTheBackendSession(): void
+    {
+        $bag = new AttributeBag();
+        $bag->setName('contao_backend');
+        $session = new Session(new MockArraySessionStorage());
+        $session->registerBag($bag);
+        $request = new Request();
+        $request->setSession($session);
+        $requests = new RequestStack();
+        $requests->push($request);
+        $site = new EmptySite($this->connection(false, false), $requests);
+
+        $this->assertTrue($site->offerDemo('seminar'));
+        $site->declineDemo('seminar');
+        $this->assertFalse($site->offerDemo('seminar'));
+        $this->assertTrue($site->offerDemo('nordwerk-shop-v1'));
+        // The start page notice stays until the site has pages.
+        $this->assertTrue($site->needsDemo('seminar'));
     }
 
     public function testMissingTablesBeforeTheMigrationStayQuiet(): void
