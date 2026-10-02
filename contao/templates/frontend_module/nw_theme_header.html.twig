@@ -2,7 +2,7 @@
 {# Theme header. design.headerStyle: clear (brand left, menu centered), centered (menu left, brand centered)
    or floating (a rounded bar). Child templates fill the blocks navigation and actions. #}
 {% block content %}
-    <style nonce="{{ csp_nonce('style-src') }}">.nw-theme { --nw-accent: {{ design.accent }}; --nw-accent-contrast: {{ design.accentText }}; --nw-surface: {{ design.surface }}; {% if design.surfaceTextOverride %}--theme-surface-ink: {{ design.surfaceTextOverride }}; {% endif %}--theme-heading-font: '{{ headingFont }}'; --theme-body-font: '{{ bodyFont }}'; }</style>
+    <style nonce="{{ csp_nonce('style-src') }}">.nw-theme { --nw-accent: {{ design.accent }}; --nw-accent-contrast: {{ design.accentText }}; --nw-surface: {{ design.surface }}; {% if design.surfaceTextOverride %}--theme-surface-ink: {{ design.surfaceTextOverride }}; {% endif %}--theme-heading-font: '{{ headingFont }}'; --theme-body-font: '{{ bodyFont }}'; {% for variable, value in design.cssVariables %}{{ variable }}: {{ value }}; {% endfor %} }</style>
     <a class="nw-skip" href="#main">Zum Inhalt</a>
     {% block announcement %}{% if design.announcement|default('') %}<div class="nw-announce"><p>{{ design.announcement }}</p></div>{% endif %}{% endblock %}
     <div class="nw-header nw-header--{{ design.headerStyle|default('clear') }}">

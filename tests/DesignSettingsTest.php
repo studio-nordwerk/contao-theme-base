@@ -51,4 +51,86 @@ final class DesignSettingsTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         new DesignSettings(fontPair: 'remote-font');
     }
+
+    public function testSurfaceContrastUsesTheEffectiveTextColor(): void
+    {
+        $settings = new DesignSettings(surface: '#ffffff', paper: '#000000', text: '#ffffff', tone1: '#000000', tone2: '#000000');
+        $settings->validateSurfaceContrast();
+        $this->assertSame('#000000', $settings->surfaceTextOverride());
+        $this->assertGreaterThanOrEqual(4.5, DesignSettings::contrastRatio($settings->surface, $settings->surfaceText()));
+    }
+
+    public function testColorpickerValuesAreNormalized(): void
+    {
+        $settings = new DesignSettings(accent: '382F3D', surface: 'fff', paper: '#FFF', text: '000', tone1: 'abcdef', tone2: '#123456');
+        $this->assertSame('#382f3d', $settings->accent);
+        $this->assertSame('#ffffff', $settings->surface);
+        $this->assertSame('#ffffff', $settings->paper);
+        $this->assertSame('#000000', $settings->text);
+        $this->assertSame('#abcdef', $settings->tone1);
+        $this->assertSame('#123456', $settings->tone2);
+    }
+
+    public static function packageDefaults(): iterable
+    {
+        foreach (DesignSettings::SURFACE_DEFAULTS as $key => $colors) {
+            yield ($key ?: 'base') => [$key, $colors];
+        }
+    }
+
+    #[DataProvider('packageDefaults')]
+    public function testEmptyColorsUseReadablePackageDefaults(string $key, array $colors): void
+    {
+        $settings = new DesignSettings(themeKey: $key);
+        $this->assertSame($colors, $settings->effectiveSurfaces());
+        $settings->validateSurfaceContrast();
+        $this->assertSame([], $settings->cssVariables());
+    }
+
+    public static function unreadableSurfaces(): iterable
+    {
+        foreach (DesignSettings::SURFACE_DEFAULTS as $key => $colors) {
+            foreach (['paper' => 'Seitenhintergrund', 'tone1' => 'Fläche 1', 'tone2' => 'Fläche 2'] as $field => $label) {
+                yield ($key ?: 'base').'/'.$field => [$key, $field, $colors['text'], $label];
+            }
+        }
+    }
+
+    #[DataProvider('unreadableSurfaces')]
+    public function testBackgroundOverridesAreCheckedAgainstDefaultText(string $key, string $field, string $color, string $label): void
+    {
+        $settings = new DesignSettings(...['themeKey' => $key, $field => $color]);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Textfarbe auf '.$label.' erreicht nur 1,00:1');
+        $settings->validateSurfaceContrast();
+    }
+
+    public function testTextOverrideIsCheckedAgainstPackageBackgrounds(): void
+    {
+        $settings = new DesignSettings(text: '#ffffff', themeKey: 'seminar');
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('mindestens 4,5:1');
+        $settings->validateSurfaceContrast();
+    }
+
+    public function testContrastJustAboveTheThresholdIsAccepted(): void
+    {
+        $settings = new DesignSettings(paper: '#ffffff', text: '#767676', tone1: '#ffffff', tone2: '#ffffff');
+        $settings->validateSurfaceContrast();
+        $this->assertGreaterThanOrEqual(4.5, DesignSettings::contrastRatio($settings->text, $settings->paper));
+    }
+
+    public function testContrastJustBelowTheThresholdIsRejected(): void
+    {
+        $settings = new DesignSettings(paper: '#ffffff', text: '#777777', tone1: '#ffffff', tone2: '#ffffff');
+        $this->expectException(\InvalidArgumentException::class);
+        $settings->validateSurfaceContrast();
+    }
+
+    public function testOnlyBundledShapesAreAccepted(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new DesignSettings(radius: '1px; color: red');
+    }
+
 }
