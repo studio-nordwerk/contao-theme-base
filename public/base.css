@@ -257,6 +257,11 @@
 .nw-theme .rte :is(h2, h3, h4) { margin: 1.6em 0 .5em; }
 .nw-theme h4 { font-family: var(--theme-body-font), sans-serif; font-size: 1.05rem; font-weight: 600; letter-spacing: .01em; }
 
+/* Text-like core elements in a row keep a reading rhythm; sections keep the larger section space. */
+.nw-theme .mod_article > :is(.content-headline, .content-text, .content-list, .content-table, .content-code, .content-hyperlink, .content-download, .content-downloads, .content-image, .content-accordion, .content-youtube, .content-vimeo):not(.nw-split, .nw-callout) + :is(.content-text, .content-list, .content-table, .content-code, .content-hyperlink, .content-download, .content-downloads, .content-image, .content-accordion, .content-youtube, .content-vimeo):not(.nw-split, .nw-callout) { margin-top: var(--nw-space-xl); }
+.nw-theme .mod_article > .content-headline + :is([class*="content-"], [class*="mod_"]) { margin-top: var(--nw-space-md); }
+.nw-theme .mod_article > :is(.content-hyperlink, .content-download) + :is(.content-hyperlink, .content-download) { margin-top: var(--nw-space-sm); }
+.nw-theme .content-headline > :is(h1, h2, h3) { margin: 0; }
 .nw-theme .content-text.media:is(.media--left, .media--right)::after { content: ""; display: table; clear: both; }
 .nw-theme .content-text.media:is(.media--left, .media--right):not(.nw-split) > figure { width: min(42%, 21rem); margin-bottom: 1rem; }
 .nw-theme .content-text.media--left:not(.nw-split) > figure { float: left; margin-inline-end: 1.75rem; }
@@ -272,6 +277,7 @@
 .nw-theme .content-table tbody th { border-bottom: 1px solid var(--nw-border); font-size: inherit; letter-spacing: 0; text-transform: none; color: inherit; }
 .nw-theme .content-table :is(th, td):last-child { padding-inline-end: 0; }
 
+.nw-theme .content-code code { padding: 0; background: none; }
 .nw-theme .content-code pre { margin: 0; padding: 1rem 1.25rem; overflow-x: auto; border: 1px solid var(--nw-border); border-radius: var(--nw-radius-control); background: var(--nw-surface); color: var(--theme-surface-ink); font: .9rem/1.65 ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
 
 .nw-theme .content-gallery > ul { display: grid; grid-template-columns: repeat(var(--nw-gallery-cols, 3), minmax(0, 1fr)); gap: .75rem; margin: 0; padding: 0; list-style: none; }
@@ -282,13 +288,13 @@
 .nw-theme .content-gallery a:hover img { transform: scale(1.03); }
 
 .nw-theme :is(.content-youtube, .content-vimeo, .content-player) { max-width: 52rem; }
-.nw-theme :is(.content-youtube, .content-vimeo) figure { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--nw-radius-card); background: var(--theme-tile); }
-.nw-theme :is(.content-youtube, .content-vimeo) :is(iframe, button) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.nw-theme :is(.content-youtube, .content-vimeo) figure > button { display: grid; place-items: center; padding: 0; background: none; color: #fff; cursor: pointer; }
+.nw-theme :is(.content-youtube, .content-vimeo) figure > :is(iframe, button) { position: relative; display: grid; place-items: center; width: 100%; height: auto; aspect-ratio: 16 / 9; padding: 0; overflow: hidden; border: 0; border-radius: var(--nw-radius-card); background: var(--theme-tile); }
+.nw-theme :is(.content-youtube, .content-vimeo) figure > button { color: #fff; cursor: pointer; }
+/* Contao's .aspect classes use the zero-height padding trick; the frame itself carries the ratio here. */
+.nw-theme :is(.content-youtube, .content-vimeo) figure.aspect { height: auto; padding: 0; aspect-ratio: auto; }
 .nw-theme :is(.content-youtube, .content-vimeo) figure > button :is(picture, img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .nw-theme :is(.content-youtube, .content-vimeo) figure > button > span { position: relative; max-width: 24rem; margin: 1rem; padding: .75rem 1rem .75rem 3.75rem; border-radius: var(--nw-radius-control); background: rgb(0 0 0 / .62); font-size: .875rem; line-height: 1.4; text-align: start; }
 .nw-theme :is(.content-youtube, .content-vimeo) figure > button > span::before { content: ""; position: absolute; left: .9rem; top: 50%; width: 2.25rem; height: 2.25rem; translate: 0 -50%; border-radius: 999px; background: var(--nw-accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='white'/%3E%3C/svg%3E") center / 1.1rem no-repeat; }
-.nw-theme :is(.content-youtube, .content-vimeo) figcaption { position: absolute; left: 0; right: 0; bottom: 0; }
 
 .nw-theme .content-accordion .handorgel { border: 0; }
 .nw-theme .content-accordion .handorgel__header { margin: 0; border-top: 1px solid var(--nw-border); font: inherit; }
