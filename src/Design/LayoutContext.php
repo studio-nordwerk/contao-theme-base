@@ -43,12 +43,35 @@ final readonly class LayoutContext
         $current = $this->requests->getMainRequest()?->attributes->get('pageModel');
         $trail = $current instanceof PageModel ? array_map('intval', [...((array) $current->trail), (int) $current->id]) : [];
 
-        foreach (PageModel::findPublishedByPid((int) ($manifest['root'] ?? 0)) ?? [] as $page) {
+        // Start point: the page chosen in the module, else the root of the current website, else the demo root.
+        $root = (int) ($module->nwNavigationRoot ?? 0) ?: ($current instanceof PageModel ? (int) $current->rootId : 0) ?: (int) ($manifest['root'] ?? 0);
+
+        foreach (PageModel::findPublishedByPid($root) ?? [] as $page) {
             if (!$page->hide && !$page->protected && 'regular' === $page->type) {
                 $navigation[] = ['title' => (string) $page->title, 'url' => $this->urls->generate($page), 'active' => \in_array((int) $page->id, $trail, true)];
             }
         }
 
-        return ['navigation' => $navigation, 'brand' => (string) ($theme['name'] ?? 'Ihr Shop'), 'design' => $settings, 'logoPath' => $this->design->logoPath($settings), 'headingFont' => DesignSettings::FONT_PAIRS[$settings->fontPair][0], 'bodyFont' => DesignSettings::FONT_PAIRS[$settings->fontPair][1], 'links' => $links];
+        return ['navigation' => $navigation, 'button' => $this->button($module, $links), 'brand' => (string) ($theme['name'] ?? 'Ihr Shop'), 'design' => $settings, 'logoPath' => $this->design->logoPath($settings), 'headingFont' => DesignSettings::FONT_PAIRS[$settings->fontPair][0], 'bodyFont' => DesignSettings::FONT_PAIRS[$settings->fontPair][1], 'links' => $links];
+    }
+
+    /**
+     * Header button from the module (label, target page, hide switch). Without a label or target the theme default
+     * applies: the demo's "events" page as "Termine", if the theme has one.
+     *
+     * @param array<string, string> $links
+     *
+     * @return array{label: string, url: string}|null
+     */
+    private function button(ModuleModel $module, array $links): array|null
+    {
+        if ($module->nwHideButton ?? false) {
+            return null;
+        }
+        $page = PageModel::findPublishedById((int) ($module->nwButtonPage ?? 0));
+        $url = null !== $page ? $this->urls->generate($page) : ($links['events'] ?? null);
+        $label = trim((string) ($module->nwButtonLabel ?? '')) ?: (null !== $page ? (string) $page->title : 'Termine');
+
+        return null !== $url ? ['label' => $label, 'url' => $url] : null;
     }
 }
