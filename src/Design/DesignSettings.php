@@ -54,8 +54,8 @@ final readonly class DesignSettings
     }
 
     /**
-     * Text color for light surfaces comes from the theme's own ink (CSS). Only a surface too
-     * dark for dark ink needs an override.
+     * Text color for light surfaces comes from the theme's own ink (CSS). Only a
+     * surface too dark for dark ink needs an override.
      */
     public function surfaceTextOverride(): string|null
     {
