@@ -43,7 +43,8 @@ final readonly class LayoutContext
         $current = $this->requests->getMainRequest()?->attributes->get('pageModel');
         $trail = $current instanceof PageModel ? array_map('intval', [...((array) $current->trail), (int) $current->id]) : [];
 
-        // Start point: the page chosen in the module, else the root of the current website, else the demo root.
+        // Start point: the page chosen in the module, else the root of the current
+        // website, else the demo root.
         $root = (int) ($module->nwNavigationRoot ?? 0) ?: ($current instanceof PageModel ? (int) $current->rootId : 0) ?: (int) ($manifest['root'] ?? 0);
 
         foreach (PageModel::findPublishedByPid($root) ?? [] as $page) {
@@ -56,8 +57,9 @@ final readonly class LayoutContext
     }
 
     /**
-     * Header button from the module (label, target page, hide switch). Without a label or target the theme default
-     * applies: the demo's "events" page as "Termine", if the theme has one.
+     * Header button from the module (label, target page, hide switch). Without a
+     * label or target the theme default applies: the demo's "events" page as
+     * "Termine", if the theme has one.
      *
      * @param array<string, string> $links
      *

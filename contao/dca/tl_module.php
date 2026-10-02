@@ -35,7 +35,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['nwDemoNote'] = [
     'sql' => "char(1) NOT NULL default ''",
 ];
 
-// Header: navigation start point and an optional button, used by the header modules of the shop and seminar themes.
+// Header: navigation start point and an optional button, used by the header
+// modules of the shop and seminar themes.
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwNavigationRoot'] = [
     'label' => ['Startpunkt der Navigation', 'Die Unterseiten dieser Seite bilden das Menü. Leer lassen für den Startpunkt der aktuellen Website. Einzelne Seiten blenden Sie über „Im Menü verstecken“ in der Seite aus.'],
     'inputType' => 'pageTree',
