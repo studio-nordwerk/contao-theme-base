@@ -5,6 +5,7 @@ services:
     Nordwerk\ThemeBaseBundle\Design\DesignRepository:
         public: true
     Nordwerk\ThemeBaseBundle\Design\LayoutContext: ~
+    Nordwerk\ThemeBaseBundle\Design\FooterContent: ~
     Nordwerk\ThemeBaseBundle\Design\DesignCallbacks: ~
     Nordwerk\ThemeBaseBundle\Demo\DemoImporter:
         public: true

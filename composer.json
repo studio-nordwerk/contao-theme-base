@@ -8,6 +8,9 @@
         "contao/core-bundle": "^5.7.12",
         "contao/manager-plugin": "^2.0"
     },
+    "suggest": {
+        "oveleon/contao-component-style-manager": "Gestaltungsvarianten (Hintergrund, Abstände, Breite, Produktbilder) als Auswahllisten im Backend"
+    },
     "autoload": {
         "psr-4": {
             "Nordwerk\\ThemeBaseBundle\\": "src/"

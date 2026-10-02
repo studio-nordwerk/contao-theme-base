@@ -1,0 +1,90 @@
+# Style variants of the Nordwerk themes for the Component Style Manager
+# (oveleon/contao-component-style-manager). With the extension installed, editors pick them
+# from dropdowns; without it, the same classes can be typed into the CSS class field.
+nordwerk_theme:
+  title: "Nordwerk Theme"
+  desc: "Gestaltungsvarianten der Nordwerk-Themes"
+  groupAlias: "Gestaltung"
+  sorting: 64
+  children:
+    background:
+      title: "Hintergrund"
+      description: "Artikel: Band über die volle Breite. Element: Kasten."
+      cssClasses:
+        nw-tone-1: "Fläche 1"
+        nw-tone-2: "Fläche 2"
+        nw-tone-dark: "Dunkel"
+      blankOption: "1"
+      extendArticle: "1"
+      extendContentElement: "1"
+      contentElements: &elements
+        - text
+        - headline
+        - image
+        - hyperlink
+        - list
+        - table
+        - accordion
+        - gallery
+        - element_group
+        - nw_callout
+        - nw_contact
+        - nw_features
+        - nw_figures
+        - nw_hero
+        - nw_logos
+        - nw_person
+        - nw_promises
+        - nw_split
+        - nw_steps
+        - nw_team
+        - nw_teaser
+        - nw_carousel
+        - nw_gallery
+        - nw_shop_usps
+        - nw_shop_categories
+        - mini_shop_product_list
+        - seminar_event_list
+    spacing:
+      title: "Abstände"
+      description: "Abstand zum vorigen Element bzw. zwischen den Elementen im Artikel."
+      cssClasses:
+        nw-space-compact: "Kompakt"
+        nw-space-wide: "Großzügig"
+      blankOption: "1"
+      extendArticle: "1"
+      extendContentElement: "1"
+      contentElements: *elements
+    width:
+      title: "Breite"
+      cssClasses:
+        nw-narrow: "Schmal (gut lesbar)"
+      blankOption: "1"
+      extendArticle: "1"
+      extendContentElement: "1"
+      contentElements: *elements
+    align:
+      title: "Ausrichtung"
+      cssClasses:
+        nw-center: "Zentriert"
+      blankOption: "1"
+      extendArticle: "1"
+      extendContentElement: "1"
+      contentElements: *elements
+    product_image:
+      title: "Produktbilder"
+      cssClasses:
+        nw-cards-portrait: "Hochformat (4:5)"
+        nw-cards-landscape: "Querformat (4:3)"
+      blankOption: "1"
+      extendContentElement: "1"
+      contentElements:
+        - mini_shop_product_list
+    product_card:
+      title: "Produktkarten"
+      cssClasses:
+        nw-cards-framed: "Mit Rahmen"
+      blankOption: "1"
+      extendContentElement: "1"
+      contentElements:
+        - mini_shop_product_list
