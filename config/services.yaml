@@ -9,3 +9,4 @@ services:
     Nordwerk\ThemeBaseBundle\Design\DesignCallbacks: ~
     Nordwerk\ThemeBaseBundle\Demo\DemoImporter:
         public: true
+    Nordwerk\ThemeBaseBundle\Migration\ThemeAuthorMigration: ~

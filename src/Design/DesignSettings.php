@@ -14,7 +14,9 @@ final readonly class DesignSettings
      */
     public const HEADER_STYLES = ['clear' => 'Klar: Wortmarke links, Menü mittig', 'centered' => 'Zentriert: Menü links, Wortmarke mittig', 'floating' => 'Schwebend: runde Leiste'];
 
-    /** Package defaults must match base.css, shop.css and seminar-theme.css. */
+    /**
+     * Package defaults must match base.css, shop.css and seminar-theme.css.
+     */
     public const SURFACE_DEFAULTS = [
         '' => ['paper' => '#f6f2f3', 'text' => '#382f3d', 'tone1' => '#e9e4e6', 'tone2' => '#e4dce3'],
         'nordwerk-shop-v1' => ['paper' => '#f6f2f3', 'text' => '#382f3d', 'tone1' => '#e7dbe9', 'tone2' => '#dce8db'],
@@ -48,9 +50,11 @@ final readonly class DesignSettings
     ) {
         $this->accent = self::normalizeColor($accent);
         $this->surface = self::normalizeColor($surface);
-        foreach (['paper' => $paper, 'text' => $text, 'tone1' => $tone1, 'tone2' => $tone2] as $field => $color) {
-            $this->{$field} = '' === trim($color) ? '' : self::normalizeColor($color);
-        }
+        $optional = static fn (string $color): string => '' === trim($color) ? '' : self::normalizeColor($color);
+        $this->paper = $optional($paper);
+        $this->text = $optional($text);
+        $this->tone1 = $optional($tone1);
+        $this->tone2 = $optional($tone2);
         if (!isset(self::RADII[$radius]) || !isset(self::BUTTON_SHAPES[$buttonShape])) {
             throw new \InvalidArgumentException('Bitte wählen Sie eine der vorgegebenen Ecken- und Buttonformen.');
         }
@@ -72,14 +76,16 @@ final readonly class DesignSettings
             throw new \InvalidArgumentException('Bitte geben Sie eine Hex-Farbe mit drei oder sechs Stellen ein, z. B. 382f3d.');
         }
         $color = ltrim($color, '#');
-        if (3 === strlen($color)) {
+        if (3 === \strlen($color)) {
             $color = $color[0].$color[0].$color[1].$color[1].$color[2].$color[2];
         }
 
         return '#'.strtolower($color);
     }
 
-    /** @param array<string, mixed> $row */
+    /**
+     * @param array<string, mixed> $row
+     */
     public static function fromThemeRow(array $row): self
     {
         $headerStyle = (string) ($row['nwHeaderStyle'] ?? 'clear');
@@ -101,10 +107,13 @@ final readonly class DesignSettings
         );
     }
 
-    /** @return array{paper: string, text: string, tone1: string, tone2: string} */
+    /**
+     * @return array{paper: string, text: string, tone1: string, tone2: string}
+     */
     public function effectiveSurfaces(): array
     {
         $colors = self::SURFACE_DEFAULTS[$this->themeKey] ?? self::SURFACE_DEFAULTS[''];
+
         foreach ($colors as $field => $default) {
             if ('' !== $this->{$field}) {
                 $colors[$field] = $this->{$field};
@@ -117,18 +126,24 @@ final readonly class DesignSettings
     public function validateSurfaceContrast(): void
     {
         $colors = $this->effectiveSurfaces();
+
         foreach (['paper' => 'Seitenhintergrund', 'tone1' => 'Fläche 1', 'tone2' => 'Fläche 2'] as $field => $label) {
             $ratio = self::contrastRatio($colors['text'], $colors[$field]);
             if ($ratio < 4.5) {
-                throw new \InvalidArgumentException(sprintf('Textfarbe auf %s erreicht nur %s:1 Kontrast. Erforderlich sind mindestens 4,5:1. Bitte ändern Sie die Textfarbe oder den Hintergrund; leere Felder verwenden die Vorgabe des Theme-Pakets.', $label, number_format($ratio, 2, ',', '')));
+                throw new \InvalidArgumentException(\sprintf('Textfarbe auf %s erreicht nur %s:1 Kontrast. Erforderlich sind mindestens 4,5:1. Bitte ändern Sie die Textfarbe oder den Hintergrund; leere Felder verwenden die Vorgabe des Theme-Pakets.', $label, number_format($ratio, 2, ',', '')));
             }
         }
     }
 
-    /** Only explicit overrides belong in the generated CSS. @return array<string, string> */
+    /**
+     * Only explicit overrides belong in the generated CSS.
+     *
+     * @return array<string, string>
+     */
     public function cssVariables(): array
     {
         $variables = [];
+
         foreach (['paper' => '--theme-paper', 'text' => '--theme-ink', 'radius' => '--theme-radius', 'buttonShape' => '--nw-radius-button', 'tone1' => '--theme-tile', 'tone2' => '--theme-callout'] as $field => $variable) {
             if ('' !== $this->{$field}) {
                 $variables[$variable] = $this->{$field};

@@ -20,6 +20,7 @@ final class ThemeDesignSummary
         /** @var DesignRepository $repository */
         $repository = System::getContainer()->get(DesignRepository::class);
         $themes = [];
+
         foreach ($connection->fetchAllAssociative('SELECT id, name FROM tl_theme WHERE nwThemeKey = ? ORDER BY id', [$themeKey]) as $theme) {
             $settings = $repository->load((int) $theme['id']);
             $theme['values'] = [
@@ -32,6 +33,7 @@ final class ThemeDesignSummary
                 'Ecken' => DesignSettings::RADII[$settings->radius],
                 'Buttons' => DesignSettings::BUTTON_SHAPES[$settings->buttonShape],
             ];
+
             foreach (['paper' => 'Seitenhintergrund', 'text' => 'Textfarbe', 'tone1' => 'Fläche 1', 'tone2' => 'Fläche 2'] as $field => $label) {
                 $theme['values'][$label] = $settings->effectiveSurfaces()[$field].('' === $settings->{$field} ? ' (Vorgabe des Themes)' : '');
             }
@@ -39,7 +41,7 @@ final class ThemeDesignSummary
             $themes[] = $theme;
         }
         $template = new BackendTemplate('be_nw_theme_summary');
-        $template->themes = $themes;
+        $template->setData(['themes' => $themes]);
 
         return $template->parse();
     }

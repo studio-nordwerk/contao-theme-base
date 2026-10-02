@@ -17,6 +17,7 @@ final class DesignVariablesTest extends TestCase
     public function testEmptyOverridesDoNotEmitVariables(): void
     {
         $html = $this->render(new DesignSettings(themeKey: 'seminar'));
+
         foreach (['--theme-paper', '--theme-ink', '--theme-muted', '--theme-radius', '--nw-radius-button', '--theme-tile', '--theme-callout', '--nw-radius-card'] as $variable) {
             $this->assertStringNotContainsString($variable.':', $html);
         }
@@ -28,6 +29,7 @@ final class DesignVariablesTest extends TestCase
     {
         $settings = new DesignSettings(paper: 'fff', text: '000', radius: '0', buttonShape: '999px', tone1: 'eeeeee', tone2: 'dddddd');
         $html = $this->render($settings);
+
         foreach ($settings->cssVariables() as $name => $value) {
             $this->assertStringContainsString($name.': '.$value.';', $html);
         }

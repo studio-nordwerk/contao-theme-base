@@ -11,8 +11,10 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 final class DesignCallbacks
 {
-    public function __construct(private RequestStack $requestStack, private DesignRepository $repository)
-    {
+    public function __construct(
+        private RequestStack $requestStack,
+        private DesignRepository $repository,
+    ) {
     }
 
     #[AsCallback(table: 'tl_theme', target: 'fields.nwAccent.load')]
@@ -36,6 +38,7 @@ final class DesignCallbacks
     {
         $row = $dc->getCurrentRecord() ?? [];
         $request = $this->requestStack->getCurrentRequest();
+
         // Validate the complete submission, not a mixture of new and stored colors.
         foreach (['nwAccent', 'nwSurface', 'nwPaper', 'nwText', 'nwTone1', 'nwTone2'] as $field) {
             if ($request?->request->has($field)) {

@@ -39,6 +39,9 @@ final class DesignCallbacksTest extends TestCase
         $this->assertSame('', $this->callbacks([])->loadColor(null));
     }
 
+    /**
+     * @param array<string, mixed> $values
+     */
     private function callbacks(array $values): DesignCallbacks
     {
         $stack = new RequestStack();
@@ -50,8 +53,16 @@ final class DesignCallbacksTest extends TestCase
     private function dataContainer(string $field): DataContainer
     {
         $dc = $this->createMock(DataContainer::class);
-        $dc->method('getCurrentRecord')->willReturn(['nwThemeKey' => 'seminar']);
-        $dc->method('__get')->with('field')->willReturn($field);
+        $dc
+            ->method('getCurrentRecord')
+            ->willReturn(['nwThemeKey' => 'seminar'])
+        ;
+
+        $dc
+            ->method('__get')
+            ->with('field')
+            ->willReturn($field)
+        ;
 
         return $dc;
     }

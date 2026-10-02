@@ -71,6 +71,9 @@ final class DesignSettingsTest extends TestCase
         $this->assertSame('#123456', $settings->tone2);
     }
 
+    /**
+     * @return iterable<string, array{string, array<string, string>}>
+     */
     public static function packageDefaults(): iterable
     {
         foreach (DesignSettings::SURFACE_DEFAULTS as $key => $colors) {
@@ -78,6 +81,9 @@ final class DesignSettingsTest extends TestCase
         }
     }
 
+    /**
+     * @param array<string, string> $colors
+     */
     #[DataProvider('packageDefaults')]
     public function testEmptyColorsUseReadablePackageDefaults(string $key, array $colors): void
     {
@@ -87,6 +93,9 @@ final class DesignSettingsTest extends TestCase
         $this->assertSame([], $settings->cssVariables());
     }
 
+    /**
+     * @return iterable<string, array{string, string, string, string}>
+     */
     public static function unreadableSurfaces(): iterable
     {
         foreach (DesignSettings::SURFACE_DEFAULTS as $key => $colors) {
@@ -132,5 +141,4 @@ final class DesignSettingsTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         new DesignSettings(radius: '1px; color: red');
     }
-
 }

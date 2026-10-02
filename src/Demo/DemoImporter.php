@@ -31,7 +31,7 @@ final readonly class DemoImporter
             $result = $this->connection->transactional(
                 function () use ($provider, $row): array {
                     if (false === $row) {
-                        $this->connection->insert('tl_theme', ['tstamp' => time(), 'name' => $provider->title(), 'nwThemeKey' => $provider->key()]);
+                        $this->connection->insert('tl_theme', ['tstamp' => time(), 'name' => $provider->title(), 'author' => 'Studio Nordwerk', 'nwThemeKey' => $provider->key()]);
                         $theme = (int) $this->connection->lastInsertId();
                         $state = [];
                     } else {
