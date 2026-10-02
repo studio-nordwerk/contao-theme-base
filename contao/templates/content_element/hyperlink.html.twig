@@ -1,0 +1,4 @@
+{% extends '@Contao/content_element/hyperlink.html.twig' %}
+{# The field "Darstellung" (nwLinkStyle) turns the link into a main or secondary button. #}
+{% set nw_link_class = data.nwLinkStyle|default('') == 'primary' ? 'nw-button' : (data.nwLinkStyle|default('') == 'secondary' ? 'nw-button nw-button--secondary' : 'nw-textlink') %}
+{% set link_attributes = attrs(link_attributes|default).addClass(nw_link_class) %}

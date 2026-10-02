@@ -1,0 +1,3 @@
+{% extends '@Contao/content_element/downloads.html.twig' %}
+{# File type and size next to the name; the type badge is decoration for sighted readers. #}
+{% block download_link_inner %}<span class="nw-file-type" aria-hidden="true">{{ download.file.extension(true)|upper|slice(0, 4) }}</span><span class="nw-file-name">{{ text }}<small>{{ download.file.extension(true)|upper }}, {{ download.file.fileSize|format_bytes }}</small></span>{% endblock %}
