@@ -85,6 +85,9 @@
 .nw-theme #header:has(.nw-header--floating) { border-bottom: 0; background: transparent; padding-top: .9rem; }
 .nw-header--floating { min-height: 64px; padding-inline: 1rem; border: 1px solid var(--nw-border); border-radius: 999px; background: var(--nw-surface); box-shadow: 0 6px 24px rgb(0 0 0 / .06); }
 .nw-header--floating .nw-brand b { font-size: 1.4rem; }
+/* Sheets of the theme (menu, gallery) close with the same round button as the cart. */
+.nw-theme :is(.nw-navigation-sheet, .nw-gallery-lightbox) .ss-close { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; padding: 0; border: 1px solid var(--nw-border); border-radius: 999px; background: transparent; color: inherit; font: inherit; font-size: 1.15rem; line-height: 1; cursor: pointer; }
+.nw-theme :is(.nw-navigation-sheet, .nw-gallery-lightbox) .ss-close:hover { background: color-mix(in srgb, currentColor 8%, transparent); }
 .nw-skip { position: absolute; top: -200px; left: 1rem; background: white; color: #382f3d; padding: 1rem; z-index: 100; }
 .nw-skip:focus { top: 1rem; }
 .nw-button, .nw-menu-toggle { display: inline-flex; align-items: center; justify-content: center; min-height: var(--nw-control-height); padding: .5rem 1.4rem; border: var(--nw-border-width) solid var(--nw-accent); border-radius: var(--nw-radius-button, 999px); background: var(--nw-accent); color: var(--nw-accent-contrast); font: inherit; font-size: var(--nw-font-size); font-weight: 600; line-height: 1.25; text-decoration: none; cursor: pointer; }
