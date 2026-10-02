@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Nordwerk\ThemeBaseBundle\Design;
 
-use Contao\Automator;
 use Contao\File;
 use Contao\FilesModel;
 use Doctrine\DBAL\Connection;
@@ -23,16 +22,6 @@ final readonly class DesignRepository
         }
 
         return DesignSettings::fromThemeRow($row);
-    }
-
-    public function save(int $theme, DesignSettings $settings): void
-    {
-        if (!$this->connection->fetchOne('SELECT id FROM tl_theme WHERE id = ?', [$theme])) {
-            throw new \InvalidArgumentException('Bitte legen Sie zuerst ein Theme oder Demo-Seiten an.');
-        }
-        $this->validateLogo($settings->logo);
-        $this->connection->update('tl_theme', ['nwAccent' => $settings->accent, 'nwSurface' => $settings->surface, 'nwFontPair' => $settings->fontPair, 'nwLogo' => $settings->logo, 'nwHeaderStyle' => $settings->headerStyle, 'nwAnnouncement' => $settings->announcement], ['id' => $theme]);
-        (new Automator())->purgePageCache();
     }
 
     public function validateLogo(string|null $logo): void
