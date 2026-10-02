@@ -53,6 +53,15 @@ final readonly class DesignSettings
         return self::contrastRatio($this->surface, '#382f3d') >= 4.5 ? '#382f3d' : (self::contrastRatio($this->surface, '#000000') >= 4.5 ? '#000000' : '#ffffff');
     }
 
+    /**
+     * Text color for light surfaces comes from the theme's own ink (CSS). Only a surface too
+     * dark for dark ink needs an override.
+     */
+    public function surfaceTextOverride(): string|null
+    {
+        return self::contrastRatio($this->surface, '#382f3d') >= 4.5 ? null : $this->surfaceText();
+    }
+
     public static function contrastRatio(string $first, string $second): float
     {
         $a = self::luminance($first);

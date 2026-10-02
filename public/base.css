@@ -14,7 +14,7 @@
   --theme-heading-font: "Lora";
   --theme-body-font: "Source Sans 3";
   --theme-radius: 22px;
-  --theme-surface-ink: #382f3d;
+  --theme-surface-ink: var(--theme-ink);
   --nw-accent: #382f3d;
   --nw-accent-contrast: #ffffff;
   --nw-surface: #fffaf7;

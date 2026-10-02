@@ -34,6 +34,12 @@ final class DesignSettingsTest extends TestCase
         $this->assertGreaterThanOrEqual(4.5, DesignSettings::contrastRatio($color, $settings->surfaceText()));
     }
 
+    public function testLightSurfacesKeepTheThemeInk(): void
+    {
+        $this->assertNull((new DesignSettings('#29584d', '#eef5f1'))->surfaceTextOverride());
+        $this->assertSame('#ffffff', (new DesignSettings('#29584d', '#202020'))->surfaceTextOverride());
+    }
+
     public function testStylesCannotContainInjectedMarkup(): void
     {
         $this->expectException(\InvalidArgumentException::class);
