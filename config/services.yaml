@@ -11,6 +11,7 @@ services:
         public: true
     Nordwerk\ThemeBaseBundle\Migration\ThemeAuthorMigration: ~
     Nordwerk\ThemeBaseBundle\Migration\CoreNavigationMigration: ~
+    Nordwerk\ThemeBaseBundle\Migration\ModuleLinksMigration: ~
     Nordwerk\ThemeBaseBundle\Navigation\NavigationRenderer: ~
     Nordwerk\ThemeBaseBundle\Navigation\NavigationModuleOptions: ~
     Nordwerk\ThemeBaseBundle\Backend\EmptySite:

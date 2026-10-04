@@ -34,6 +34,12 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['nwFooterLegalModule'] = [
     'eval' => ['includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50'],
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
+$GLOBALS['TL_DCA']['tl_module']['fields']['nwWithdrawalPage'] = [
+    'label' => ['Seite „Vertrag widerrufen“', 'Die Rechtsspalte verlinkt diese Seite immer mit dem Wortlaut „Vertrag widerrufen“. Ohne Seite entfällt der Link.'],
+    'inputType' => 'pageTree',
+    'eval' => ['fieldType' => 'radio', 'tl_class' => 'clr'],
+    'sql' => "int(10) unsigned NOT NULL default '0'",
+];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwDemoNote'] = [
     'label' => ['Demo-Hinweis anzeigen', 'Hinweis, dass Betreiberangaben und Rechtstexte noch Platzhalter sind. Vor dem Start ausschalten.'],
     'inputType' => 'checkbox',
@@ -50,13 +56,13 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['nwNavModule'] = [
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwButtonLabel'] = [
-    'label' => ['Button-Text', 'Hervorgehobener Button in der Kopfzeile, z. B. „Termine“. Leer lassen für die Vorgabe des Themes.'],
+    'label' => ['Button-Text', 'Hervorgehobener Button in der Kopfzeile, z. B. „Termine“. Leer lassen für den Namen der Zielseite.'],
     'inputType' => 'text',
     'eval' => ['maxlength' => 40, 'tl_class' => 'w50'],
     'sql' => "varchar(40) NOT NULL default ''",
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwButtonPage'] = [
-    'label' => ['Button-Ziel', 'Seite, zu der der Button führt. Leer lassen für die Vorgabe des Themes.'],
+    'label' => ['Button-Ziel', 'Seite, zu der der Button führt. Ohne Ziel erscheint kein Button.'],
     'inputType' => 'pageTree',
     'eval' => ['fieldType' => 'radio', 'tl_class' => 'clr'],
     'sql' => "int(10) unsigned NOT NULL default '0'",
@@ -69,8 +75,9 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['nwHideButton'] = [
 ];
 
 // Before 0.5 header and footer built their links themselves. The columns stay so
-// CoreNavigationMigration can read them; nwCoreNavigation marks modules that
-// already use core navigation modules (new modules start with it).
+// the migrations can read them. nwCoreNavigation is the migration state of a
+// module: '' = before 0.5, '1' = core navigation modules (0.5.0), '2' = button
+// and withdrawal page picked in the module (0.5.1). New modules start at '2'.
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwNavigationRoot'] = ['sql' => "int(10) unsigned NOT NULL default '0'"];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwFooterPages'] = ['sql' => 'blob NULL'];
-$GLOBALS['TL_DCA']['tl_module']['fields']['nwCoreNavigation'] = ['default' => '1', 'sql' => "char(1) NOT NULL default ''"];
+$GLOBALS['TL_DCA']['tl_module']['fields']['nwCoreNavigation'] = ['default' => '2', 'sql' => "char(1) NOT NULL default ''"];

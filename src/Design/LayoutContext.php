@@ -9,6 +9,7 @@ use Contao\ModuleModel;
 use Contao\PageModel;
 use Doctrine\DBAL\Connection;
 use Nordwerk\ThemeBaseBundle\Navigation\NavigationRenderer;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 final readonly class LayoutContext
 {
@@ -17,6 +18,7 @@ final readonly class LayoutContext
         private DesignRepository $design,
         private ContentUrlGenerator $urls,
         private NavigationRenderer $navigation,
+        private RequestStack $requests,
     ) {
     }
 
@@ -25,40 +27,36 @@ final readonly class LayoutContext
      */
     public function build(ModuleModel $module): array
     {
-        $theme = $this->connection->fetchAssociative('SELECT name, nwDemoState FROM tl_theme WHERE id = ?', [(int) $module->pid]);
-        $manifest = json_decode((string) ($theme['nwDemoState'] ?? '{}'), true, 512, JSON_THROW_ON_ERROR);
-        $pages = \is_array($manifest) ? ($manifest['pages'] ?? []) : [];
         $settings = $this->design->load((int) $module->pid);
-        $links = [];
 
-        foreach (\is_array($pages) ? $pages : [] as $name => $id) {
-            $page = PageModel::findById((int) $id);
-            if (null !== $page && $page->published) {
-                $links[$name] = $this->urls->generate($page);
-            }
-        }
-
-        return ['navigation' => $this->navigation->render((int) ($module->nwNavModule ?? 0)), 'button' => $this->button($module, $links), 'brand' => (string) ($theme['name'] ?? 'Ihr Shop'), 'design' => $settings, 'logoPath' => $this->design->logoPath($settings), 'headingFont' => DesignSettings::FONT_PAIRS[$settings->fontPair][0], 'bodyFont' => DesignSettings::FONT_PAIRS[$settings->fontPair][1], 'links' => $links];
+        return ['navigation' => $this->navigation->render((int) ($module->nwNavModule ?? 0)), 'button' => $this->button($module), 'start' => $this->start(), 'brand' => (string) ($this->connection->fetchOne('SELECT name FROM tl_theme WHERE id = ?', [(int) $module->pid]) ?: 'Ihr Shop'), 'design' => $settings, 'logoPath' => $this->design->logoPath($settings), 'headingFont' => DesignSettings::FONT_PAIRS[$settings->fontPair][0], 'bodyFont' => DesignSettings::FONT_PAIRS[$settings->fontPair][1]];
     }
 
     /**
-     * Header button from the module (label, target page, hide switch). Without a
-     * label or target the theme default applies: the demo's "events" page as
-     * "Termine", if the theme has one.
-     *
-     * @param array<string, string> $links
+     * The logo links to the start page of the website the visitor is on: the first
+     * published page below its root.
+     */
+    private function start(): string
+    {
+        $current = $this->requests->getMainRequest()?->attributes->get('pageModel');
+        $start = $current instanceof PageModel ? PageModel::findFirstPublishedByPid((int) $current->rootId) : null;
+
+        return null !== $start ? $this->urls->generate($start) : '/';
+    }
+
+    /**
+     * Header button from the module: target page, optional label, hide switch.
+     * Without a target there is no button.
      *
      * @return array{label: string, url: string}|null
      */
-    private function button(ModuleModel $module, array $links): array|null
+    private function button(ModuleModel $module): array|null
     {
-        if ($module->nwHideButton ?? false) {
+        $page = $module->nwHideButton ?? false ? null : PageModel::findPublishedById((int) ($module->nwButtonPage ?? 0));
+        if (null === $page) {
             return null;
         }
-        $page = PageModel::findPublishedById((int) ($module->nwButtonPage ?? 0));
-        $url = null !== $page ? $this->urls->generate($page) : ($links['events'] ?? null);
-        $label = trim((string) ($module->nwButtonLabel ?? '')) ?: (null !== $page ? (string) $page->title : 'Termine');
 
-        return null !== $url ? ['label' => $label, 'url' => $url] : null;
+        return ['label' => trim((string) ($module->nwButtonLabel ?? '')) ?: (string) $page->title, 'url' => $this->urls->generate($page)];
     }
 }
