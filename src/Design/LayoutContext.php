@@ -8,7 +8,7 @@ use Contao\CoreBundle\Routing\ContentUrlGenerator;
 use Contao\ModuleModel;
 use Contao\PageModel;
 use Doctrine\DBAL\Connection;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Nordwerk\ThemeBaseBundle\Navigation\NavigationRenderer;
 
 final readonly class LayoutContext
 {
@@ -16,7 +16,7 @@ final readonly class LayoutContext
         private Connection $connection,
         private DesignRepository $design,
         private ContentUrlGenerator $urls,
-        private RequestStack $requests = new RequestStack(),
+        private NavigationRenderer $navigation,
     ) {
     }
 
@@ -38,22 +38,7 @@ final readonly class LayoutContext
             }
         }
 
-        $navigation = [];
-        // The current page and its parents mark the active menu item.
-        $current = $this->requests->getMainRequest()?->attributes->get('pageModel');
-        $trail = $current instanceof PageModel ? array_map('intval', [...((array) $current->trail), (int) $current->id]) : [];
-
-        // Start point: the page chosen in the module, else the root of the current
-        // website, else the demo root.
-        $root = (int) ($module->nwNavigationRoot ?? 0) ?: ($current instanceof PageModel ? (int) $current->rootId : 0) ?: (int) ($manifest['root'] ?? 0);
-
-        foreach (PageModel::findPublishedByPid($root) ?? [] as $page) {
-            if (!$page->hide && !$page->protected && 'regular' === $page->type) {
-                $navigation[] = ['title' => (string) $page->title, 'url' => $this->urls->generate($page), 'active' => \in_array((int) $page->id, $trail, true)];
-            }
-        }
-
-        return ['navigation' => $navigation, 'button' => $this->button($module, $links), 'brand' => (string) ($theme['name'] ?? 'Ihr Shop'), 'design' => $settings, 'logoPath' => $this->design->logoPath($settings), 'headingFont' => DesignSettings::FONT_PAIRS[$settings->fontPair][0], 'bodyFont' => DesignSettings::FONT_PAIRS[$settings->fontPair][1], 'links' => $links];
+        return ['navigation' => $this->navigation->render((int) ($module->nwNavModule ?? 0)), 'button' => $this->button($module, $links), 'brand' => (string) ($theme['name'] ?? 'Ihr Shop'), 'design' => $settings, 'logoPath' => $this->design->logoPath($settings), 'headingFont' => DesignSettings::FONT_PAIRS[$settings->fontPair][0], 'bodyFont' => DesignSettings::FONT_PAIRS[$settings->fontPair][1], 'links' => $links];
     }
 
     /**

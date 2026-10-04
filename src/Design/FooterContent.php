@@ -4,47 +4,30 @@ declare(strict_types=1);
 
 namespace Nordwerk\ThemeBaseBundle\Design;
 
-use Contao\CoreBundle\Routing\ContentUrlGenerator;
 use Contao\ModuleModel;
-use Contao\PageModel;
-use Contao\StringUtil;
+use Nordwerk\ThemeBaseBundle\Navigation\NavigationRenderer;
 
 /**
- * Footer contents from the module settings: free text, column headings, extra
- * pages and the demo note. Empty headings keep the theme's defaults.
+ * Footer contents from the module settings: free text, column headings, the two
+ * navigation modules and the demo note. Empty headings keep the theme's defaults.
  */
 final readonly class FooterContent
 {
-    public function __construct(private ContentUrlGenerator $urls)
+    public function __construct(private NavigationRenderer $navigation)
     {
     }
 
     /**
-     * @return array{text: string, navHeadline: string, legalHeadline: string, pages: list<array{title: string, url: string}>, demoNote: bool}
+     * @return array{text: string, navHeadline: string, legalHeadline: string, nav: string, legal: string, demoNote: bool}
      */
     public function build(ModuleModel $module): array
     {
-        $pages = [];
-        $ids = array_map('intval', StringUtil::deserialize($module->nwFooterPages ?? null, true));
-
-        foreach ($ids as $id) {
-            $page = PageModel::findById($id);
-            if (null === $page || !$page->published || $page->protected) {
-                continue;
-            }
-
-            try {
-                $pages[] = ['title' => (string) $page->title, 'url' => $this->urls->generate($page)];
-            } catch (\Throwable) {
-                continue;
-            }
-        }
-
         return [
             'text' => trim((string) ($module->nwFooterText ?? '')),
             'navHeadline' => trim((string) ($module->nwFooterNavHeadline ?? '')),
             'legalHeadline' => trim((string) ($module->nwFooterLegalHeadline ?? '')),
-            'pages' => $pages,
+            'nav' => $this->navigation->render((int) ($module->nwFooterNavModule ?? 0)),
+            'legal' => $this->navigation->render((int) ($module->nwFooterLegalModule ?? 0)),
             'demoNote' => '1' === (string) ($module->nwDemoNote ?? ''),
         ];
     }

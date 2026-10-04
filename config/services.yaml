@@ -10,5 +10,8 @@ services:
     Nordwerk\ThemeBaseBundle\Demo\DemoImporter:
         public: true
     Nordwerk\ThemeBaseBundle\Migration\ThemeAuthorMigration: ~
+    Nordwerk\ThemeBaseBundle\Migration\CoreNavigationMigration: ~
+    Nordwerk\ThemeBaseBundle\Navigation\NavigationRenderer: ~
+    Nordwerk\ThemeBaseBundle\Navigation\NavigationModuleOptions: ~
     Nordwerk\ThemeBaseBundle\Backend\EmptySite:
         public: true

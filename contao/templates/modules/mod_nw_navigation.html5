@@ -1,0 +1,2 @@
+<?php // The list only: header and footer of the theme bring their own <nav>. ?>
+<?= $this->items ?>

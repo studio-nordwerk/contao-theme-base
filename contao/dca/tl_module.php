@@ -22,11 +22,17 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['nwFooterLegalHeadline'] = [
     'eval' => ['maxlength' => 64, 'tl_class' => 'w50'],
     'sql' => "varchar(64) NOT NULL default ''",
 ];
-$GLOBALS['TL_DCA']['tl_module']['fields']['nwFooterPages'] = [
-    'label' => ['Weitere Seiten', 'Zusätzliche Links in der Seitenspalte, z. B. Kontakt oder FAQ. Reihenfolge per Ziehen.'],
-    'inputType' => 'pageTree',
-    'eval' => ['multiple' => true, 'fieldType' => 'checkbox', 'isSortable' => true, 'tl_class' => 'clr'],
-    'sql' => 'blob NULL',
+$GLOBALS['TL_DCA']['tl_module']['fields']['nwFooterNavModule'] = [
+    'label' => ['Navigation der Seitenspalte', 'Navigationsmodul mit den Links der Seitenspalte, z. B. eine „Individuelle Navigation“ mit Ihren wichtigsten Seiten.'],
+    'inputType' => 'select',
+    'eval' => ['includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50 clr'],
+    'sql' => "int(10) unsigned NOT NULL default '0'",
+];
+$GLOBALS['TL_DCA']['tl_module']['fields']['nwFooterLegalModule'] = [
+    'label' => ['Navigation der Rechtsspalte', 'Navigationsmodul mit den rechtlichen Seiten, z. B. eine „Individuelle Navigation“ mit Impressum und Datenschutz.'],
+    'inputType' => 'select',
+    'eval' => ['includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50'],
+    'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwDemoNote'] = [
     'label' => ['Demo-Hinweis anzeigen', 'Hinweis, dass Betreiberangaben und Rechtstexte noch Platzhalter sind. Vor dem Start ausschalten.'],
@@ -35,16 +41,16 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['nwDemoNote'] = [
     'sql' => "char(1) NOT NULL default ''",
 ];
 
-// Header: navigation start point and an optional button, used by the header
-// modules of the shop and seminar themes.
-$GLOBALS['TL_DCA']['tl_module']['fields']['nwNavigationRoot'] = [
-    'label' => ['Startpunkt der Navigation', 'Die Unterseiten dieser Seite bilden das Menü. Leer lassen für den Startpunkt der aktuellen Website. Einzelne Seiten blenden Sie über „Im Menü verstecken“ in der Seite aus.'],
-    'inputType' => 'pageTree',
-    'eval' => ['fieldType' => 'radio', 'tl_class' => 'clr'],
+// Header: the menu is a core navigation module, plus an optional button. Used by
+// the header modules of the shop and seminar themes.
+$GLOBALS['TL_DCA']['tl_module']['fields']['nwNavModule'] = [
+    'label' => ['Hauptnavigation', 'Navigationsmodul für das Menü der Kopfzeile, in der Regel ein „Navigationsmenü“. Seiten, Reihenfolge und „Im Menü verstecken“ pflegen Sie in der Seitenstruktur.'],
+    'inputType' => 'select',
+    'eval' => ['includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50 clr'],
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwButtonLabel'] = [
-    'label' => ['Button-Text', 'Hervorgehobener Button im Kopfbereich, z. B. „Termine“. Leer lassen für die Vorgabe des Themes.'],
+    'label' => ['Button-Text', 'Hervorgehobener Button in der Kopfzeile, z. B. „Termine“. Leer lassen für die Vorgabe des Themes.'],
     'inputType' => 'text',
     'eval' => ['maxlength' => 40, 'tl_class' => 'w50'],
     'sql' => "varchar(40) NOT NULL default ''",
@@ -56,8 +62,15 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['nwButtonPage'] = [
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwHideButton'] = [
-    'label' => ['Button ausblenden', 'Keinen hervorgehobenen Button im Kopfbereich zeigen.'],
+    'label' => ['Button ausblenden', 'Keinen hervorgehobenen Button in der Kopfzeile zeigen.'],
     'inputType' => 'checkbox',
     'eval' => ['tl_class' => 'w50 m12'],
     'sql' => "char(1) NOT NULL default ''",
 ];
+
+// Before 0.5 header and footer built their links themselves. The columns stay so
+// CoreNavigationMigration can read them; nwCoreNavigation marks modules that
+// already use core navigation modules (new modules start with it).
+$GLOBALS['TL_DCA']['tl_module']['fields']['nwNavigationRoot'] = ['sql' => "int(10) unsigned NOT NULL default '0'"];
+$GLOBALS['TL_DCA']['tl_module']['fields']['nwFooterPages'] = ['sql' => 'blob NULL'];
+$GLOBALS['TL_DCA']['tl_module']['fields']['nwCoreNavigation'] = ['default' => '1', 'sql' => "char(1) NOT NULL default ''"];
