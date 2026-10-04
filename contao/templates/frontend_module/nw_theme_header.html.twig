@@ -9,7 +9,7 @@
         {% block brand %}
             {# A wordmark from the theme name: with three or more words the first one leads, the rest is the byline. #}
             {% set words = brand|split(' ') %}
-            <a class="nw-brand" href="{{ start }}" aria-label="{{ brand }}, Startseite">{% if logoPath %}<img src="{{ asset(logoPath) }}" alt="{{ brand }}" width="180" height="64">{% elseif words|length > 2 %}<b>{{ words|first }}</b><small>{{ words|slice(1)|join(' ') }}</small>{% else %}<b>{{ brand }}</b>{% endif %}</a>
+            <a class="nw-brand" href="{{ start|default('/') }}" aria-label="{{ brand }}, Startseite">{% if logoPath %}<img src="{{ asset(logoPath) }}" alt="{{ brand }}" width="180" height="64">{% elseif words|length > 2 %}<b>{{ words|first }}</b><small>{{ words|slice(1)|join(' ') }}</small>{% else %}<b>{{ brand }}</b>{% endif %}</a>
         {% endblock %}
         {% block navigation %}{% endblock %}
         {% block actions %}{% endblock %}
