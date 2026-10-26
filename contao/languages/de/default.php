@@ -12,6 +12,7 @@ $GLOBALS['TL_LANG']['nw_theme']['setup'] = [
     'inventory' => 'Ein ersetzender Import überschreibt diese Datensätze der Demo (laut Importprotokoll im Theme):',
     'overwrite' => 'Ich bestätige: Bereits importierte Demo-Inhalte dürfen durch die Vorlage ersetzt werden.',
     'overwriteHelp' => 'Ohne Auswahl bleibt eine vorhandene Demo unverändert. Eigene zusätzliche Seiten und Elemente bleiben erhalten. Jeder ersetzte Datensatz bekommt eine neue Version, frühere Stände finden Sie unter „Versionen“.',
+    'adminOnly' => 'Demo-Seiten anlegen und ersetzen dürfen nur Administratoren: Der Import legt Seiten, Artikel, Produkte bzw. Termine und Einstellungen an und ersetzt sie, unabhängig von Pagemounts und erlaubten Feldern. Übersicht und Gestaltung stehen Ihnen mit diesem Modul zur Verfügung.',
     'import' => 'Demo-Seiten anlegen',
     'created' => 'Die Demo-Seiten wurden angelegt.',
     'preserved' => 'Die Demo ist bereits vorhanden. Ihre Inhalte wurden erhalten.',

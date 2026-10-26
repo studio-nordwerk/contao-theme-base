@@ -7,6 +7,7 @@ namespace Nordwerk\ThemeBaseBundle\Theme;
 use Contao\CoreBundle\Cache\CacheTagManager;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Contao\CoreBundle\Event\LayoutEvent;
+use Contao\CoreBundle\String\HtmlAttributes;
 use Contao\LayoutModel;
 use Contao\PageModel;
 use Doctrine\DBAL\Connection;
@@ -37,24 +38,43 @@ final class ThemeAssets
     }
 
     /**
-     * Classic layouts ("Standard-Layout").
+     * Classic layouts ("Standard-Layout"). The body classes the stylesheets and the
+     * design variables rely on are added if the layout lacks them; the record itself
+     * is not changed.
      */
     #[AsHook('generatePage')]
     public function onGeneratePage(PageModel $page, LayoutModel $layout): void
     {
-        $this->addToPage($layout);
+        $package = $this->addToPage($layout);
+        if (null !== $package) {
+            $layout->cssClass = self::withClasses((string) $layout->cssClass, $package);
+        }
     }
 
     /**
-     * Twig layouts. "page/layout/nw_theme" reads the body classes from nw_theme.
+     * Twig layouts, whatever template they use.
      */
     #[AsEventListener]
     public function onLayout(LayoutEvent $event): void
     {
         $package = $this->addToPage($event->getLayout());
-        if (null !== $package) {
-            $event->getTemplate()->set('nw_theme', ['key' => $package->key(), 'cssClass' => $package->cssClass()]);
+        if (null === $package) {
+            return;
         }
+        $template = $event->getTemplate();
+        $attributes = new HtmlAttributes($template->has('body_attributes') ? $template->get('body_attributes') : null);
+        $template->set('body_attributes', $attributes->addClass(explode(' ', self::withClasses('', $package))));
+        $template->set('nw_theme', ['key' => $package->key(), 'cssClass' => $package->cssClass()]);
+    }
+
+    /**
+     * CSS classes plus "nw-theme" and the classes of the package, without duplicates.
+     */
+    public static function withClasses(string $classes, ThemePackage $package): string
+    {
+        $list = preg_split('/\s+/', trim($classes.' nw-theme '.$package->cssClass()), -1, PREG_SPLIT_NO_EMPTY) ?: [];
+
+        return implode(' ', array_values(array_unique($list)));
     }
 
     /**

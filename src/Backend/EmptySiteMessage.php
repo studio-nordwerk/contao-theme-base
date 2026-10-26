@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Nordwerk\ThemeBaseBundle\Backend;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
-use Contao\CoreBundle\Security\ContaoCorePermissions;
 use Contao\System;
 use Nordwerk\ThemeBaseBundle\Theme\ThemePackages;
 use Symfony\Bundle\SecurityBundle\Security;
 
 /**
- * On a site without pages the backend start page points to the demo import of
- * each installed theme package, for users who may open "Theme einrichten".
+ * On a site without pages the backend start page points administrators to the
+ * demo import of each installed theme package (only they may run it).
  */
 #[AsHook('getSystemMessages')]
 final readonly class EmptySiteMessage
@@ -26,7 +25,7 @@ final readonly class EmptySiteMessage
 
     public function __invoke(): string
     {
-        if (!$this->security->isGranted(ContaoCorePermissions::USER_CAN_ACCESS_MODULE, ThemeSetupModule::MODULE)) {
+        if (!$this->security->isGranted('ROLE_ADMIN')) {
             return '';
         }
         System::loadLanguageFile('default');

@@ -8,12 +8,14 @@ use Contao\Automator;
 use Contao\CoreBundle\Cache\CacheTagManager;
 use Contao\Versions;
 use Doctrine\DBAL\Connection;
+use Symfony\Bundle\SecurityBundle\Security;
 
 final readonly class DemoImporter
 {
     public function __construct(
         private Connection $connection,
         private CacheTagManager|null $cacheTags = null,
+        private Security|null $security = null,
     ) {
     }
 
@@ -51,6 +53,7 @@ final readonly class DemoImporter
             );
             $records = $provider instanceof DemoInventory ? $provider->records($state) : [];
             $records['tl_theme'][] = $result['theme'];
+            $records = DemoRecords::existing($this->connection, $records);
             $this->version($records);
             (new Automator())->generateSymlinks();
             // Only pages that show a replaced record or the theme are outdated.
@@ -63,18 +66,21 @@ final readonly class DemoImporter
     }
 
     /**
-     * A version per imported record, like saving it in the backend. After a replacing
-     * import the editor finds the earlier state under "Versionen".
+     * A version per imported record, like saving it in the backend: with the user in
+     * the backend, without one on the console. After a replacing import the editor
+     * finds the earlier state under "Versionen".
      *
      * @param array<string, list<int>> $records
      */
     private function version(array $records): void
     {
+        $anonymous = null === $this->security?->getUser();
+
         foreach ($records as $table => $ids) {
             foreach (array_unique($ids) as $id) {
                 $versions = new Versions($table, $id);
                 $versions->setEditUrl($this->editUrl($table, $id));
-                $versions->create(true);
+                $versions->create($anonymous);
             }
         }
     }

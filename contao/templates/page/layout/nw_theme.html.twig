@@ -3,14 +3,10 @@
 {#
     Twig layout of the Nordwerk themes ("Layout-Typ: Modern", template "nw_theme").
     The slots header, main and footer take the modules of the layout, e.g. "Shop: Kopfzeile"
-    in header. Stylesheets and design variables come from the theme base for every layout of
-    a Nordwerk theme; this template adds the body classes of the theme package and the
-    wrapper elements base.css expects.
+    in header. For every layout of a Nordwerk theme the theme base adds stylesheets, design
+    variables and body classes; this template adds the wrapper elements base.css expects.
+    In a theme that is not a Nordwerk theme it is a plain layout without theme styles.
 #}
-{% set body_attributes = attrs(body_attributes|default)
-    .addClass('nw-theme')
-    .addClass(nw_theme.cssClass|default)
-%}
 
 {% block viewport %}
     <meta name="viewport" content="width=device-width,initial-scale=1.0">

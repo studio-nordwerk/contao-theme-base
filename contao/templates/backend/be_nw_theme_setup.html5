@@ -5,7 +5,7 @@
 <nav class="tl_panel" aria-label="<?= $escape($lang['navigation']) ?>"><p>
 <?php if (count($this->packages) > 1): ?><?php foreach ($this->packages as $key => $title): ?><a href="contao?do=nw_theme_setup&amp;theme=<?= $escape(rawurlencode($key)) ?>"<?php if ($key === $this->package): ?> aria-current="page"<?php endif; ?>><?= $escape($title) ?></a> · <?php endforeach; ?><?php endif; ?>
 <?php if ($this->setupUrl): ?><a href="<?= $escape($this->setupUrl) ?>"><?= $escape($this->setupLabel) ?></a> · <?php endif; ?>
-<a href="/" target="_blank" rel="noopener"><?= $escape($lang['view']) ?></a>
+<?php if ($this->viewUrl): ?><a href="<?= $escape($this->viewUrl) ?>" target="_blank" rel="noopener"><?= $escape($lang['view']) ?></a><?php endif; ?>
 </p></nav>
 <?php if ($this->notice): ?><p class="tl_confirm" role="status"><?= $escape($this->notice) ?><?php if ($this->continue): ?> <a href="<?= $escape($this->setupUrl) ?>"><?= $escape($this->setupLabel) ?></a><?php endif; ?></p><?php endif; ?>
 <?php if ($this->error): ?><p class="tl_error" role="alert"><?= $escape($this->error) ?></p><?php endif; ?>
@@ -18,12 +18,16 @@
 <p><?= $escape($lang['inventory']) ?></p>
 <ul class="tl_listing_text" data-nw-demo-inventory><?php foreach ($this->inventory as $label => $count): ?><li>– <?= $escape($label) ?>: <?= (int) $count ?></li><?php endforeach; ?></ul>
 <?php endif; ?>
+<?php if (!$this->mayImport): ?>
+<p class="tl_info" data-nw-admin-only><?= $escape($lang['adminOnly']) ?></p>
+<?php else: ?>
 <form class="tl_form" method="post" action="<?= $escape($this->action) ?>">
 <input type="hidden" name="REQUEST_TOKEN" value="<?= $escape($this->requestToken) ?>"><input type="hidden" name="themeAction" value="import-demo">
 <div class="tl_formbody_edit"><div class="widget"><label><input class="tl_checkbox" type="checkbox" name="overwrite" value="1"> <?= $escape($lang['overwrite']) ?></label>
 <p class="tl_help"><?= $escape($lang['overwriteHelp']) ?></p></div></div>
 <div class="tl_formbody_submit"><button class="tl_submit" type="submit"><?= $escape($lang['import']) ?></button></div>
 </form>
+<?php endif; ?>
 <?= $this->design ?>
 <?php endif; ?>
 <?php endif; ?>

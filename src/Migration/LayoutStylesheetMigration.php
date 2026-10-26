@@ -19,7 +19,7 @@ use Nordwerk\ThemeBaseBundle\Theme\ThemePackages;
  */
 final class LayoutStylesheetMigration extends AbstractMigration
 {
-    // Loaded by the withdrawal element itself since withdrawal-bundle 1.1.
+    // The withdrawal element loads it itself while its base styles are switched on.
     private const WITHDRAWAL = 'bundles/nordwerkwithdrawal/withdrawal-base.css';
 
     public function __construct(
@@ -70,8 +70,10 @@ final class LayoutStylesheetMigration extends AbstractMigration
     }
 
     /**
-     * Removes <link rel="stylesheet"> tags to the given public files, with or without
-     * a leading slash (layouts up to 0.5.4 had none).
+     * Removes <link rel="stylesheet"> tags to the given public files: any attribute
+     * order and quotes, extra attributes such as media, a leading slash or path
+     * prefix (installation in a subdirectory) and a version parameter. Only the
+     * removed tags and the line breaks right after them leave the head.
      *
      * @param list<string> $stylesheets
      */
@@ -79,6 +81,16 @@ final class LayoutStylesheetMigration extends AbstractMigration
     {
         $files = implode('|', array_map(static fn (string $file): string => preg_quote($file, '~'), $stylesheets));
 
-        return trim((string) preg_replace('~<link\s+rel="stylesheet"\s+href="/?(?:'.$files.')(?:\?[^"]*)?"\s*/?>\s*~i', '', $head));
+        return (string) preg_replace_callback(
+            '~[ \t]*<link\b[^>]*>(?:[ \t]*\r?\n)?~i',
+            static function (array $match) use ($files): string {
+                $tag = $match[0];
+                $isStylesheet = preg_match('~\srel\s*=\s*(["\'])\s*stylesheet\s*\1~i', $tag);
+                $isThemeFile = preg_match('~\shref\s*=\s*(["\'])(?:[^"\']*/)?(?:'.$files.')(?:\?[^"\']*)?\1~i', $tag);
+
+                return $isStylesheet && $isThemeFile ? '' : $tag;
+            },
+            $head,
+        );
     }
 }

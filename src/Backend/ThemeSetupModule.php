@@ -8,7 +8,9 @@ use Contao\BackendModule;
 use Contao\BackendTemplate;
 use Contao\Controller;
 use Contao\CoreBundle\Csrf\ContaoCsrfTokenManager;
+use Contao\CoreBundle\Routing\ContentUrlGenerator;
 use Contao\CoreBundle\Security\ContaoCorePermissions;
+use Contao\PageModel;
 use Contao\System;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
@@ -20,6 +22,9 @@ use Nordwerk\ThemeBaseBundle\Theme\ThemePackages;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\Exception\ExceptionInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Layout → Theme einrichten: demo website and design summary of the installed
@@ -61,9 +66,16 @@ final class ThemeSetupModule extends BackendModule
         /** @var Security $security */
         $security = $container->get('security.helper');
         $setupUrl = $security->isGranted(ContaoCorePermissions::USER_CAN_ACCESS_MODULE, $package->setupModule()) ? 'contao?do='.$package->setupModule() : null;
+        // The import creates and replaces pages, articles, products and settings past
+        // pagemounts and field rights, so only administrators may run it. Overview and
+        // design summary follow the module right.
+        $mayImport = $security->isGranted('ROLE_ADMIN');
         $error = '';
 
         $action = $request->isMethod('POST') ? $request->request->getString('themeAction') : '';
+        if (\in_array($action, ['decline-demo', 'import-demo'], true) && !$mayImport) {
+            throw new AccessDeniedException('Only administrators may import the theme demo.');
+        }
         if ('decline-demo' === $action) {
             $site->declineDemo($key);
             Controller::redirect($setupUrl ?? $self);
@@ -90,7 +102,7 @@ final class ThemeSetupModule extends BackendModule
             $request->attributes->set('_contao_widget_error', true);
         }
 
-        $showWelcome = $site->offerDemo($key);
+        $showWelcome = $mayImport && $site->offerDemo($key);
         /** @var ContaoCsrfTokenManager $tokens */
         $tokens = $container->get('contao.csrf.token_manager');
         $this->Template->setData([
@@ -109,6 +121,8 @@ final class ThemeSetupModule extends BackendModule
             'error' => $error,
             'welcome' => $showWelcome ? DemoWelcome::generate($self, $texts['product'], $texts['contents']) : '',
             'action' => $self,
+            'mayImport' => $mayImport,
+            'viewUrl' => $this->websiteUrl($key),
             'requestToken' => $tokens->getDefaultTokenValue(),
             'demo' => $texts['demo'],
             'inventory' => $showWelcome ? [] : $this->inventory($package),
@@ -127,6 +141,30 @@ final class ThemeSetupModule extends BackendModule
         $text = $GLOBALS['TL_LANG']['ERR']['nw_demo_'.$exception->reason] ?? null;
 
         return \is_string($text) ? vsprintf($text, $exception->parameters) : $exception->getMessage();
+    }
+
+    /**
+     * Start page of the first website that uses a layout of the theme, as an absolute
+     * URL (domain and subdirectory of that website), or null.
+     */
+    private function websiteUrl(string $themeKey): string|null
+    {
+        /** @var Connection $connection */
+        $connection = System::getContainer()->get('database_connection');
+        $root = $connection->fetchOne("SELECT p.id FROM tl_page p JOIN tl_layout l ON l.id = p.layout JOIN tl_theme t ON t.id = l.pid WHERE p.type = 'root' AND p.published = 1 AND t.nwThemeKey = ? ORDER BY p.fallback DESC, p.sorting LIMIT 1", [$themeKey]);
+        $start = false !== $root ? PageModel::findFirstPublishedByPid((int) $root) : null;
+        if (null === $start) {
+            return null;
+        }
+
+        try {
+            /** @var ContentUrlGenerator $urls */
+            $urls = System::getContainer()->get('contao.routing.content_url_generator');
+
+            return $urls->generate($start, [], UrlGeneratorInterface::ABSOLUTE_URL);
+        } catch (ExceptionInterface) {
+            return null;
+        }
     }
 
     /**

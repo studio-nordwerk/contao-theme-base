@@ -5,7 +5,7 @@ Contao-Bundle für Contao 5.7.12 oder neuer innerhalb 5.7. Installation über Co
 Gemeinsame Layoutvorlagen, lokale OFL-Schriften, Gestaltung unter **Layout → Themes → Theme bearbeiten → Gestaltung** und sichere Demo-Import-Mechanik für weitere Nordwerk-Themes. Das Paket verlangt keinen Mini-Shop.
 
 - Für jedes Seitenlayout eines Nordwerk-Themes lädt die Basis die Stylesheets des Themes (mit Versionsnummer, vor den „Externen Stylesheets“ des Layouts) und die Farben und Schriften aus dem Theme-Formular, unabhängig von den Modulen des Layouts.
-- **Layout → Theme einrichten** legt die Demo-Seiten der installierten Themes an und zeigt die Gestaltung. Das Modul hat ein eigenes Recht in den Benutzergruppen.
+- **Layout → Theme einrichten** legt die Demo-Seiten der installierten Themes an und zeigt die Gestaltung. Demo-Seiten anlegen dürfen nur Administratoren; Übersicht und Gestaltung folgen dem Recht des Moduls. Das Modul hat ein eigenes Recht in den Benutzergruppen.
 - Das Twig-Layout `page/layout/nw_theme` (Layout-Typ „Modern“) bietet die Slots `header`, `main` und `footer`.
 - Texte auf Deutsch und Englisch; Frontend-Texte lassen sich in `translations/messages.<sprache>.yaml` des Projekts überschreiben (`nw_theme.*`).
 

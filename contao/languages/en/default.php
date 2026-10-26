@@ -12,6 +12,7 @@ $GLOBALS['TL_LANG']['nw_theme']['setup'] = [
     'inventory' => 'A replacing import overwrites these records of the demo (according to the import log in the theme):',
     'overwrite' => 'I confirm: demo contents imported before may be replaced by the template.',
     'overwriteHelp' => 'Without this option an existing demo stays as it is. Additional pages and elements of your own are kept. Every replaced record gets a new version; earlier states are listed under "Versions".',
+    'adminOnly' => 'Only administrators may create and replace the demo pages: the import creates and replaces pages, articles, products or events and settings regardless of pagemounts and allowed fields. The overview and the design are available to you in this module.',
     'import' => 'Create demo pages',
     'created' => 'The demo pages have been created.',
     'preserved' => 'The demo already exists. Your contents have been kept.',
