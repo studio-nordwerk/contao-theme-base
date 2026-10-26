@@ -1,0 +1,13 @@
+{# Like nav_default, but the current page stays a link, marked with aria-current. #}
+<ul class="{{ level }}">
+    {% for item in items %}
+        <li{{ attrs().addClass(item.class) }}><a{{ attrs()
+            .set('href', item.href)
+            .addClass(item.class)
+            .set('aria-current', 'page', item.isActive)
+            .setIfExists('accesskey', item.accesskey|default)
+            .mergeWith(item.target|default)
+            .mergeWith(item.rel|default)
+        }}>{{ item.link }}</a>{{- item.subitems|default|raw -}}</li>
+    {% endfor %}
+</ul>

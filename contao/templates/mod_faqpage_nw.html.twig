@@ -1,0 +1,17 @@
+{% extends '@Contao/block_unsearchable.html.twig' %}
+
+{# FAQ as an accordion: one question per row, the answer opens below. The FAQPage data stays. #}
+{% block content %}
+    {% for category in faq %}
+        <div class="nw-faq">
+            {% if category.headline %}<h2>{{ category.headline }}</h2>{% endif %}
+            {% for item in category.items %}
+                <details class="nw-faq__item" id="{{ item.alias }}">
+                    <summary>{{ item.question }}</summary>
+                    <div class="nw-faq__answer">{{ item.answer|csp_inline_styles|raw }}</div>
+                </details>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    {% do add_schema_org(getSchemaOrgData.invoke()) %}
+{% endblock %}

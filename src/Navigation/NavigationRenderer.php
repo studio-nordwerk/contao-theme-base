@@ -24,9 +24,10 @@ final readonly class NavigationRenderer
         }
 
         // The header prints the menu up to three times (desktop, sheet, noscript) and
-        // brings its own <nav>, so the module contributes the list only.
+        // brings its own <nav>, so by default the module contributes the list only.
+        // Templates chosen in the navigation module win.
         $module = $module->cloneDetached();
-        $module->customTpl = 'mod_nw_navigation';
+        $module->customTpl = $module->customTpl ?: 'mod_nw_navigation';
         $module->navigationTpl = $module->navigationTpl ?: 'nav_nw';
 
         return trim(Controller::getFrontendModule($module));
