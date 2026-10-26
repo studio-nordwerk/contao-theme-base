@@ -10,9 +10,15 @@ final readonly class DesignSettings
 
     /**
      * Header layouts: clear (brand left, menu centered), centered (menu left, brand
-     * centered) and floating (a rounded bar below the top edge).
+     * centered) and floating (a rounded bar below the top edge). Labels of all
+     * options are in $GLOBALS['TL_LANG']['tl_theme'].
      */
-    public const HEADER_STYLES = ['clear' => 'Klar: Wortmarke links, Menü mittig', 'centered' => 'Zentriert: Menü links, Wortmarke mittig', 'floating' => 'Schwebend: runde Leiste'];
+    public const HEADER_STYLES = ['clear', 'centered', 'floating'];
+
+    /**
+     * Logo formats. SVG keeps its own size; Image Studio scales the others.
+     */
+    public const LOGO_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'svg'];
 
     /**
      * Package defaults must match base.css, shop.css and seminar-theme.css.
@@ -23,8 +29,12 @@ final readonly class DesignSettings
         'seminar' => ['paper' => '#fcfdfb', 'text' => '#263b35', 'tone1' => '#e4eee9', 'tone2' => '#e4efe9'],
     ];
 
-    public const RADII = ['' => 'Vorgabe des Themes', '0' => 'Eckig (0)', '6px' => 'Leicht (6 px)', '14px' => 'Weich (14 px)', '22px' => 'Rund (22 px)'];
-    public const BUTTON_SHAPES = ['' => 'Vorgabe des Themes', '4px' => 'Eckig (4 px)', '10px' => 'Abgerundet (10 px)', '999px' => 'Pille'];
+    /**
+     * Empty keeps the package default.
+     */
+    public const RADII = ['', '0', '6px', '14px', '22px'];
+
+    public const BUTTON_SHAPES = ['', '4px', '10px', '999px'];
 
     public string $accent;
     public string $surface;
@@ -47,6 +57,7 @@ final readonly class DesignSettings
         string $tone1 = '',
         string $tone2 = '',
         public string $themeKey = '',
+        public string $logoSize = '',
     ) {
         $this->accent = self::normalizeColor($accent);
         $this->surface = self::normalizeColor($surface);
@@ -55,17 +66,17 @@ final readonly class DesignSettings
         $this->text = $optional($text);
         $this->tone1 = $optional($tone1);
         $this->tone2 = $optional($tone2);
-        if (!isset(self::RADII[$radius]) || !isset(self::BUTTON_SHAPES[$buttonShape])) {
-            throw new \InvalidArgumentException('Bitte wählen Sie eine der vorgegebenen Ecken- und Buttonformen.');
+        if (!\in_array($radius, self::RADII, true) || !\in_array($buttonShape, self::BUTTON_SHAPES, true)) {
+            throw new DesignException('shape', 'Please choose one of the given corner and button shapes.');
         }
         if (!isset(self::FONT_PAIRS[$fontPair])) {
-            throw new \InvalidArgumentException('Bitte wählen Sie eines der mitgelieferten Schriftpaare.');
+            throw new DesignException('font_pair', 'Please choose one of the bundled font pairs.');
         }
-        if (!isset(self::HEADER_STYLES[$headerStyle])) {
-            throw new \InvalidArgumentException('Bitte wählen Sie eine der Kopfzeilen.');
+        if (!\in_array($headerStyle, self::HEADER_STYLES, true)) {
+            throw new DesignException('header_style', 'Please choose one of the header layouts.');
         }
         if (mb_strlen($announcement) > 120) {
-            throw new \InvalidArgumentException('Die Hinweisleiste hat Platz für höchstens 120 Zeichen.');
+            throw new DesignException('announcement', 'The announcement bar holds at most 120 characters.');
         }
     }
 
@@ -73,7 +84,7 @@ final readonly class DesignSettings
     {
         $color = trim($color);
         if (!preg_match('/^#?(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/D', $color)) {
-            throw new \InvalidArgumentException('Bitte geben Sie eine Hex-Farbe mit drei oder sechs Stellen ein, z. B. 382f3d.');
+            throw new DesignException('color', 'Please enter a hex color with three or six digits, e.g. 382f3d.');
         }
         $color = ltrim($color, '#');
         if (3 === \strlen($color)) {
@@ -95,7 +106,7 @@ final readonly class DesignSettings
             surface: (string) ($row['nwSurface'] ?? '#fffaf7'),
             fontPair: (string) ($row['nwFontPair'] ?? 'lora-source'),
             logo: \is_string($row['nwLogo'] ?? null) ? $row['nwLogo'] : null,
-            headerStyle: isset(self::HEADER_STYLES[$headerStyle]) ? $headerStyle : 'clear',
+            headerStyle: \in_array($headerStyle, self::HEADER_STYLES, true) ? $headerStyle : 'clear',
             announcement: mb_substr((string) ($row['nwAnnouncement'] ?? ''), 0, 120),
             paper: (string) ($row['nwPaper'] ?? ''),
             text: (string) ($row['nwText'] ?? ''),
@@ -104,6 +115,7 @@ final readonly class DesignSettings
             tone1: (string) ($row['nwTone1'] ?? ''),
             tone2: (string) ($row['nwTone2'] ?? ''),
             themeKey: (string) ($row['nwThemeKey'] ?? ''),
+            logoSize: (string) ($row['nwLogoSize'] ?? ''),
         );
     }
 
@@ -127,10 +139,10 @@ final readonly class DesignSettings
     {
         $colors = $this->effectiveSurfaces();
 
-        foreach (['paper' => 'Seitenhintergrund', 'tone1' => 'Fläche 1', 'tone2' => 'Fläche 2'] as $field => $label) {
+        foreach (['paper' => 'nwPaper', 'tone1' => 'nwTone1', 'tone2' => 'nwTone2'] as $field => $column) {
             $ratio = self::contrastRatio($colors['text'], $colors[$field]);
             if ($ratio < 4.5) {
-                throw new \InvalidArgumentException(\sprintf('Textfarbe auf %s erreicht nur %s:1 Kontrast. Erforderlich sind mindestens 4,5:1. Bitte ändern Sie die Textfarbe oder den Hintergrund; leere Felder verwenden die Vorgabe des Theme-Pakets.', $label, number_format($ratio, 2, ',', '')));
+                throw new DesignException('contrast', \sprintf('The text color reaches only %s:1 contrast on %s; at least 4.5:1 is required. Empty fields use the default of the theme package.', number_format($ratio, 2), $column), ['field' => $column, 'ratio' => $ratio]);
             }
         }
     }

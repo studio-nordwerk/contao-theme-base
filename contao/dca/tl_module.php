@@ -5,43 +5,43 @@ declare(strict_types=1);
 // Footer contents an editor maintains in the module instead of the template.
 // Used by the footer modules of the shop and seminar themes (palettes there).
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwFooterText'] = [
-    'label' => ['Freitext', 'Steht unter Name und Kontakt, z. B. Öffnungszeiten oder ein Satz über den Betrieb.'],
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['nwFooterText'],
     'inputType' => 'textarea',
     'eval' => ['rte' => 'tinyMCE', 'tl_class' => 'clr'],
     'sql' => 'text NULL',
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwFooterNavHeadline'] = [
-    'label' => ['Überschrift der Seitenspalte', 'Leer lassen für die Vorgabe des Themes (z. B. „Shop“ oder „Seminare“).'],
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['nwFooterNavHeadline'],
     'inputType' => 'text',
     'eval' => ['maxlength' => 64, 'tl_class' => 'w50'],
     'sql' => "varchar(64) NOT NULL default ''",
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwFooterLegalHeadline'] = [
-    'label' => ['Überschrift der Rechtsspalte', 'Leer lassen für „Rechtliches“.'],
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['nwFooterLegalHeadline'],
     'inputType' => 'text',
     'eval' => ['maxlength' => 64, 'tl_class' => 'w50'],
     'sql' => "varchar(64) NOT NULL default ''",
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwFooterNavModule'] = [
-    'label' => ['Navigation der Seitenspalte', 'Navigationsmodul mit den Links der Seitenspalte, z. B. eine „Individuelle Navigation“ mit Ihren wichtigsten Seiten.'],
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['nwFooterNavModule'],
     'inputType' => 'select',
     'eval' => ['includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50 clr'],
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwFooterLegalModule'] = [
-    'label' => ['Navigation der Rechtsspalte', 'Navigationsmodul mit den rechtlichen Seiten, z. B. eine „Individuelle Navigation“ mit Impressum und Datenschutz.'],
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['nwFooterLegalModule'],
     'inputType' => 'select',
     'eval' => ['includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50'],
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwWithdrawalPage'] = [
-    'label' => ['Seite „Vertrag widerrufen“', 'Die Rechtsspalte verlinkt diese Seite immer mit dem Wortlaut „Vertrag widerrufen“. Ohne Seite entfällt der Link.'],
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['nwWithdrawalPage'],
     'inputType' => 'pageTree',
     'eval' => ['fieldType' => 'radio', 'tl_class' => 'clr'],
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwDemoNote'] = [
-    'label' => ['Demo-Hinweis anzeigen', 'Hinweis, dass Betreiberangaben und Rechtstexte noch Platzhalter sind. Vor dem Start ausschalten.'],
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['nwDemoNote'],
     'inputType' => 'checkbox',
     'eval' => ['tl_class' => 'clr'],
     'sql' => "char(1) NOT NULL default ''",
@@ -50,25 +50,25 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['nwDemoNote'] = [
 // Header: the menu is a core navigation module, plus an optional button. Used by
 // the header modules of the shop and seminar themes.
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwNavModule'] = [
-    'label' => ['Hauptnavigation', 'Navigationsmodul für das Menü der Kopfzeile, in der Regel ein „Navigationsmenü“. Seiten, Reihenfolge und „Im Menü verstecken“ pflegen Sie in der Seitenstruktur.'],
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['nwNavModule'],
     'inputType' => 'select',
     'eval' => ['includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50 clr'],
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwButtonLabel'] = [
-    'label' => ['Button-Text', 'Hervorgehobener Button in der Kopfzeile, z. B. „Termine“. Leer lassen für den Namen der Zielseite.'],
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['nwButtonLabel'],
     'inputType' => 'text',
     'eval' => ['maxlength' => 40, 'tl_class' => 'w50'],
     'sql' => "varchar(40) NOT NULL default ''",
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwButtonPage'] = [
-    'label' => ['Button-Ziel', 'Seite, zu der der Button führt. Ohne Ziel erscheint kein Button.'],
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['nwButtonPage'],
     'inputType' => 'pageTree',
     'eval' => ['fieldType' => 'radio', 'tl_class' => 'clr'],
     'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 $GLOBALS['TL_DCA']['tl_module']['fields']['nwHideButton'] = [
-    'label' => ['Button ausblenden', 'Keinen hervorgehobenen Button in der Kopfzeile zeigen.'],
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['nwHideButton'],
     'inputType' => 'checkbox',
     'eval' => ['tl_class' => 'w50 m12'],
     'sql' => "char(1) NOT NULL default ''",

@@ -6,10 +6,11 @@ use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
 // Hyperlink: main button, secondary button or text link, without typing a CSS class.
 $GLOBALS['TL_DCA']['tl_content']['fields']['nwLinkStyle'] = [
-    'label' => ['Darstellung', 'Hauptbutton für die wichtigste Handlung, Nebenbutton für Nebenwege, sonst Textlink.'],
+    'label' => &$GLOBALS['TL_LANG']['tl_content']['nwLinkStyle'],
     'exclude' => true,
     'inputType' => 'select',
-    'options' => ['' => 'Textlink', 'primary' => 'Hauptbutton', 'secondary' => 'Nebenbutton'],
+    'options' => ['', 'primary', 'secondary'],
+    'reference' => &$GLOBALS['TL_LANG']['tl_content']['nwLinkStyleOptions'],
     'eval' => ['tl_class' => 'w50'],
     'sql' => "varchar(16) NOT NULL default ''",
 ];

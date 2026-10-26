@@ -8,6 +8,6 @@
             {% if footer.text|default('') %}<div class="nw-footer__text">{{ footer.text|sanitize_html('contao')|insert_tag_raw }}</div>{% endif %}
         </div>
         {% block footer_navigation %}{% endblock %}
-        {% if footer.demoNote|default(false) %}<p class="nw-demo-note">{% block demo_note %}Demo-Shop einer fiktiven Marke. Betreiberangaben, Produkte und Rechtstexte vor dem Verkauf ersetzen.{% endblock %}</p>{% endif %}
+        {% if footer.demoNote|default(false) %}<p class="nw-demo-note">{% block demo_note %}{{ 'nw_theme.footer.demo_note'|trans }}{% endblock %}</p>{% endif %}
     </div>
 {% endblock %}

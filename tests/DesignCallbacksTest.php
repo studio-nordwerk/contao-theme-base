@@ -24,8 +24,25 @@ final class DesignCallbacksTest extends TestCase
     {
         $callbacks = $this->callbacks(['nwText' => 'ffffff', 'nwPaper' => '000000', 'nwTone1' => '', 'nwTone2' => '000000']);
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Textfarbe auf Fläche 1');
+        $this->expectExceptionMessage('on nwTone1');
         $callbacks->validateColor('ffffff', $this->dataContainer('nwText'));
+    }
+
+    public function testErrorsAreShownInTheBackendLanguage(): void
+    {
+        $GLOBALS['TL_LANG']['ERR']['nw_design_contrast'] = 'Textfarbe auf %s erreicht nur %s:1 Kontrast.';
+        $GLOBALS['TL_LANG']['tl_theme']['nwTone1'] = ['Fläche 1', ''];
+        $GLOBALS['TL_LANG']['MSC']['decimalSeparator'] = ',';
+        $callbacks = $this->callbacks(['nwText' => 'ffffff', 'nwPaper' => '000000', 'nwTone1' => '', 'nwTone2' => '000000']);
+
+        try {
+            $callbacks->validateColor('ffffff', $this->dataContainer('nwText'));
+            $this->fail('The unreadable surface must be rejected.');
+        } catch (\InvalidArgumentException $exception) {
+            $this->assertMatchesRegularExpression('/^Textfarbe auf Fläche 1 erreicht nur \d+,\d{2}:1 Kontrast\.$/', $exception->getMessage());
+        } finally {
+            unset($GLOBALS['TL_LANG']);
+        }
     }
 
     public function testSavePreservesEmptyOverrides(): void
@@ -47,7 +64,7 @@ final class DesignCallbacksTest extends TestCase
         $stack = new RequestStack();
         $stack->push(Request::create('/contao?do=themes&act=edit&id=1', 'POST', $values));
 
-        return new DesignCallbacks($stack, new DesignRepository($this->createMock(Connection::class)));
+        return new DesignCallbacks($stack, new DesignRepository($this->createStub(Connection::class)));
     }
 
     private function dataContainer(string $field): DataContainer

@@ -29,11 +29,12 @@ final readonly class DesignRepository
         if (null === $logo || '' === $logo) {
             return;
         }
-        if (!$this->connection->fetchOne("SELECT uuid FROM tl_files WHERE uuid = ? AND type = 'file' AND extension IN ('jpg', 'jpeg', 'png', 'webp')", [$logo])) {
-            throw new \InvalidArgumentException('Bitte wählen Sie ein Bild aus der Dateiverwaltung.');
+        $extensions = DesignSettings::LOGO_EXTENSIONS;
+        if (!$this->connection->fetchOne("SELECT uuid FROM tl_files WHERE uuid = ? AND type = 'file' AND extension IN (".implode(', ', array_fill(0, \count($extensions), '?')).')', [$logo, ...$extensions])) {
+            throw new DesignException('logo_file', 'Please choose an image from the file manager.');
         }
         if (null === $this->logoPath(new DesignSettings(logo: $logo))) {
-            throw new \InvalidArgumentException('Bitte geben Sie das Logo in der Dateiverwaltung öffentlich frei.');
+            throw new DesignException('logo_public', 'Please make the logo public in the file manager.');
         }
     }
 

@@ -1,0 +1,12 @@
+nw_theme:
+    skip_to_content: Zum Inhalt
+    home_link: '%brand%, Startseite'
+    brand_fallback: Ihre Website
+    menu: Menü
+    navigation: Navigation
+    main_navigation: Hauptnavigation
+    main_navigation_nojs: Hauptnavigation ohne JavaScript
+    mobile_navigation: Mobile Hauptnavigation
+    footer:
+        legal: Rechtliches
+        demo_note: Demo-Website einer fiktiven Firma. Betreiberangaben, Inhalte und Rechtstexte vor der Veröffentlichung ersetzen.

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Nordwerk\ThemeBaseBundle\Tests;
 
+use Nordwerk\ThemeBaseBundle\Design\DesignException;
 use Nordwerk\ThemeBaseBundle\Design\DesignSettings;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -99,26 +100,32 @@ final class DesignSettingsTest extends TestCase
     public static function unreadableSurfaces(): iterable
     {
         foreach (DesignSettings::SURFACE_DEFAULTS as $key => $colors) {
-            foreach (['paper' => 'Seitenhintergrund', 'tone1' => 'Fläche 1', 'tone2' => 'Fläche 2'] as $field => $label) {
-                yield ($key ?: 'base').'/'.$field => [$key, $field, $colors['text'], $label];
+            foreach (['paper' => 'nwPaper', 'tone1' => 'nwTone1', 'tone2' => 'nwTone2'] as $field => $column) {
+                yield ($key ?: 'base').'/'.$field => [$key, $field, $colors['text'], $column];
             }
         }
     }
 
     #[DataProvider('unreadableSurfaces')]
-    public function testBackgroundOverridesAreCheckedAgainstDefaultText(string $key, string $field, string $color, string $label): void
+    public function testBackgroundOverridesAreCheckedAgainstDefaultText(string $key, string $field, string $color, string $column): void
     {
         $settings = new DesignSettings(...['themeKey' => $key, $field => $color]);
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Textfarbe auf '.$label.' erreicht nur 1,00:1');
-        $settings->validateSurfaceContrast();
+
+        try {
+            $settings->validateSurfaceContrast();
+            $this->fail('The unreadable surface must be rejected.');
+        } catch (DesignException $exception) {
+            $this->assertSame('contrast', $exception->reason);
+            $this->assertSame($column, $exception->parameters['field']);
+            $this->assertEqualsWithDelta(1.0, $exception->parameters['ratio'], 0.0001);
+        }
     }
 
     public function testTextOverrideIsCheckedAgainstPackageBackgrounds(): void
     {
         $settings = new DesignSettings(text: '#ffffff', themeKey: 'seminar');
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('mindestens 4,5:1');
+        $this->expectException(DesignException::class);
+        $this->expectExceptionMessage('at least 4.5:1');
         $settings->validateSurfaceContrast();
     }
 
