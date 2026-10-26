@@ -9,8 +9,7 @@ use Contao\CoreBundle\Csrf\ContaoCsrfTokenManager;
 use Contao\System;
 
 /**
- * First step of a setup assistant on a fresh site: start with the demo website or
- * without it.
+ * First step on a fresh site: start with the demo website or without it.
  */
 final class DemoWelcome
 {
@@ -28,6 +27,7 @@ final class DemoWelcome
             'product' => $product,
             'contents' => $contents,
             'requestToken' => $tokens->getDefaultTokenValue(),
+            'lang' => $GLOBALS['TL_LANG']['nw_theme']['welcome'],
         ]);
 
         return $template->parse();

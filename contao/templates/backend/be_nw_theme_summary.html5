@@ -1,11 +1,11 @@
-<?php $escape = static fn ($value): string => htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8'); ?>
-<h2 class="sub_headline">Gestaltung</h2>
-<p class="tl_info">Logo, Farben und lokal ausgelieferte Schriften pflegen Sie unter Layout → Themes → Theme bearbeiten, im Bereich Gestaltung.</p>
+<?php $escape = static fn ($value): string => htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8'); $lang = $this->lang; ?>
+<h2 class="sub_headline"><?= $escape($lang['title']) ?></h2>
+<p class="tl_info"><?= $escape($lang['where']) ?></p>
 <?php if (!$this->themes): ?>
-<p>Bitte legen Sie zuerst Demo-Seiten oder ein Theme für dieses Theme-Paket an.</p>
+<p><?= $escape($lang['none']) ?></p>
 <?php endif; ?>
 <?php foreach ($this->themes as $theme): ?>
 <h3><?= $escape($theme['name']) ?></h3>
 <dl><?php foreach ($theme['values'] as $label => $value): ?><dt><?= $escape($label) ?></dt><dd><?= $escape($value) ?></dd><?php endforeach; ?></dl>
-<p><a class="tl_submit" href="<?= $escape($theme['editUrl']) ?>">Gestaltung im Theme bearbeiten</a></p>
+<?php if ($theme['editUrl']): ?><p><a class="tl_submit" href="<?= $escape($theme['editUrl']) ?>"><?= $escape($lang['edit']) ?></a></p><?php endif; ?>
 <?php endforeach; ?>

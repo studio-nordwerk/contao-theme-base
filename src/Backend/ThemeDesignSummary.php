@@ -6,42 +6,55 @@ namespace Nordwerk\ThemeBaseBundle\Backend;
 
 use Contao\Backend;
 use Contao\BackendTemplate;
+use Contao\CoreBundle\Security\ContaoCorePermissions;
 use Contao\System;
 use Doctrine\DBAL\Connection;
 use Nordwerk\ThemeBaseBundle\Design\DesignRepository;
 use Nordwerk\ThemeBaseBundle\Design\DesignSettings;
+use Symfony\Bundle\SecurityBundle\Security;
 
+/**
+ * The current design values of the themes of a package, with a link to the theme form.
+ */
 final class ThemeDesignSummary
 {
     public static function generate(string $themeKey): string
     {
+        System::loadLanguageFile('tl_theme');
+        $container = System::getContainer();
         /** @var Connection $connection */
-        $connection = System::getContainer()->get('database_connection');
+        $connection = $container->get('database_connection');
         /** @var DesignRepository $repository */
-        $repository = System::getContainer()->get(DesignRepository::class);
+        $repository = $container->get(DesignRepository::class);
+        /** @var Security $security */
+        $security = $container->get('security.helper');
+        $lang = $GLOBALS['TL_LANG']['tl_theme'];
+        $summary = $GLOBALS['TL_LANG']['nw_theme']['summary'];
+        $label = static fn (string $field): string => (string) ($lang[$field][0] ?? $field);
         $themes = [];
 
         foreach ($connection->fetchAllAssociative('SELECT id, name FROM tl_theme WHERE nwThemeKey = ? ORDER BY id', [$themeKey]) as $theme) {
             $settings = $repository->load((int) $theme['id']);
             $theme['values'] = [
-                'Logo' => null === $settings->logo ? 'Theme-Name als Wortmarke' : 'Bild aus der Dateiverwaltung',
-                'Akzentfarbe' => $settings->accent,
-                'Flächenfarbe' => $settings->surface,
-                'Schriftpaar' => implode(' / ', array_unique(DesignSettings::FONT_PAIRS[$settings->fontPair])),
-                'Kopfzeile' => DesignSettings::HEADER_STYLES[$settings->headerStyle],
-                'Hinweisleiste' => '' === $settings->announcement ? 'Ausgeblendet' : $settings->announcement,
-                'Ecken' => DesignSettings::RADII[$settings->radius],
-                'Buttons' => DesignSettings::BUTTON_SHAPES[$settings->buttonShape],
+                $label('nwLogo') => null === $settings->logo ? $summary['wordmark'] : $summary['logo'],
+                $label('nwAccent') => $settings->accent,
+                $label('nwSurface') => $settings->surface,
+                $label('nwFontPair') => (string) ($lang['nwFontPairOptions'][$settings->fontPair] ?? implode(' / ', array_unique(DesignSettings::FONT_PAIRS[$settings->fontPair]))),
+                $label('nwHeaderStyle') => (string) ($lang['nwHeaderStyleOptions'][$settings->headerStyle] ?? $settings->headerStyle),
+                $label('nwAnnouncement') => '' === $settings->announcement ? $summary['hidden'] : $settings->announcement,
+                $label('nwRadius') => (string) ($lang['nwRadiusOptions'][$settings->radius] ?? $settings->radius),
+                $label('nwButtonShape') => (string) ($lang['nwButtonShapeOptions'][$settings->buttonShape] ?? $settings->buttonShape),
             ];
 
-            foreach (['paper' => 'Seitenhintergrund', 'text' => 'Textfarbe', 'tone1' => 'Fläche 1', 'tone2' => 'Fläche 2'] as $field => $label) {
-                $theme['values'][$label] = $settings->effectiveSurfaces()[$field].('' === $settings->{$field} ? ' (Vorgabe des Themes)' : '');
+            foreach (['paper' => 'nwPaper', 'text' => 'nwText', 'tone1' => 'nwTone1', 'tone2' => 'nwTone2'] as $field => $column) {
+                $theme['values'][$label($column)] = $settings->effectiveSurfaces()[$field].('' === $settings->{$field} ? ' ('.$summary['default'].')' : '');
             }
-            $theme['editUrl'] = html_entity_decode(Backend::addToUrl('do=themes&act=edit&id='.(int) $theme['id'], true, ['step', 'theme', 'imported', 'saved']), ENT_QUOTES, 'UTF-8');
+            // The theme form needs the module "Themes" and the right to edit the theme.
+            $theme['editUrl'] = $security->isGranted(ContaoCorePermissions::USER_CAN_ACCESS_MODULE, 'themes') ? html_entity_decode(Backend::addToUrl('do=themes&act=edit&id='.(int) $theme['id'], true, ['theme', 'imported']), ENT_QUOTES, 'UTF-8') : null;
             $themes[] = $theme;
         }
         $template = new BackendTemplate('be_nw_theme_summary');
-        $template->setData(['themes' => $themes]);
+        $template->setData(['themes' => $themes, 'lang' => $summary]);
 
         return $template->parse();
     }

@@ -63,11 +63,15 @@ final readonly class EmptySite
         if (!$this->needsDemo($themeKey)) {
             return '';
         }
+        $lang = $GLOBALS['TL_LANG']['nw_theme']['empty'] ?? [];
 
         return \sprintf(
-            '<p class="tl_info" data-nw-empty-site>Ihre Website hat noch keine Seiten. %s Sie können alles danach anpassen oder löschen. <a href="%s">Demo-Seiten anlegen</a></p>',
+            '<p class="tl_info" data-nw-empty-site>%s %s %s <a href="%s">%s</a></p>',
+            htmlspecialchars((string) ($lang['intro'] ?? 'Your website has no pages yet.'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
             htmlspecialchars($offer, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
+            htmlspecialchars((string) ($lang['after'] ?? 'You can change or delete everything afterwards.'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
             htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
+            htmlspecialchars((string) ($lang['link'] ?? 'Create demo pages'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
         );
     }
 

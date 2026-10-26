@@ -1,0 +1,29 @@
+<?php $escape = static fn ($value): string => htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8'); $lang = $this->lang; ?>
+<?php if (!$this->package): ?>
+<p class="tl_info"><?= $escape($lang['noPackage']) ?></p>
+<?php else: ?>
+<nav class="tl_panel" aria-label="<?= $escape($lang['navigation']) ?>"><p>
+<?php if (count($this->packages) > 1): ?><?php foreach ($this->packages as $key => $title): ?><a href="contao?do=nw_theme_setup&amp;theme=<?= $escape(rawurlencode($key)) ?>"<?php if ($key === $this->package): ?> aria-current="page"<?php endif; ?>><?= $escape($title) ?></a> · <?php endforeach; ?><?php endif; ?>
+<?php if ($this->setupUrl): ?><a href="<?= $escape($this->setupUrl) ?>"><?= $escape($this->setupLabel) ?></a> · <?php endif; ?>
+<a href="/" target="_blank" rel="noopener"><?= $escape($lang['view']) ?></a>
+</p></nav>
+<?php if ($this->notice): ?><p class="tl_confirm" role="status"><?= $escape($this->notice) ?><?php if ($this->continue): ?> <a href="<?= $escape($this->setupUrl) ?>"><?= $escape($this->setupLabel) ?></a><?php endif; ?></p><?php endif; ?>
+<?php if ($this->error): ?><p class="tl_error" role="alert"><?= $escape($this->error) ?></p><?php endif; ?>
+<?php if ($this->welcome): ?>
+<?= $this->welcome ?>
+<?php else: ?>
+<h2 class="sub_headline"><?= $escape($lang['demoTitle']) ?></h2>
+<p class="tl_info"><?= $escape($this->demo) ?></p>
+<?php if ($this->inventory): ?>
+<p><?= $escape($lang['inventory']) ?></p>
+<ul class="tl_listing_text" data-nw-demo-inventory><?php foreach ($this->inventory as $label => $count): ?><li>– <?= $escape($label) ?>: <?= (int) $count ?></li><?php endforeach; ?></ul>
+<?php endif; ?>
+<form class="tl_form" method="post" action="<?= $escape($this->action) ?>">
+<input type="hidden" name="REQUEST_TOKEN" value="<?= $escape($this->requestToken) ?>"><input type="hidden" name="themeAction" value="import-demo">
+<div class="tl_formbody_edit"><div class="widget"><label><input class="tl_checkbox" type="checkbox" name="overwrite" value="1"> <?= $escape($lang['overwrite']) ?></label>
+<p class="tl_help"><?= $escape($lang['overwriteHelp']) ?></p></div></div>
+<div class="tl_formbody_submit"><button class="tl_submit" type="submit"><?= $escape($lang['import']) ?></button></div>
+</form>
+<?= $this->design ?>
+<?php endif; ?>
+<?php endif; ?>
