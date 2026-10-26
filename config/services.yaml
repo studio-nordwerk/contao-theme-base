@@ -9,10 +9,15 @@ services:
     Nordwerk\ThemeBaseBundle\Design\DesignCallbacks: ~
     Nordwerk\ThemeBaseBundle\Demo\DemoImporter:
         public: true
+    Nordwerk\ThemeBaseBundle\Theme\ThemePackages:
+        public: true
+    Nordwerk\ThemeBaseBundle\Theme\ThemeAssets: ~
     Nordwerk\ThemeBaseBundle\Migration\ThemeAuthorMigration: ~
     Nordwerk\ThemeBaseBundle\Migration\CoreNavigationMigration: ~
     Nordwerk\ThemeBaseBundle\Migration\ModuleLinksMigration: ~
+    Nordwerk\ThemeBaseBundle\Migration\LayoutStylesheetMigration: ~
     Nordwerk\ThemeBaseBundle\Navigation\NavigationRenderer: ~
     Nordwerk\ThemeBaseBundle\Navigation\NavigationModuleOptions: ~
     Nordwerk\ThemeBaseBundle\Backend\EmptySite:
         public: true
+    Nordwerk\ThemeBaseBundle\Backend\EmptySiteMessage: ~

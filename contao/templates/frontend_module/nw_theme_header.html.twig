@@ -1,15 +1,16 @@
 {% extends '@Contao/frontend_module/_base.html.twig' %}
 {# Theme header. design.headerStyle: clear (brand left, menu centered), centered (menu left, brand centered)
-   or floating (a rounded bar). Child templates fill the blocks navigation and actions. #}
+   or floating (a rounded bar). Child templates fill the blocks navigation and actions. Colors and fonts of
+   the theme form are loaded for the whole layout, independent of this module. #}
 {% block content %}
-    <style nonce="{{ csp_nonce('style-src') }}">.nw-theme { --nw-accent: {{ design.accent }}; --nw-accent-contrast: {{ design.accentText }}; --nw-surface: {{ design.surface }}; {% if design.surfaceTextOverride %}--theme-surface-ink: {{ design.surfaceTextOverride }}; {% endif %}--theme-heading-font: '{{ headingFont }}'; --theme-body-font: '{{ bodyFont }}'; {% for variable, value in design.cssVariables %}{{ variable }}: {{ value }}; {% endfor %} }</style>
-    <a class="nw-skip" href="#main">Zum Inhalt</a>
+    <a class="nw-skip" href="#main">{{ 'nw_theme.skip_to_content'|trans }}</a>
     {% block announcement %}{% if design.announcement|default('') %}<div class="nw-announce"><p>{{ design.announcement }}</p></div>{% endif %}{% endblock %}
     <div class="nw-header nw-header--{{ design.headerStyle|default('clear') }}">
         {% block brand %}
             {# A wordmark from the theme name: with three or more words the first one leads, the rest is the byline. #}
             {% set words = brand|split(' ') %}
-            <a class="nw-brand" href="{{ start|default('/') }}" aria-label="{{ brand }}, Startseite">{% if logoPath %}<img src="{{ asset(logoPath) }}" alt="{{ brand }}" width="180" height="64">{% elseif words|length > 2 %}<b>{{ words|first }}</b><small>{{ words|slice(1)|join(' ') }}</small>{% else %}<b>{{ brand }}</b>{% endif %}</a>
+            {% set logo_figure = logo|default ? figure(logo, logoSize|default('_nw_logo'), {metadata: {alt: brand}}) : null %}
+            <a class="nw-brand" href="{{ start|default('/') }}" aria-label="{{ 'nw_theme.home_link'|trans({'%brand%': brand}) }}">{% if logo_figure %}{{ include('@Contao/component/_picture.html.twig', {figure: logo_figure}) }}{% elseif words|length > 2 %}<b>{{ words|first }}</b><small>{{ words|slice(1)|join(' ') }}</small>{% else %}<b>{{ brand }}</b>{% endif %}</a>
         {% endblock %}
         {% block navigation %}{% endblock %}
         {% block actions %}{% endblock %}

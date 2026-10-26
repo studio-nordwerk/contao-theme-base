@@ -10,6 +10,7 @@ use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 use Twig\Loader\ChainLoader;
 use Twig\Loader\FilesystemLoader;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 final class DesignVariablesTest extends TestCase
@@ -47,7 +48,23 @@ final class DesignVariablesTest extends TestCase
         $this->assertStringNotContainsString('--theme-callout:', $html);
     }
 
+    public function testTheHeaderModuleNoLongerCarriesTheVariables(): void
+    {
+        $html = $this->twig()->render('@Contao/frontend_module/nw_theme_header.html.twig', [
+            'design' => new DesignSettings(), 'brand' => 'Test-Theme', 'logo' => null, 'start' => '/',
+        ]);
+        $this->assertStringNotContainsString('<style', $html);
+        $this->assertStringContainsString('<b>Test-Theme</b>', $html);
+    }
+
     private function render(DesignSettings $settings): string
+    {
+        return $this->twig()->render('@Contao/component/_nw_design_variables.html.twig', [
+            'design' => $settings, 'headingFont' => 'Lora', 'bodyFont' => 'Source Sans 3',
+        ]);
+    }
+
+    private function twig(): Environment
     {
         $files = new FilesystemLoader();
         $files->addPath(__DIR__.'/../contao/templates', 'Contao');
@@ -57,10 +74,9 @@ final class DesignVariablesTest extends TestCase
         ]), ['strict_variables' => true]);
         $twig->addFunction(new TwigFunction('asset', static fn (string $path): string => $path));
         $twig->addFunction(new TwigFunction('csp_nonce', static fn (string $directive): string => 'test-nonce'));
+        $twig->addFunction(new TwigFunction('figure', static fn (): null => null));
+        $twig->addFilter(new TwigFilter('trans', static fn (string $id): string => $id));
 
-        return $twig->render('@Contao/frontend_module/nw_theme_header.html.twig', [
-            'design' => $settings, 'headingFont' => 'Lora', 'bodyFont' => 'Source Sans 3',
-            'brand' => 'Test-Theme', 'logoPath' => null, 'links' => [],
-        ]);
+        return $twig;
     }
 }

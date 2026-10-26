@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Nordwerk\ThemeBaseBundle\Design;
 
-use Contao\Automator;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+/**
+ * Validation of the design fields in the theme form. Saving the form invalidates
+ * the cache tag contao.db.tl_theme.<id>, which every page of the theme carries
+ * (see ThemeAssets), so cached pages show new colors right away.
+ */
 final class DesignCallbacks
 {
     public function __construct(
@@ -46,23 +50,44 @@ final class DesignCallbacks
             }
         }
         $row[$dc->field] = $value;
-        $settings = DesignSettings::fromThemeRow($row);
-        $settings->validateSurfaceContrast();
 
-        return '' === trim($value) ? '' : DesignSettings::normalizeColor($value);
+        try {
+            DesignSettings::fromThemeRow($row)->validateSurfaceContrast();
+
+            return '' === trim($value) ? '' : DesignSettings::normalizeColor($value);
+        } catch (DesignException $exception) {
+            throw new \InvalidArgumentException(self::message($exception), 0, $exception);
+        }
     }
 
     #[AsCallback(table: 'tl_theme', target: 'fields.nwLogo.save')]
     public function validateLogo(string|null $value): string|null
     {
-        $this->repository->validateLogo($value);
+        try {
+            $this->repository->validateLogo($value);
+        } catch (DesignException $exception) {
+            throw new \InvalidArgumentException(self::message($exception), 0, $exception);
+        }
 
         return $value;
     }
 
-    #[AsCallback(table: 'tl_theme', target: 'config.onsubmit')]
-    public function purgePageCache(): void
+    /**
+     * The reason in the backend language, the English message without a translation.
+     */
+    public static function message(DesignException $exception): string
     {
-        (new Automator())->purgePageCache();
+        $text = $GLOBALS['TL_LANG']['ERR']['nw_design_'.$exception->reason] ?? null;
+        if (!\is_string($text)) {
+            return $exception->getMessage();
+        }
+        if ('contrast' !== $exception->reason) {
+            return $text;
+        }
+        $field = (string) ($exception->parameters['field'] ?? '');
+        $label = $GLOBALS['TL_LANG']['tl_theme'][$field][0] ?? $field;
+        $separator = $GLOBALS['TL_LANG']['MSC']['decimalSeparator'] ?? '.';
+
+        return \sprintf($text, $label, number_format((float) ($exception->parameters['ratio'] ?? 0), 2, \is_string($separator) ? $separator : '.', ''));
     }
 }
