@@ -16,7 +16,7 @@ $GLOBALS['TL_LANG']['tl_theme']['nwRadiusOptions'] = ['' => 'Theme default', '0'
 $GLOBALS['TL_LANG']['tl_theme']['nwButtonShape'] = ['Buttons', 'Shape of the buttons. Without a choice the default of the theme package stays.'];
 $GLOBALS['TL_LANG']['tl_theme']['nwButtonShapeOptions'] = ['' => 'Theme default', '4px' => 'Square (4 px)', '10px' => 'Rounded (10 px)', '999px' => 'Pill'];
 $GLOBALS['TL_LANG']['tl_theme']['nwFontPair'] = ['Font pair', 'All fonts are served locally.'];
-$GLOBALS['TL_LANG']['tl_theme']['nwFontPairOptions'] = ['lora-source' => 'Lora / Source Sans 3', 'newsreader-source' => 'Newsreader / Source Sans 3', 'nunito' => 'Nunito Sans', 'fraunces-source' => 'Fraunces / Source Sans 3'];
+$GLOBALS['TL_LANG']['tl_theme']['nwFontPairOptions'] = ['lora-source' => 'Lora / Source Sans 3', 'newsreader-source' => 'Newsreader / Source Sans 3', 'nunito' => 'Nunito Sans', 'fraunces-helvetica' => 'Fraunces / Helvetica'];
 $GLOBALS['TL_LANG']['tl_theme']['nwHeaderStyle'] = ['Header layout', 'Arrangement of wordmark, menu and icons.'];
 $GLOBALS['TL_LANG']['tl_theme']['nwHeaderStyleOptions'] = ['clear' => 'Clear: wordmark left, menu centered', 'centered' => 'Centered: menu left, wordmark centered', 'floating' => 'Floating: rounded bar'];
 $GLOBALS['TL_LANG']['tl_theme']['nwAnnouncement'] = ['Announcement bar', 'One line above the header, for example "Free shipping from €30". At most 120 characters. Leave empty to hide it.'];

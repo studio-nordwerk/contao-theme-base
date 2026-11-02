@@ -6,7 +6,7 @@ namespace Nordwerk\ThemeBaseBundle\Design;
 
 final readonly class DesignSettings
 {
-    public const FONT_PAIRS = ['lora-source' => ['Lora', 'Source Sans 3'], 'newsreader-source' => ['Newsreader', 'Source Sans 3'], 'nunito' => ['Nunito Sans', 'Nunito Sans'], 'fraunces-source' => ['Fraunces', 'Source Sans 3']];
+    public const FONT_PAIRS = ['lora-source' => ['Lora', 'Source Sans 3'], 'newsreader-source' => ['Newsreader', 'Source Sans 3'], 'nunito' => ['Nunito Sans', 'Nunito Sans'], 'fraunces-helvetica' => ['Fraunces', 'Helvetica Neue']];
 
     /**
      * Header layouts: clear (brand left, menu centered), centered (menu left, brand
