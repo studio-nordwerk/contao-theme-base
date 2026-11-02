@@ -16,7 +16,7 @@ $GLOBALS['TL_LANG']['tl_theme']['nwRadiusOptions'] = ['' => 'Vorgabe des Themes'
 $GLOBALS['TL_LANG']['tl_theme']['nwButtonShape'] = ['Buttons', 'Form der Buttons. Ohne eigene Auswahl bleibt die Vorgabe des Theme-Pakets erhalten.'];
 $GLOBALS['TL_LANG']['tl_theme']['nwButtonShapeOptions'] = ['' => 'Vorgabe des Themes', '4px' => 'Eckig (4 px)', '10px' => 'Abgerundet (10 px)', '999px' => 'Pille'];
 $GLOBALS['TL_LANG']['tl_theme']['nwFontPair'] = ['Schriftpaar', 'Alle Schriften werden lokal ausgeliefert.'];
-$GLOBALS['TL_LANG']['tl_theme']['nwFontPairOptions'] = ['lora-source' => 'Lora / Source Sans 3', 'newsreader-source' => 'Newsreader / Source Sans 3', 'nunito' => 'Nunito Sans'];
+$GLOBALS['TL_LANG']['tl_theme']['nwFontPairOptions'] = ['lora-source' => 'Lora / Source Sans 3', 'newsreader-source' => 'Newsreader / Source Sans 3', 'nunito' => 'Nunito Sans', 'fraunces-source' => 'Fraunces / Source Sans 3'];
 $GLOBALS['TL_LANG']['tl_theme']['nwHeaderStyle'] = ['Anordnung der Kopfzeile', 'Anordnung von Wortmarke, Menü und Symbolen.'];
 $GLOBALS['TL_LANG']['tl_theme']['nwHeaderStyleOptions'] = ['clear' => 'Klar: Wortmarke links, Menü mittig', 'centered' => 'Zentriert: Menü links, Wortmarke mittig', 'floating' => 'Schwebend: runde Leiste'];
 $GLOBALS['TL_LANG']['tl_theme']['nwAnnouncement'] = ['Hinweisleiste', 'Eine Zeile über der Kopfzeile, zum Beispiel „Versandkostenfrei ab 30 €“. Höchstens 120 Zeichen. Leer lassen, um sie auszublenden.'];

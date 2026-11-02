@@ -6,6 +6,8 @@
 @font-face { font-family: "Newsreader"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/newsreader-latin-600-normal.woff2") format("woff2"); }
 @font-face { font-family: "Nunito Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/nunito-sans-latin-400-normal.woff2") format("woff2"); }
 @font-face { font-family: "Nunito Sans"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/nunito-sans-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Fraunces"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/fraunces-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Fraunces"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/fraunces-latin-600-normal.woff2") format("woff2"); }
 
 .nw-theme {
   --theme-ink: #382f3d;
