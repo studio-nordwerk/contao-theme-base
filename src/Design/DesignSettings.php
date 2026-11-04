@@ -27,7 +27,7 @@ final readonly class DesignSettings
         '' => ['paper' => '#f6f2f3', 'text' => '#382f3d', 'tone1' => '#e9e4e6', 'tone2' => '#e4dce3'],
         'nordwerk-shop-v1' => ['paper' => '#f6f2f3', 'text' => '#382f3d', 'tone1' => '#e7dbe9', 'tone2' => '#dce8db'],
         'seminar' => ['paper' => '#fcfdfb', 'text' => '#263b35', 'tone1' => '#e4eee9', 'tone2' => '#e4efe9'],
-        'nordwerk-hofladen-v1' => ['paper' => '#f6f2e7', 'text' => '#3a342b', 'tone1' => '#e6f2d2', 'tone2' => '#f1e6cf'],
+        'nordwerk-farm-shop-v1' => ['paper' => '#f6f2e7', 'text' => '#3a342b', 'tone1' => '#e6f2d2', 'tone2' => '#f1e6cf'],
     ];
 
     /**
