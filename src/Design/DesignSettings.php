@@ -28,6 +28,7 @@ final readonly class DesignSettings
         'nordwerk-shop-v1' => ['paper' => '#f6f2f3', 'text' => '#382f3d', 'tone1' => '#e7dbe9', 'tone2' => '#dce8db'],
         'seminar' => ['paper' => '#fcfdfb', 'text' => '#263b35', 'tone1' => '#e4eee9', 'tone2' => '#e4efe9'],
         'nordwerk-farm-shop-v1' => ['paper' => '#f6f2e7', 'text' => '#3a342b', 'tone1' => '#e6f2d2', 'tone2' => '#f1e6cf'],
+        'nordwerk-booking-v1' => ['paper' => '#f7f5f0', 'text' => '#1c1b19', 'tone1' => '#ece8df', 'tone2' => '#e6eae2'],
     ];
 
     /**
@@ -59,6 +60,10 @@ final readonly class DesignSettings
         string $tone2 = '',
         public string $themeKey = '',
         public string $logoSize = '',
+        public string $style = '',
+        public string $palette = '',
+        public string $typeset = '',
+        public string $shape = '',
     ) {
         $this->accent = self::normalizeColor($accent);
         $this->surface = self::normalizeColor($surface);
@@ -70,7 +75,8 @@ final readonly class DesignSettings
         if (!\in_array($radius, self::RADII, true) || !\in_array($buttonShape, self::BUTTON_SHAPES, true)) {
             throw new DesignException('shape', 'Please choose one of the given corner and button shapes.');
         }
-        if (!isset(self::FONT_PAIRS[$fontPair])) {
+        // Empty: the fonts of the style or, without a style, of the theme package.
+        if ('' !== $fontPair && !isset(self::FONT_PAIRS[$fontPair])) {
             throw new DesignException('font_pair', 'Please choose one of the bundled font pairs.');
         }
         if (!\in_array($headerStyle, self::HEADER_STYLES, true)) {
@@ -117,6 +123,10 @@ final readonly class DesignSettings
             tone2: (string) ($row['nwTone2'] ?? ''),
             themeKey: (string) ($row['nwThemeKey'] ?? ''),
             logoSize: (string) ($row['nwLogoSize'] ?? ''),
+            style: (string) ($row['nwStyle'] ?? ''),
+            palette: (string) ($row['nwPalette'] ?? ''),
+            typeset: (string) ($row['nwTypeset'] ?? ''),
+            shape: (string) ($row['nwShape'] ?? ''),
         );
     }
 
@@ -125,7 +135,8 @@ final readonly class DesignSettings
      */
     public function effectiveSurfaces(): array
     {
-        $colors = self::SURFACE_DEFAULTS[$this->themeKey] ?? self::SURFACE_DEFAULTS[''];
+        // With a palette, empty fields fall back to its surfaces (see Palette::tokens()).
+        $colors = $this->paletteProfile()?->surfaces() ?? self::SURFACE_DEFAULTS[$this->themeKey] ?? self::SURFACE_DEFAULTS[''];
 
         foreach ($colors as $field => $default) {
             if ('' !== $this->{$field}) {
@@ -155,19 +166,46 @@ final readonly class DesignSettings
      */
     public function cssVariables(): array
     {
+        return [...$this->colorVariables(), ...$this->shapeVariables()];
+    }
+
+    /**
+     * Color fields of the form that were set by hand or by a palette.
+     *
+     * @return array<string, string>
+     */
+    public function colorVariables(): array
+    {
         $variables = [];
 
-        foreach (['paper' => '--theme-paper', 'text' => '--theme-ink', 'radius' => '--theme-radius', 'buttonShape' => '--nw-radius-button', 'tone1' => '--theme-tile', 'tone2' => '--theme-callout'] as $field => $variable) {
+        foreach (['paper' => '--theme-paper', 'text' => '--theme-ink', 'tone1' => '--theme-tile', 'tone2' => '--theme-callout'] as $field => $variable) {
             if ('' !== $this->{$field}) {
                 $variables[$variable] = $this->{$field};
             }
         }
-        if ('' !== $this->text) {
+        // The palette brings its own secondary text color for its own ink.
+        if ('' !== $this->text && $this->text !== $this->paletteProfile()?->surfaces()['text']) {
             $variables['--theme-muted'] = 'color-mix(in srgb, var(--theme-ink) 75%, var(--theme-paper))';
         }
+
+        return $variables;
+    }
+
+    /**
+     * Corners and buttons chosen by hand.
+     *
+     * @return array<string, string>
+     */
+    public function shapeVariables(): array
+    {
+        $variables = [];
         if ('' !== $this->radius) {
+            $variables['--theme-radius'] = $this->radius;
             // Shop cards otherwise keep their package's fixed radius.
             $variables['--nw-radius-card'] = 'var(--theme-radius)';
+        }
+        if ('' !== $this->buttonShape) {
+            $variables['--nw-radius-button'] = $this->buttonShape;
         }
 
         return $variables;
@@ -180,7 +218,60 @@ final readonly class DesignSettings
 
     public function accentText(): string
     {
+        // The palette's button text for the palette's accent, if it reads well enough.
+        $palette = $this->paletteProfile();
+        if (null !== $palette && $palette->action() === $this->accent && self::contrastRatio($this->accent, $palette->actionInk()) >= 4.5) {
+            return $palette->actionInk();
+        }
+
         return $this->contrast() >= 4.5 ? '#ffffff' : '#000000';
+    }
+
+    /**
+     * The chosen style preset, null without one or for an id the catalog no longer knows.
+     */
+    public function styleProfile(): Style|null
+    {
+        return StyleCatalog::bundled()->get($this->style);
+    }
+
+    /**
+     * The palette chosen in the form, else the style's. An id the catalog no longer
+     * knows counts as not chosen.
+     */
+    public function paletteProfile(): Palette|null
+    {
+        return $this->axis('palette', $this->palette);
+    }
+
+    public function typesetProfile(): Typeset|null
+    {
+        return $this->axis('typeset', $this->typeset);
+    }
+
+    public function shapeProfile(): Shape|null
+    {
+        return $this->axis('shape', $this->shape);
+    }
+
+    /**
+     * Spacing and content width of the chosen style; no axis changes them.
+     *
+     * @return array<string, string>
+     */
+    public function spaceTokens(): array
+    {
+        return $this->styleProfile()?->shape->spaceTokens() ?? [];
+    }
+
+    /**
+     * Font families of the font pair, null for "default of the style or theme".
+     *
+     * @return array{0: string, 1: string}|null
+     */
+    public function fontFamilies(): array|null
+    {
+        return self::FONT_PAIRS[$this->fontPair] ?? null;
     }
 
     public function surfaceText(): string
@@ -217,5 +308,17 @@ final readonly class DesignSettings
         }
 
         return $channels[0] * 0.2126 + $channels[1] * 0.7152 + $channels[2] * 0.0722;
+    }
+
+    /**
+     * @param 'palette'|'typeset'|'shape' $axis
+     *
+     * @return ($axis is 'palette' ? Palette|null : ($axis is 'typeset' ? Typeset|null : Shape|null))
+     */
+    private function axis(string $axis, string $id): Palette|Shape|Typeset|null
+    {
+        $style = $this->styleProfile();
+
+        return StyleCatalog::bundled()->forStyle($axis, $id, $style) ?? $style?->{$axis};
     }
 }

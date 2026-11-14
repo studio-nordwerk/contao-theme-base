@@ -1,0 +1,55 @@
+{# Switcher of the style preview, at the end of <body>: whole styles as a start, then colors, type and shape on their own. Without JavaScript it stays hidden; style-preview.js opens it, remembers the choice for the visit and writes it to the address. Names are the option names of the theme form, so a customer finds the combination there. #}
+<div class="nw-style-preview" data-nw-style-preview hidden>
+    <div class="nw-style-preview__panel" id="nw-style-preview-panel" role="dialog" aria-modal="false" aria-labelledby="nw-style-preview-title" hidden>
+        <div class="nw-style-preview__head">
+            <p class="nw-style-preview__title" id="nw-style-preview-title">{{ 'nw_theme.style_preview.title'|trans }}</p>
+            <p class="nw-style-preview__text">{{ 'nw_theme.style_preview.text'|trans }}</p>
+        </div>
+        <div class="nw-style-preview__body">
+            <section class="nw-style-preview__group" aria-labelledby="nw-style-preview-styles">
+                <h2 class="nw-style-preview__heading" id="nw-style-preview-styles">{{ 'nw_theme.style_preview.styles'|trans }}</h2>
+                <ul class="nw-style-preview__list">
+                    <li><button type="button" class="nw-style-preview__option" data-nw-pick="" aria-pressed="false"><span class="nw-style-preview__swatch" data-nw-swatch=""></span><span class="nw-style-preview__name"><b>{{ 'nw_theme.style_preview.original'|trans }}</b><small>{{ 'nw_theme.style_preview.original_note'|trans }}</small></span></button></li>
+                    {% for style in featured %}
+                        <li><button type="button" class="nw-style-preview__option" data-nw-pick="{{ style.id }}" data-nw-axes="{{ axes[style.id]|join(' ') }}" aria-pressed="false"><span class="nw-style-preview__swatch" data-nw-swatch="{{ axes[style.id][0] }}"></span><span class="nw-style-preview__name"><b>{{ style.label }}</b><small>{{ style.audience }}</small></span></button></li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <section class="nw-style-preview__group" aria-labelledby="nw-style-preview-palette">
+                <h2 class="nw-style-preview__heading" id="nw-style-preview-palette">{{ 'nw_theme.style_preview.palette'|trans }}</h2>
+                <ul class="nw-style-preview__grid">
+                    <li><button type="button" class="nw-style-preview__chip" data-nw-axis="palette" data-nw-value="" aria-pressed="true" title="{{ 'nw_theme.style_preview.original'|trans }}"><span class="nw-style-preview__swatch" data-nw-swatch=""></span><span class="nw-style-preview__chip-name">{{ 'nw_theme.style_preview.original'|trans }}</span></button></li>
+                    {% for palette in palettes %}
+                        <li><button type="button" class="nw-style-preview__chip" data-nw-axis="palette" data-nw-value="{{ palette.id }}" data-nw-label="{{ palette.label }}" aria-pressed="false" title="{{ palette.label }}: {{ palette.description }}"><span class="nw-style-preview__swatch" data-nw-swatch="{{ palette.id }}"></span><span class="nw-style-preview__chip-name">{{ palette.label }}</span></button></li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <section class="nw-style-preview__group" aria-labelledby="nw-style-preview-typeset">
+                <h2 class="nw-style-preview__heading" id="nw-style-preview-typeset">{{ 'nw_theme.style_preview.typeset'|trans }}</h2>
+                <ul class="nw-style-preview__list">
+                    <li><button type="button" class="nw-style-preview__option" data-nw-axis="typeset" data-nw-value="" aria-pressed="true"><span class="nw-style-preview__name"><b>{{ 'nw_theme.style_preview.original'|trans }}</b><small>{{ 'nw_theme.style_preview.original_note'|trans }}</small></span></button></li>
+                    {% for typeset in typesets %}
+                        <li><button type="button" class="nw-style-preview__option" data-nw-axis="typeset" data-nw-value="{{ typeset.id }}" data-nw-label="{{ typeset.label }}" aria-pressed="false"><span class="nw-style-preview__name"><b class="nw-style-preview__sample" data-nw-font="{{ typeset.id }}">{{ typeset.label }}</b><small>{{ typeset.description }}</small></span></button></li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <section class="nw-style-preview__group" aria-labelledby="nw-style-preview-shape">
+                <h2 class="nw-style-preview__heading" id="nw-style-preview-shape">{{ 'nw_theme.style_preview.shape'|trans }}</h2>
+                <ul class="nw-style-preview__list">
+                    <li><button type="button" class="nw-style-preview__option" data-nw-axis="shape" data-nw-value="" aria-pressed="true"><span class="nw-style-preview__shape"></span><span class="nw-style-preview__name"><b>{{ 'nw_theme.style_preview.original'|trans }}</b><small>{{ 'nw_theme.style_preview.original_note'|trans }}</small></span></button></li>
+                    {% for shape in shapes %}
+                        <li><button type="button" class="nw-style-preview__option" data-nw-axis="shape" data-nw-value="{{ shape.id }}" data-nw-label="{{ shape.label }}" aria-pressed="false"><span class="nw-style-preview__shape" data-nw-radius="{{ shape.id }}"></span><span class="nw-style-preview__name"><b>{{ shape.label }}</b><small>{{ shape.description }}</small></span></button></li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+        <p class="nw-style-preview__backend" data-nw-style-backend data-nw-intro="{{ 'nw_theme.style_preview.backend'|trans }}" data-nw-style="{{ 'nw_theme.style_preview.field_style'|trans }}" data-nw-palette="{{ 'nw_theme.style_preview.field_palette'|trans }}" data-nw-typeset="{{ 'nw_theme.style_preview.field_typeset'|trans }}" data-nw-shape="{{ 'nw_theme.style_preview.field_shape'|trans }}" aria-live="polite" hidden></p>
+    </div>
+    <button type="button" class="nw-style-preview__toggle" aria-expanded="false" aria-controls="nw-style-preview-panel">
+        <span class="nw-style-preview__swatch" data-nw-style-current-swatch data-nw-swatch=""></span>
+        <span class="nw-style-preview__caption">{{ 'nw_theme.style_preview.caption'|trans }}</span>
+        <span class="nw-style-preview__current" data-nw-style-current data-nw-original="{{ 'nw_theme.style_preview.original'|trans }}" data-nw-mix="{{ 'nw_theme.style_preview.mix'|trans }}">{{ 'nw_theme.style_preview.original'|trans }}</span>
+        <svg class="nw-style-preview__chevron" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 10l4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</div>
+<script src="{{ asset(script) }}" defer></script>

@@ -42,8 +42,8 @@ final readonly class LayoutContext
             'logo' => null !== $logoPath ? $settings->logo : null,
             'logoSize' => ImageSize::orDefault($settings->logoSize, '_nw_logo'),
             'logoPath' => $logoPath,
-            'headingFont' => DesignSettings::FONT_PAIRS[$settings->fontPair][0],
-            'bodyFont' => DesignSettings::FONT_PAIRS[$settings->fontPair][1],
+            'headingFont' => $settings->fontFamilies()[0] ?? null,
+            'bodyFont' => $settings->fontFamilies()[1] ?? null,
         ];
     }
 

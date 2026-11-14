@@ -10,3 +10,19 @@ nw_theme:
     footer:
         legal: Legal
         demo_note: Demo website of a fictitious company. Replace operator details, contents and legal texts before publishing.
+    style_preview:
+        caption: Style
+        title: Try a style
+        text: A preview with the content of this site. Start from a style and mix colors, type and shape on their own. You set it once in the back end later.
+        original: Original
+        original_note: As this theme is set up
+        styles: Styles
+        palette: Colors
+        typeset: Type
+        shape: Shape
+        mix: Own mix
+        backend: 'In the back end under Layout → Themes:'
+        field_palette: Colors
+        field_typeset: Type
+        field_shape: Shape
+        field_style: Style

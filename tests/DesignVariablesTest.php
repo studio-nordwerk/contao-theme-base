@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nordwerk\ThemeBaseBundle\Tests;
 
 use Nordwerk\ThemeBaseBundle\Design\DesignSettings;
+use Nordwerk\ThemeBaseBundle\Design\DesignVariables;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
@@ -60,7 +61,7 @@ final class DesignVariablesTest extends TestCase
     private function render(DesignSettings $settings): string
     {
         return $this->twig()->render('@Contao/component/_nw_design_variables.html.twig', [
-            'design' => $settings, 'headingFont' => 'Lora', 'bodyFont' => 'Source Sans 3',
+            'variables' => DesignVariables::of($settings, false),
         ]);
     }
 

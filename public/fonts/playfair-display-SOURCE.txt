@@ -1,0 +1,2 @@
+@fontsource/playfair-display 5.3.0
+https://registry.npmjs.org/@fontsource/playfair-display/-/playfair-display-5.3.0.tgz

@@ -10,7 +10,6 @@ use Contao\CoreBundle\Security\ContaoCorePermissions;
 use Contao\System;
 use Doctrine\DBAL\Connection;
 use Nordwerk\ThemeBaseBundle\Design\DesignRepository;
-use Nordwerk\ThemeBaseBundle\Design\DesignSettings;
 use Symfony\Bundle\SecurityBundle\Security;
 
 /**
@@ -36,10 +35,14 @@ final class ThemeDesignSummary
         foreach ($connection->fetchAllAssociative('SELECT id, name FROM tl_theme WHERE nwThemeKey = ? ORDER BY id', [$themeKey]) as $theme) {
             $settings = $repository->load((int) $theme['id']);
             $theme['values'] = [
+                ...(null !== $settings->styleProfile() ? [$label('nwStyle') => $settings->styleProfile()->label] : []),
+                ...(null !== $settings->paletteProfile() ? [$label('nwPalette') => $settings->paletteProfile()->label] : []),
+                ...(null !== $settings->typesetProfile() ? [$label('nwTypeset') => $settings->typesetProfile()->label] : []),
+                ...(null !== $settings->shapeProfile() ? [$label('nwShape') => $settings->shapeProfile()->label] : []),
                 $label('nwLogo') => null === $settings->logo ? $summary['wordmark'] : $summary['logo'],
                 $label('nwAccent') => $settings->accent,
                 $label('nwSurface') => $settings->surface,
-                $label('nwFontPair') => (string) ($lang['nwFontPairOptions'][$settings->fontPair] ?? implode(' / ', array_unique(DesignSettings::FONT_PAIRS[$settings->fontPair]))),
+                $label('nwFontPair') => (string) ($lang['nwFontPairOptions'][$settings->fontPair] ?? implode(' / ', array_unique($settings->fontFamilies() ?? [$summary['default']]))),
                 $label('nwHeaderStyle') => (string) ($lang['nwHeaderStyleOptions'][$settings->headerStyle] ?? $settings->headerStyle),
                 $label('nwAnnouncement') => '' === $settings->announcement ? $summary['hidden'] : $settings->announcement,
                 $label('nwRadius') => (string) ($lang['nwRadiusOptions'][$settings->radius] ?? $settings->radius),

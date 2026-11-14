@@ -1,0 +1,1063 @@
+{
+  "_source": "Nordwerk catalog (core c7774bfa, apps/catalog/profiles and profiles/axes.json), copied by scripts/styles/sync-styles.mjs. Do not edit by hand.",
+  "styles": [
+    {
+      "id": "beere-mutig",
+      "label": "Beere mutig",
+      "note": "Beauty, Mode, Fitnessstudios: zartes Rosaweiß mit dunkler Beere, weiche Radien, Fraunces. Aus der Composer-Demo übernommen (eine Palette, ein Schriftpaar, ein Radius).",
+      "palette": "beere-mutig",
+      "typeset": "beere-mutig",
+      "shape": "beere-mutig"
+    },
+    {
+      "id": "editorial-serif",
+      "label": "Editorial",
+      "note": "Studios, Künstlerinnen, Architektur, Fotografie: eine Grotesk für alles, Meta-Zeilen klein in Versalien mit Laufweite. Kein Radius, keine Schatten, Weiß und Fastschwarz, viel Luft. Die Farbe kommt aus den Bildern, nicht aus dem Profil (Referenz: Editorial-Portfolios wie Blankit).",
+      "palette": "editorial-serif",
+      "typeset": "editorial-serif",
+      "shape": "editorial-serif"
+    },
+    {
+      "id": "fuersorglich-hell",
+      "label": "Fürsorglich hell",
+      "note": "Praxis, Pflege, Kita: Apfelgrün als Marke, für Flächen auf AA abgedunkelt, warm-heller Grund mit Grünstich, Pill-Buttons.",
+      "palette": "fuersorglich-hell",
+      "typeset": "fuersorglich-hell",
+      "shape": "fuersorglich-hell"
+    },
+    {
+      "id": "gastro-abend",
+      "label": "Gastro Abend",
+      "note": "Restaurant, Café, Weinbar: Bordeaux als Marke auf cremefarbenem Grund, DM Serif Display für Überschriften, feine Radien.",
+      "palette": "gastro-abend",
+      "typeset": "gastro-abend",
+      "shape": "gastro-abend"
+    },
+    {
+      "id": "handel-ruhig",
+      "label": "Handel ruhig",
+      "note": "Marken, Verlage und Händler mit Ware zum Kaufen (Schuhe, Bücher, Mode, Lederwaren), auch Manufakturen mit eigenem Sortiment: Weiß, warme Grautöne, Tinte #1e1c1a, Geist, Pillen-Buttons in Tinte, Ochsenblut als einziger Akzent (aktiver Reiter, Warenkorb-Zahl). Dichter als ein Betriebsauftritt: kleinerer Section-Abstand, breitere Spalte. Marken im Sortiment bringen ihre eigenen Farben über die Props der Retail-Sections mit.",
+      "palette": "handel-ruhig",
+      "typeset": "handel-ruhig",
+      "shape": "handel-ruhig"
+    },
+    {
+      "id": "koralle-freundlich",
+      "label": "Koralle freundlich",
+      "note": "Familien, Bildung, Freizeit, Cafés: Creme mit lebhafter Koralle, große Radien, Quicksand. Aus der Composer-Demo übernommen (eine Palette, ein Schriftpaar, ein Radius).",
+      "palette": "koralle-freundlich",
+      "typeset": "koralle-freundlich",
+      "shape": "koralle-freundlich"
+    },
+    {
+      "id": "moebel-natur",
+      "label": "Möbel Natur",
+      "note": "Tischlerei, Innenausbau, Manufaktur: Moosgrün auf eichehellem Grund, Lora für Überschriften, weiche Radien, Bilder leicht gerundet.",
+      "palette": "moebel-natur",
+      "typeset": "moebel-natur",
+      "shape": "moebel-natur"
+    },
+    {
+      "id": "nacht-gold",
+      "label": "Nacht gold",
+      "note": "Kanzlei, Finanzen, Beratung: dunkles Anthrazit mit gedecktem Gold, minimale Radien, Playfair Display. Aus der Composer-Demo übernommen (eine Palette, ein Schriftpaar, ein Radius).",
+      "palette": "nacht-gold",
+      "typeset": "nacht-gold",
+      "shape": "nacht-gold"
+    },
+    {
+      "id": "nordwerk",
+      "label": "Nordwerk",
+      "note": "Hausstil von Studio Nordwerk für eigene Produktseiten: Weiß, Tinte #141513, Grautöne mit leichtem Grünstich, Geist, Pillen-Buttons in Tinte, Salbei als einziger Akzent, Meta-Zeilen ohne Versalien. Farbige Flächen (backdrop tint) leiten sich als Pastell aus der Markenfarbe ab; ein Produkt setzt dafür seine Punktfarbe als brand.",
+      "palette": "nordwerk",
+      "typeset": "nordwerk",
+      "shape": "nordwerk"
+    },
+    {
+      "id": "premium-kanzlei",
+      "label": "Premium Kanzlei",
+      "note": "Warmes Elfenbein-Monochrom (Referenz harvey.ai). Grund hell, Fast-Schwarz ist Typo und Buttons; dunkle Flächen nur als Invert-Section.",
+      "palette": "premium-kanzlei",
+      "typeset": "premium-kanzlei",
+      "shape": "gastro-abend"
+    },
+    {
+      "id": "reise-frisch",
+      "label": "Reise frisch",
+      "note": "Reisebüro, Tourismus, Freizeit: Meerblau als Marke, Koralle als Handlungsfarbe, heller sandfarbener Grund, weiche Radien, Playfair für Überschriften.",
+      "palette": "reise-frisch",
+      "typeset": "reise-frisch",
+      "shape": "reise-frisch"
+    },
+    {
+      "id": "saas-schlicht",
+      "label": "SaaS schlicht",
+      "note": "Software, Apps und Startups mit freundlichem Ton: modernes SaaS-Licht (Referenz userjot, linear), warmweißer Grund, ein Terracotta-Akzent, Inter, Pill-Buttons. Terracotta auf AA gegen den Grund abgedunkelt (#e05d38 → #c24b28, 4,57:1).",
+      "palette": "saas-schlicht",
+      "typeset": "saas-schlicht",
+      "shape": "saas-schlicht"
+    },
+    {
+      "id": "salbei-ruhig",
+      "label": "Salbei ruhig",
+      "note": "Gesundheit, Therapie, Betreuung: Salbeigrün auf warmem Weiß, weiche Radien, freundliche runde Grotesk. Aus der Composer-Demo übernommen (eine Palette, ein Schriftpaar, ein Radius).",
+      "palette": "salbei-ruhig",
+      "typeset": "salbei-ruhig",
+      "shape": "salbei-ruhig"
+    },
+    {
+      "id": "sand-editorial",
+      "label": "Sand editorial",
+      "note": "Möbel, Architektur, Studios, Gastgeber: warmer Sand und Fastschwarz, keine Radien, Fraunces für Überschriften. Aus der Composer-Demo übernommen (eine Palette, ein Schriftpaar, ein Radius).",
+      "palette": "sand-editorial",
+      "typeset": "sand-editorial",
+      "shape": "sand-editorial"
+    },
+    {
+      "id": "studio-still",
+      "label": "Studio still",
+      "note": "Fast monochrom, kein Radius, sehr große Displaygrößen mit enger Laufweite, viel Luft (Referenz wearecollins.com). Lebt von der Typo-Skala, nicht von Farbe.",
+      "palette": "studio-still",
+      "typeset": "studio-still",
+      "shape": "studio-still"
+    },
+    {
+      "id": "tinte-klar",
+      "label": "Tinte klar",
+      "note": "Software, digitale Produkte, Tech-Agenturen: Schwarz-Weiß mit einem elektrischen Akzent, Space Grotesk. Aus der Composer-Demo übernommen (eine Palette, ein Schriftpaar, ein Radius).",
+      "palette": "tinte-klar",
+      "typeset": "tinte-klar",
+      "shape": "tinte-klar"
+    },
+    {
+      "id": "wald-tief",
+      "label": "Wald tief",
+      "note": "Garten, Bio, Outdoor: tiefes Grün mit gebrochenem Weiß, mittlere Radien, Inter durchgehend. Aus der Composer-Demo übernommen (eine Palette, ein Schriftpaar, ein Radius).",
+      "palette": "wald-tief",
+      "typeset": "wald-tief",
+      "shape": "wald-tief"
+    },
+    {
+      "id": "werkbank-blau",
+      "label": "Werkbank blau",
+      "note": "Handwerk, Reparatur, Technik: kräftiges Blau auf Weiß, kleine Radien, Archivo fett für Überschriften. Aus der Composer-Demo übernommen (eine Palette, ein Schriftpaar, ein Radius).",
+      "palette": "werkbank-blau",
+      "typeset": "werkbank-blau",
+      "shape": "werkbank-blau"
+    },
+    {
+      "id": "werkstatt-ehrlich",
+      "label": "Werkstatt ehrlich",
+      "note": "Handwerk und Technik: kühles Hellgrau, Petrol als Akzent, kleine Radien, Archivo für Überschriften.",
+      "palette": "werkstatt-ehrlich",
+      "typeset": "werkstatt-ehrlich",
+      "shape": "werkstatt-ehrlich"
+    }
+  ],
+  "palettes": [
+    {
+      "id": "beere-mutig",
+      "label": "wie Beere mutig",
+      "colors": {
+        "surface": "#fbf5f6",
+        "surfaceRaised": "#f1dde3",
+        "ink": "#25131b",
+        "inkSoft": "#695b61",
+        "line": "#d9d1d3",
+        "brand": "#9b2355",
+        "brandInk": "#ffffff"
+      }
+    },
+    {
+      "id": "editorial-serif",
+      "label": "wie Editorial",
+      "colors": {
+        "surface": "#ffffff",
+        "surfaceRaised": "#f2f2f0",
+        "ink": "#111111",
+        "inkSoft": "#6f6f6b",
+        "line": "#dcdcd8",
+        "brand": "#111111",
+        "brandInk": "#ffffff"
+      }
+    },
+    {
+      "id": "fuersorglich-hell",
+      "label": "wie Fürsorglich hell",
+      "colors": {
+        "surface": "#f9f9f4",
+        "surfaceRaised": "#eff2e6",
+        "ink": "#3a3d38",
+        "inkSoft": "#696d64",
+        "line": "#dde2d0",
+        "brand": "#517d1e",
+        "brandInk": "#f9f9f4"
+      }
+    },
+    {
+      "id": "gastro-abend",
+      "label": "wie Gastro Abend",
+      "colors": {
+        "surface": "#f8f2ea",
+        "surfaceRaised": "#efe6d9",
+        "ink": "#2a1a16",
+        "inkSoft": "#6f5d56",
+        "line": "#dccfbf",
+        "brand": "#6b1d2a",
+        "brandInk": "#f8f2ea"
+      }
+    },
+    {
+      "id": "handel-ruhig",
+      "label": "wie Handel ruhig",
+      "colors": {
+        "surface": "#ffffff",
+        "surfaceRaised": "#f4f1ed",
+        "ink": "#1e1c1a",
+        "inkSoft": "#6c6761",
+        "line": "#e8e4de",
+        "brand": "#8a3a22",
+        "brandInk": "#ffffff",
+        "action": "#1e1c1a",
+        "actionInk": "#ffffff"
+      }
+    },
+    {
+      "id": "koralle-freundlich",
+      "label": "wie Koralle freundlich",
+      "colors": {
+        "surface": "#fff8ee",
+        "surfaceRaised": "#ffe3cf",
+        "ink": "#2b1d16",
+        "inkSoft": "#6f635b",
+        "line": "#ddd5cb",
+        "brand": "#c23d1c",
+        "brandInk": "#ffffff"
+      }
+    },
+    {
+      "id": "moebel-natur",
+      "label": "wie Möbel Natur",
+      "colors": {
+        "surface": "#f6f1e8",
+        "surfaceRaised": "#ece4d6",
+        "ink": "#26231d",
+        "inkSoft": "#6a655a",
+        "line": "#d6ccba",
+        "brand": "#4a5d3a",
+        "brandInk": "#f6f1e8"
+      }
+    },
+    {
+      "id": "nacht-gold",
+      "label": "wie Nacht gold",
+      "colors": {
+        "surface": "#14161a",
+        "surfaceRaised": "#262a31",
+        "ink": "#ece8df",
+        "inkSoft": "#a7a5a0",
+        "line": "#37383a",
+        "brand": "#c5a46a",
+        "brandInk": "#14161a"
+      }
+    },
+    {
+      "id": "nordwerk",
+      "label": "wie Nordwerk",
+      "colors": {
+        "surface": "#ffffff",
+        "surfaceRaised": "#f3f4f1",
+        "ink": "#141513",
+        "inkSoft": "#6d706a",
+        "line": "#e7e8e4",
+        "brand": "#2e5747",
+        "brandInk": "#ffffff",
+        "action": "#141513",
+        "actionInk": "#ffffff"
+      }
+    },
+    {
+      "id": "premium-kanzlei",
+      "label": "wie Premium Kanzlei",
+      "colors": {
+        "surface": "#f2efe8",
+        "surfaceRaised": "#e9e5dc",
+        "ink": "#191713",
+        "inkSoft": "#69655d",
+        "line": "#d8d3c8",
+        "brand": "#191713",
+        "brandInk": "#f2efe8"
+      }
+    },
+    {
+      "id": "reise-frisch",
+      "label": "wie Reise frisch",
+      "colors": {
+        "surface": "#fbf8f2",
+        "surfaceRaised": "#f1ece1",
+        "ink": "#17293a",
+        "inkSoft": "#5b6a78",
+        "line": "#dcd6c8",
+        "brand": "#0f6f80",
+        "brandInk": "#fbf8f2",
+        "action": "#bf4c2a",
+        "actionInk": "#fbf8f2"
+      }
+    },
+    {
+      "id": "saas-schlicht",
+      "label": "wie SaaS schlicht",
+      "colors": {
+        "surface": "#faf8f5",
+        "surfaceRaised": "#f1eee8",
+        "ink": "#191817",
+        "inkSoft": "#6f6a62",
+        "line": "#e6e1d8",
+        "brand": "#c24b28",
+        "brandInk": "#faf8f5"
+      }
+    },
+    {
+      "id": "salbei-ruhig",
+      "label": "wie Salbei ruhig",
+      "colors": {
+        "surface": "#f7f5ef",
+        "surfaceRaised": "#e3e8dd",
+        "ink": "#1f2a24",
+        "inkSoft": "#535b55",
+        "line": "#d4d5cf",
+        "brand": "#3d6a57",
+        "brandInk": "#ffffff"
+      }
+    },
+    {
+      "id": "sand-editorial",
+      "label": "wie Sand editorial",
+      "colors": {
+        "surface": "#f4ede2",
+        "surfaceRaised": "#e2d6c4",
+        "ink": "#1b1917",
+        "inkSoft": "#605d58",
+        "line": "#d1cbc2",
+        "brand": "#8a5a2b",
+        "brandInk": "#ffffff"
+      }
+    },
+    {
+      "id": "studio-still",
+      "label": "wie Studio still",
+      "colors": {
+        "surface": "#f7f7f5",
+        "surfaceRaised": "#eeeeea",
+        "ink": "#141414",
+        "inkSoft": "#6b6b66",
+        "line": "#dcdcd6",
+        "brand": "#141414",
+        "brandInk": "#f7f7f5"
+      }
+    },
+    {
+      "id": "tinte-klar",
+      "label": "wie Tinte klar",
+      "colors": {
+        "surface": "#ffffff",
+        "surfaceRaised": "#eeeef2",
+        "ink": "#0b0b0f",
+        "inkSoft": "#59595c",
+        "line": "#d8d8d9",
+        "brand": "#5b3df5",
+        "brandInk": "#ffffff"
+      }
+    },
+    {
+      "id": "wald-tief",
+      "label": "wie Wald tief",
+      "colors": {
+        "surface": "#f3f4ee",
+        "surfaceRaised": "#d9e0d2",
+        "ink": "#14231b",
+        "inkSoft": "#4a554e",
+        "line": "#cfd3cc",
+        "brand": "#1f5a3d",
+        "brandInk": "#ffffff"
+      }
+    },
+    {
+      "id": "werkbank-blau",
+      "label": "wie Werkbank blau",
+      "colors": {
+        "surface": "#ffffff",
+        "surfaceRaised": "#e9edf3",
+        "ink": "#111827",
+        "inkSoft": "#5d626c",
+        "line": "#d9dadc",
+        "brand": "#1d4fd8",
+        "brandInk": "#ffffff"
+      }
+    },
+    {
+      "id": "werkstatt-ehrlich",
+      "label": "wie Werkstatt ehrlich",
+      "colors": {
+        "surface": "#f4f6f6",
+        "surfaceRaised": "#e9eeee",
+        "ink": "#16201f",
+        "inkSoft": "#55625f",
+        "line": "#c8d2d0",
+        "brand": "#0f4c56",
+        "brandInk": "#f4f6f6"
+      }
+    }
+  ],
+  "typesets": [
+    {
+      "id": "beere-mutig",
+      "label": "wie Beere mutig",
+      "fonts": {
+        "display": "\"Fraunces\", Georgia, serif",
+        "body": "\"DM Sans\", system-ui, sans-serif"
+      },
+      "type": {
+        "display": "clamp(2.25rem, 4.6vw, 3.5rem)",
+        "title": "clamp(1.6rem, 3vw, 1.9rem)",
+        "lead": "1.125rem"
+      },
+      "measure": "52ch"
+    },
+    {
+      "id": "editorial-serif",
+      "label": "wie Editorial",
+      "fonts": {
+        "display": "\"Inter\", system-ui, sans-serif",
+        "body": "\"Inter\", system-ui, sans-serif"
+      },
+      "type": {
+        "display": "clamp(2.4rem, 5.2vw, 4.4rem)",
+        "title": "clamp(1.8rem, 3.6vw, 2.8rem)",
+        "titleLineHeight": "1.05",
+        "statement": "clamp(1.6rem, 3.2vw, 2.6rem)",
+        "lead": "clamp(1.05rem, 1.3vw, 1.2rem)",
+        "leadingDisplay": "0.98",
+        "trackingDisplay": "-0.025em",
+        "trackingMeta": "0.08em",
+        "meta": "0.75rem"
+      },
+      "measure": "44ch"
+    },
+    {
+      "id": "fuersorglich-hell",
+      "label": "wie Fürsorglich hell",
+      "fonts": {
+        "display": "\"Bricolage Grotesque\", system-ui, sans-serif",
+        "body": "\"Sofia Sans\", system-ui, sans-serif"
+      }
+    },
+    {
+      "id": "gastro-abend",
+      "label": "wie Gastro Abend",
+      "fonts": {
+        "display": "\"DM Serif Display\", Georgia, serif",
+        "body": "\"DM Sans\", system-ui, sans-serif"
+      }
+    },
+    {
+      "id": "handel-ruhig",
+      "label": "wie Handel ruhig",
+      "fonts": {
+        "display": "\"Geist Variable\", \"Helvetica Neue\", Arial, sans-serif",
+        "body": "\"Geist Variable\", \"Helvetica Neue\", Arial, sans-serif"
+      },
+      "type": {
+        "display": "clamp(2.8rem, 6vw, 5.4rem)",
+        "title": "clamp(1.5rem, 2.6vw, 2.1rem)",
+        "titleLineHeight": "1.1",
+        "lead": "clamp(1.1rem, 1.5vw, 1.35rem)",
+        "leadingDisplay": "0.96",
+        "trackingDisplay": "-0.045em",
+        "trackingMeta": "0.06em",
+        "meta": "0.75rem",
+        "metaCase": "uppercase"
+      },
+      "measure": "46ch"
+    },
+    {
+      "id": "koralle-freundlich",
+      "label": "wie Koralle freundlich",
+      "fonts": {
+        "display": "\"Quicksand\", system-ui, sans-serif",
+        "body": "\"Nunito Sans\", system-ui, sans-serif"
+      },
+      "type": {
+        "display": "clamp(2.25rem, 4.6vw, 3.5rem)",
+        "title": "clamp(1.6rem, 3vw, 1.9rem)",
+        "lead": "1.125rem"
+      },
+      "measure": "52ch"
+    },
+    {
+      "id": "moebel-natur",
+      "label": "wie Möbel Natur",
+      "fonts": {
+        "display": "\"Lora\", Georgia, serif",
+        "body": "\"Nunito Sans\", system-ui, sans-serif"
+      }
+    },
+    {
+      "id": "nacht-gold",
+      "label": "wie Nacht gold",
+      "fonts": {
+        "display": "\"Playfair Display\", Georgia, serif",
+        "body": "\"Source Sans 3\", system-ui, sans-serif"
+      },
+      "type": {
+        "display": "clamp(2.25rem, 4.6vw, 3.5rem)",
+        "title": "clamp(1.6rem, 3vw, 1.9rem)",
+        "lead": "1.125rem"
+      },
+      "measure": "52ch"
+    },
+    {
+      "id": "nordwerk",
+      "label": "wie Nordwerk",
+      "fonts": {
+        "display": "\"Geist Variable\", \"Helvetica Neue\", Arial, sans-serif",
+        "body": "\"Geist Variable\", \"Helvetica Neue\", Arial, sans-serif"
+      },
+      "type": {
+        "display": "clamp(2.6rem, 5.6vw, 4.6rem)",
+        "title": "clamp(1.8rem, 3.4vw, 2.6rem)",
+        "titleLineHeight": "1.08",
+        "lead": "clamp(1.05rem, 1.3vw, 1.2rem)",
+        "leadingDisplay": "1.0",
+        "trackingDisplay": "-0.035em",
+        "trackingMeta": "0",
+        "meta": "0.875rem",
+        "metaCase": "none"
+      },
+      "measure": "46ch"
+    },
+    {
+      "id": "premium-kanzlei",
+      "label": "wie Premium Kanzlei",
+      "fonts": {
+        "display": "\"Newsreader\", \"Iowan Old Style\", Georgia, serif",
+        "body": "\"Inter\", \"Helvetica Neue\", system-ui, sans-serif"
+      }
+    },
+    {
+      "id": "reise-frisch",
+      "label": "wie Reise frisch",
+      "fonts": {
+        "display": "\"Playfair Display\", Georgia, serif",
+        "body": "\"Source Sans 3\", system-ui, sans-serif"
+      }
+    },
+    {
+      "id": "saas-schlicht",
+      "label": "wie SaaS schlicht",
+      "fonts": {
+        "display": "\"Inter\", system-ui, sans-serif",
+        "body": "\"Inter\", system-ui, sans-serif"
+      }
+    },
+    {
+      "id": "salbei-ruhig",
+      "label": "wie Salbei ruhig",
+      "fonts": {
+        "display": "\"Nunito Sans\", system-ui, sans-serif",
+        "body": "\"Nunito Sans\", system-ui, sans-serif"
+      },
+      "type": {
+        "display": "clamp(2.25rem, 4.6vw, 3.5rem)",
+        "title": "clamp(1.6rem, 3vw, 1.9rem)",
+        "lead": "1.125rem"
+      },
+      "measure": "52ch"
+    },
+    {
+      "id": "sand-editorial",
+      "label": "wie Sand editorial",
+      "fonts": {
+        "display": "\"Fraunces\", Georgia, serif",
+        "body": "\"Inter\", system-ui, sans-serif"
+      },
+      "type": {
+        "display": "clamp(2.25rem, 4.6vw, 3.5rem)",
+        "title": "clamp(1.6rem, 3vw, 1.9rem)",
+        "lead": "1.125rem"
+      },
+      "measure": "52ch"
+    },
+    {
+      "id": "studio-still",
+      "label": "wie Studio still",
+      "fonts": {
+        "display": "\"Public Sans\", system-ui, sans-serif",
+        "body": "\"Public Sans\", system-ui, sans-serif"
+      },
+      "type": {
+        "display": "clamp(3rem, 8.4vw, 8rem)",
+        "title": "clamp(2.2rem, 5.4vw, 4.2rem)",
+        "titleLineHeight": "1.0",
+        "statement": "clamp(1.8rem, 4vw, 3.4rem)",
+        "lead": "clamp(1.05rem, 1.4vw, 1.25rem)",
+        "leadingDisplay": "0.94",
+        "trackingDisplay": "-0.035em",
+        "trackingMeta": "0.16em"
+      },
+      "measure": "38ch"
+    },
+    {
+      "id": "tinte-klar",
+      "label": "wie Tinte klar",
+      "fonts": {
+        "display": "\"Space Grotesk\", system-ui, sans-serif",
+        "body": "\"Public Sans\", system-ui, sans-serif"
+      },
+      "type": {
+        "display": "clamp(2.25rem, 4.6vw, 3.5rem)",
+        "title": "clamp(1.6rem, 3vw, 1.9rem)",
+        "lead": "1.125rem"
+      },
+      "measure": "52ch"
+    },
+    {
+      "id": "wald-tief",
+      "label": "wie Wald tief",
+      "fonts": {
+        "display": "\"Inter\", system-ui, sans-serif",
+        "body": "\"Inter\", system-ui, sans-serif"
+      },
+      "type": {
+        "display": "clamp(2.25rem, 4.6vw, 3.5rem)",
+        "title": "clamp(1.6rem, 3vw, 1.9rem)",
+        "lead": "1.125rem"
+      },
+      "measure": "52ch"
+    },
+    {
+      "id": "werkbank-blau",
+      "label": "wie Werkbank blau",
+      "fonts": {
+        "display": "\"Archivo\", system-ui, sans-serif",
+        "body": "\"Inter\", system-ui, sans-serif"
+      },
+      "type": {
+        "display": "clamp(2.25rem, 4.6vw, 3.5rem)",
+        "title": "clamp(1.6rem, 3vw, 1.9rem)",
+        "lead": "1.125rem"
+      },
+      "measure": "52ch"
+    },
+    {
+      "id": "werkstatt-ehrlich",
+      "label": "wie Werkstatt ehrlich",
+      "fonts": {
+        "display": "\"Archivo\", system-ui, sans-serif",
+        "body": "\"Inter\", system-ui, sans-serif"
+      }
+    }
+  ],
+  "shapes": [
+    {
+      "id": "beere-mutig",
+      "label": "wie Beere mutig",
+      "radius": {
+        "button": "0.75rem",
+        "control": "0.75rem",
+        "card": "0.75rem",
+        "image": "0.75rem"
+      },
+      "space": {
+        "section": "clamp(3rem, 6vw, 4.5rem)",
+        "content": "72rem"
+      }
+    },
+    {
+      "id": "editorial-serif",
+      "label": "wie Editorial",
+      "radius": {
+        "button": "0",
+        "control": "0",
+        "card": "0",
+        "image": "0"
+      },
+      "shadow": {
+        "card": "none"
+      },
+      "space": {
+        "section": "clamp(4rem, 7vw, 7rem)",
+        "content": "84rem",
+        "gutter": "clamp(1.25rem, 4vw, 3rem)"
+      }
+    },
+    {
+      "id": "fuersorglich-hell",
+      "label": "wie Fürsorglich hell",
+      "radius": {
+        "button": "999px",
+        "control": "0.25rem",
+        "card": "1.25rem",
+        "image": "1.5rem"
+      }
+    },
+    {
+      "id": "gastro-abend",
+      "label": "wie Gastro Abend",
+      "radius": {
+        "button": "0.25rem",
+        "control": "0.25rem",
+        "card": "0.5rem",
+        "image": "0.25rem"
+      }
+    },
+    {
+      "id": "handel-ruhig",
+      "label": "wie Handel ruhig",
+      "radius": {
+        "button": "999px",
+        "control": "0.75rem",
+        "card": "1.5rem",
+        "image": "1.5rem"
+      },
+      "shadow": {
+        "card": "0 0 0 1px rgba(30, 28, 26, 0.06), 0 24px 60px -24px rgba(30, 28, 26, 0.35)"
+      },
+      "space": {
+        "section": "clamp(2.5rem, 5vw, 4.5rem)",
+        "content": "77.5rem",
+        "gutter": "clamp(1rem, 3.5vw, 2.5rem)"
+      }
+    },
+    {
+      "id": "koralle-freundlich",
+      "label": "wie Koralle freundlich",
+      "radius": {
+        "button": "1.375rem",
+        "control": "1.375rem",
+        "card": "1.375rem",
+        "image": "1.375rem"
+      },
+      "space": {
+        "section": "clamp(3rem, 6vw, 4.5rem)",
+        "content": "72rem"
+      }
+    },
+    {
+      "id": "moebel-natur",
+      "label": "wie Möbel Natur",
+      "radius": {
+        "button": "0.5rem",
+        "control": "0.375rem",
+        "card": "0.75rem",
+        "image": "1rem"
+      }
+    },
+    {
+      "id": "nacht-gold",
+      "label": "wie Nacht gold",
+      "radius": {
+        "button": "0.125rem",
+        "control": "0.125rem",
+        "card": "0.125rem",
+        "image": "0.125rem"
+      },
+      "space": {
+        "section": "clamp(3rem, 6vw, 4.5rem)",
+        "content": "72rem"
+      }
+    },
+    {
+      "id": "nordwerk",
+      "label": "wie Nordwerk",
+      "radius": {
+        "button": "999px",
+        "control": "0.75rem",
+        "card": "1.25rem",
+        "image": "1.5rem"
+      },
+      "shadow": {
+        "card": "0 0 0 1px rgba(20, 21, 19, 0.07), 0 2px 2px -1px rgba(20, 21, 19, 0.05), 0 16px 32px -16px rgba(20, 21, 19, 0.14)"
+      },
+      "space": {
+        "section": "clamp(5rem, 10vw, 8rem)",
+        "content": "72rem",
+        "gutter": "clamp(1rem, 4vw, 3rem)"
+      }
+    },
+    {
+      "id": "reise-frisch",
+      "label": "wie Reise frisch",
+      "radius": {
+        "button": "0.5rem",
+        "control": "0.375rem",
+        "card": "0.75rem",
+        "image": "0.75rem"
+      }
+    },
+    {
+      "id": "saas-schlicht",
+      "label": "wie SaaS schlicht",
+      "radius": {
+        "button": "999px",
+        "control": "0.25rem",
+        "card": "1rem",
+        "image": "0.75rem"
+      }
+    },
+    {
+      "id": "salbei-ruhig",
+      "label": "wie Salbei ruhig",
+      "radius": {
+        "button": "0.875rem",
+        "control": "0.875rem",
+        "card": "0.875rem",
+        "image": "0.875rem"
+      },
+      "space": {
+        "section": "clamp(3rem, 6vw, 4.5rem)",
+        "content": "72rem"
+      }
+    },
+    {
+      "id": "sand-editorial",
+      "label": "wie Sand editorial",
+      "radius": {
+        "button": "0rem",
+        "control": "0rem",
+        "card": "0rem",
+        "image": "0rem"
+      },
+      "space": {
+        "section": "clamp(3rem, 6vw, 4.5rem)",
+        "content": "72rem"
+      }
+    },
+    {
+      "id": "studio-still",
+      "label": "wie Studio still",
+      "radius": {
+        "button": "0",
+        "control": "0",
+        "card": "0",
+        "image": "0"
+      },
+      "shadow": {
+        "card": "none"
+      },
+      "space": {
+        "section": "clamp(6rem, 14vw, 13rem)",
+        "gutter": "clamp(1.5rem, 6vw, 5.5rem)"
+      }
+    },
+    {
+      "id": "tinte-klar",
+      "label": "wie Tinte klar",
+      "radius": {
+        "button": "0.375rem",
+        "control": "0.375rem",
+        "card": "0.375rem",
+        "image": "0.375rem"
+      },
+      "space": {
+        "section": "clamp(3rem, 6vw, 4.5rem)",
+        "content": "72rem"
+      }
+    },
+    {
+      "id": "wald-tief",
+      "label": "wie Wald tief",
+      "radius": {
+        "button": "0.5rem",
+        "control": "0.5rem",
+        "card": "0.5rem",
+        "image": "0.5rem"
+      },
+      "space": {
+        "section": "clamp(3rem, 6vw, 4.5rem)",
+        "content": "72rem"
+      }
+    },
+    {
+      "id": "werkbank-blau",
+      "label": "wie Werkbank blau",
+      "radius": {
+        "button": "0.1875rem",
+        "control": "0.1875rem",
+        "card": "0.1875rem",
+        "image": "0.1875rem"
+      },
+      "space": {
+        "section": "clamp(3rem, 6vw, 4.5rem)",
+        "content": "72rem"
+      }
+    },
+    {
+      "id": "werkstatt-ehrlich",
+      "label": "wie Werkstatt ehrlich",
+      "radius": {
+        "button": "0.375rem",
+        "control": "0.375rem",
+        "card": "0.5rem",
+        "image": "0.5rem"
+      }
+    }
+  ],
+  "curated": {
+    "palettes": [
+      {
+        "id": "weiss",
+        "label": "Schwarz auf Weiß",
+        "description": "neutral, ohne Farbakzent",
+        "from": "editorial-serif"
+      },
+      {
+        "id": "creme",
+        "label": "Schwarz auf Creme",
+        "description": "warm und zurückhaltend",
+        "from": "premium-kanzlei"
+      },
+      {
+        "id": "sand",
+        "label": "Sand",
+        "description": "Braun auf Sand",
+        "from": "sand-editorial"
+      },
+      {
+        "id": "salbei",
+        "label": "Salbei",
+        "description": "helles Grün auf warmem Weiß",
+        "from": "salbei-ruhig"
+      },
+      {
+        "id": "wald",
+        "label": "Wald",
+        "description": "tiefes Grün",
+        "from": "wald-tief"
+      },
+      {
+        "id": "petrol",
+        "label": "Petrol",
+        "description": "kühles Blaugrün",
+        "from": "werkstatt-ehrlich"
+      },
+      {
+        "id": "blau",
+        "label": "Blau",
+        "description": "klares Blau auf Weiß",
+        "from": "werkbank-blau"
+      },
+      {
+        "id": "violett",
+        "label": "Violett",
+        "description": "kräftiges Violett auf Weiß",
+        "from": "tinte-klar"
+      },
+      {
+        "id": "beere",
+        "label": "Beere",
+        "description": "Beerenrot auf Rosé",
+        "from": "beere-mutig"
+      },
+      {
+        "id": "koralle",
+        "label": "Koralle",
+        "description": "warmes Orangerot auf Creme",
+        "from": "koralle-freundlich"
+      },
+      {
+        "id": "nacht",
+        "label": "Nacht",
+        "description": "Gold auf Anthrazit, dunkel",
+        "from": "nacht-gold"
+      }
+    ],
+    "typesets": [
+      {
+        "id": "neutral",
+        "label": "Neutral",
+        "description": "Inter, sachliche Grotesk",
+        "from": "wald-tief"
+      },
+      {
+        "id": "rund",
+        "label": "Rund",
+        "description": "Nunito Sans, freundlich",
+        "from": "salbei-ruhig"
+      },
+      {
+        "id": "technisch",
+        "label": "Technisch",
+        "description": "Space Grotesk mit Public Sans",
+        "from": "tinte-klar"
+      },
+      {
+        "id": "klassisch",
+        "label": "Klassisch",
+        "description": "Playfair Display mit Source Sans",
+        "from": "nacht-gold"
+      },
+      {
+        "id": "editorial",
+        "label": "Editorial",
+        "description": "Fraunces mit Inter, weiche Serifen",
+        "from": "sand-editorial"
+      },
+      {
+        "id": "plakativ",
+        "label": "Plakativ",
+        "description": "Public Sans, große Überschriften",
+        "from": "studio-still",
+        "type": {
+          "display": "clamp(2.6rem, 5.8vw, 4.8rem)",
+          "title": "clamp(1.9rem, 3.8vw, 2.9rem)",
+          "statement": "clamp(1.6rem, 3.2vw, 2.6rem)"
+        }
+      }
+    ],
+    "shapes": [
+      {
+        "id": "eckig",
+        "label": "Eckig",
+        "description": "keine Rundung",
+        "from": "sand-editorial"
+      },
+      {
+        "id": "fein",
+        "label": "Fein",
+        "description": "kaum gerundet",
+        "from": "gastro-abend"
+      },
+      {
+        "id": "weich",
+        "label": "Weich",
+        "description": "deutlich gerundet",
+        "from": "salbei-ruhig"
+      },
+      {
+        "id": "rund",
+        "label": "Rund",
+        "description": "große Rundung, Buttons als Pille",
+        "from": "fuersorglich-hell"
+      }
+    ]
+  },
+  "fonts": {
+    "Archivo": "archivo",
+    "Bricolage Grotesque": "bricolage-grotesque",
+    "DM Sans": "dm-sans",
+    "DM Serif Display": "dm-serif-display",
+    "Fraunces": "fraunces",
+    "Geist Variable": "geist",
+    "Inter": "inter",
+    "Lora": "lora",
+    "Newsreader": "newsreader",
+    "Nunito Sans": "nunito-sans",
+    "Playfair Display": "playfair-display",
+    "Public Sans": "public-sans",
+    "Quicksand": "quicksand",
+    "Sofia Sans": "sofia-sans",
+    "Source Sans 3": "source-sans-3",
+    "Space Grotesk": "space-grotesk"
+  }
+}

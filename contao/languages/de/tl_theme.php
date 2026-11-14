@@ -3,6 +3,17 @@
 declare(strict_types=1);
 
 $GLOBALS['TL_LANG']['tl_theme']['nw_design_legend'] = 'Gestaltung';
+$GLOBALS['TL_LANG']['tl_theme']['nwStyle'] = ['Stil', 'Fertige Gestaltung als Startpunkt: setzt Farbwelt, Schrift und Form und füllt die Farben aus. Danach ist jedes Feld einzeln änderbar.'];
+$GLOBALS['TL_LANG']['tl_theme']['nwPalette'] = ['Farbwelt', 'Farben samt Fehler-, Erfolgs- und Fokusfarben. Füllt Akzent, Flächen und Textfarbe aus; jede Farbe bleibt danach frei änderbar.'];
+$GLOBALS['TL_LANG']['tl_theme']['nwTypeset'] = ['Schrift', 'Schriftfamilien mit den Größen, die zu ihnen gehören. Ein Schriftpaar weiter unten gilt davor.'];
+$GLOBALS['TL_LANG']['tl_theme']['nwShape'] = ['Form', 'Ecken, Buttonform und Schatten. Abstände und Seitenbreite bleiben die des Stils bzw. des Themes. Ecken und Buttons weiter unten gelten davor.'];
+$GLOBALS['TL_LANG']['tl_theme']['axisFromStyle'] = 'Wie Stil';
+$GLOBALS['TL_LANG']['tl_theme']['axisNone'] = 'Keine (Gestaltung des Themes)';
+$GLOBALS['TL_LANG']['tl_theme']['axisSaved'] = 'bisherige Auswahl';
+$GLOBALS['TL_LANG']['tl_theme']['typesetDefault'] = 'Wie Schrift';
+$GLOBALS['TL_LANG']['tl_theme']['shapeDefault'] = 'Wie Form';
+$GLOBALS['TL_LANG']['tl_theme']['nwStylePreview'] = ['Stil-Vorschau für Besucher', 'Zeigt auf der Website einen Umschalter, mit dem Besucher alle Stile mit den Inhalten der Seite ausprobieren. Für Demo-Seiten gedacht; vor dem Start ausschalten.'];
+$GLOBALS['TL_LANG']['tl_theme']['nwStyleNone'] = 'Kein Stil (Gestaltung des Themes)';
 $GLOBALS['TL_LANG']['tl_theme']['nwLogo'] = ['Logo', 'JPG, PNG, WebP oder SVG. Bilder zuerst in der Dateiverwaltung hochladen und den Ordner öffentlich freigeben. Ohne Logo erscheint der Theme-Name als Wortmarke.'];
 $GLOBALS['TL_LANG']['tl_theme']['nwLogoSize'] = ['Bildgröße des Logos', 'Leer lassen für die Vorgabe des Themes (höchstens 180 × 56 Pixel, auch für hochauflösende Bildschirme). SVG-Logos behalten ihre Proportionen.'];
 $GLOBALS['TL_LANG']['tl_theme']['nwAccent'] = ['Akzentfarbe', 'Hex-Farbe, z. B. 382f3d. Weißer Text benötigt mindestens 4,5:1 Kontrast; bei hellen Akzenten verwendet das Theme automatisch dunklen Buttontext. Prüfen Sie eigene CSS-Anpassungen.'];
@@ -17,6 +28,7 @@ $GLOBALS['TL_LANG']['tl_theme']['nwButtonShape'] = ['Buttons', 'Form der Buttons
 $GLOBALS['TL_LANG']['tl_theme']['nwButtonShapeOptions'] = ['' => 'Vorgabe des Themes', '4px' => 'Eckig (4 px)', '10px' => 'Abgerundet (10 px)', '999px' => 'Pille'];
 $GLOBALS['TL_LANG']['tl_theme']['nwFontPair'] = ['Schriftpaar', 'Alle Schriften werden lokal ausgeliefert.'];
 $GLOBALS['TL_LANG']['tl_theme']['nwFontPairOptions'] = ['lora-source' => 'Lora / Source Sans 3', 'newsreader-source' => 'Newsreader / Source Sans 3', 'nunito' => 'Nunito Sans', 'fraunces-helvetica' => 'Fraunces / Helvetica'];
+$GLOBALS['TL_LANG']['tl_theme']['nwFontPairDefault'] = 'Vorgabe des Themes';
 $GLOBALS['TL_LANG']['tl_theme']['nwHeaderStyle'] = ['Anordnung der Kopfzeile', 'Anordnung von Wortmarke, Menü und Symbolen.'];
 $GLOBALS['TL_LANG']['tl_theme']['nwHeaderStyleOptions'] = ['clear' => 'Klar: Wortmarke links, Menü mittig', 'centered' => 'Zentriert: Menü links, Wortmarke mittig', 'floating' => 'Schwebend: runde Leiste'];
 $GLOBALS['TL_LANG']['tl_theme']['nwAnnouncement'] = ['Hinweisleiste', 'Eine Zeile über der Kopfzeile, zum Beispiel „Versandkostenfrei ab 30 €“. Höchstens 120 Zeichen. Leer lassen, um sie auszublenden.'];

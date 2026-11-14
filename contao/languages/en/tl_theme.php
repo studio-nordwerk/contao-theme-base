@@ -3,6 +3,17 @@
 declare(strict_types=1);
 
 $GLOBALS['TL_LANG']['tl_theme']['nw_design_legend'] = 'Design';
+$GLOBALS['TL_LANG']['tl_theme']['nwStyle'] = ['Style', 'A ready-made design as a starting point: sets colors, type and shape and fills the colors in. Every field stays editable on its own.'];
+$GLOBALS['TL_LANG']['tl_theme']['nwPalette'] = ['Colors', 'Colors including error, success and focus colors. Fills accent, surfaces and text color in; every color stays editable.'];
+$GLOBALS['TL_LANG']['tl_theme']['nwTypeset'] = ['Type', 'Font families with the sizes that belong to them. A font pair below wins.'];
+$GLOBALS['TL_LANG']['tl_theme']['nwShape'] = ['Shape', 'Corners, button shape and shadow. Spacing and page width stay those of the style or theme. Corners and buttons below win.'];
+$GLOBALS['TL_LANG']['tl_theme']['axisFromStyle'] = 'As the style';
+$GLOBALS['TL_LANG']['tl_theme']['axisNone'] = 'None (the theme\'s design)';
+$GLOBALS['TL_LANG']['tl_theme']['axisSaved'] = 'earlier choice';
+$GLOBALS['TL_LANG']['tl_theme']['typesetDefault'] = 'As the type';
+$GLOBALS['TL_LANG']['tl_theme']['shapeDefault'] = 'As the shape';
+$GLOBALS['TL_LANG']['tl_theme']['nwStylePreview'] = ['Style preview for visitors', 'Shows a switcher on the website that lets visitors try every style with the site\'s content. Meant for demo sites; switch it off before going live.'];
+$GLOBALS['TL_LANG']['tl_theme']['nwStyleNone'] = 'No style (the theme\'s design)';
 $GLOBALS['TL_LANG']['tl_theme']['nwLogo'] = ['Logo', 'JPG, PNG, WebP or SVG. Upload the image in the file manager first and make the folder public. Without a logo the theme name is shown as a wordmark.'];
 $GLOBALS['TL_LANG']['tl_theme']['nwLogoSize'] = ['Logo image size', 'Leave empty for the theme default (at most 180 × 56 pixels, also for high-resolution screens). SVG logos keep their proportions.'];
 $GLOBALS['TL_LANG']['tl_theme']['nwAccent'] = ['Accent color', 'Hex color, e.g. 382f3d. White text needs a contrast of at least 4.5:1; with light accents the theme uses dark button text automatically. Check your own CSS changes.'];
@@ -17,6 +28,7 @@ $GLOBALS['TL_LANG']['tl_theme']['nwButtonShape'] = ['Buttons', 'Shape of the but
 $GLOBALS['TL_LANG']['tl_theme']['nwButtonShapeOptions'] = ['' => 'Theme default', '4px' => 'Square (4 px)', '10px' => 'Rounded (10 px)', '999px' => 'Pill'];
 $GLOBALS['TL_LANG']['tl_theme']['nwFontPair'] = ['Font pair', 'All fonts are served locally.'];
 $GLOBALS['TL_LANG']['tl_theme']['nwFontPairOptions'] = ['lora-source' => 'Lora / Source Sans 3', 'newsreader-source' => 'Newsreader / Source Sans 3', 'nunito' => 'Nunito Sans', 'fraunces-helvetica' => 'Fraunces / Helvetica'];
+$GLOBALS['TL_LANG']['tl_theme']['nwFontPairDefault'] = 'Theme default';
 $GLOBALS['TL_LANG']['tl_theme']['nwHeaderStyle'] = ['Header layout', 'Arrangement of wordmark, menu and icons.'];
 $GLOBALS['TL_LANG']['tl_theme']['nwHeaderStyleOptions'] = ['clear' => 'Clear: wordmark left, menu centered', 'centered' => 'Centered: menu left, wordmark centered', 'floating' => 'Floating: rounded bar'];
 $GLOBALS['TL_LANG']['tl_theme']['nwAnnouncement'] = ['Announcement bar', 'One line above the header, for example "Free shipping from €30". At most 120 characters. Leave empty to hide it.'];

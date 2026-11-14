@@ -4,7 +4,17 @@ declare(strict_types=1);
 
 use Nordwerk\ThemeBaseBundle\Design\DesignSettings;
 
-$GLOBALS['TL_DCA']['tl_theme']['palettes']['default'] .= ';{nw_design_legend},nwLogo,nwLogoSize,nwAccent,nwSurface,nwPaper,nwText,nwTone1,nwTone2,nwRadius,nwButtonShape,nwFontPair,nwHeaderStyle,nwAnnouncement';
+$GLOBALS['TL_DCA']['tl_theme']['palettes']['default'] .= ';{nw_design_legend},nwStyle,nwPalette,nwTypeset,nwShape,nwStylePreview,nwLogo,nwLogoSize,nwAccent,nwSurface,nwPaper,nwText,nwTone1,nwTone2,nwRadius,nwButtonShape,nwFontPair,nwHeaderStyle,nwAnnouncement';
+// Style preset (StyleCatalog); options and prefilling in StyleCallbacks. Only
+// themes of a StylableThemePackage show it.
+$GLOBALS['TL_DCA']['tl_theme']['fields']['nwStyle'] = ['label' => &$GLOBALS['TL_LANG']['tl_theme']['nwStyle'], 'inputType' => 'select', 'eval' => ['includeBlankOption' => true, 'blankOptionLabel' => &$GLOBALS['TL_LANG']['tl_theme']['nwStyleNone'], 'submitOnChange' => true, 'chosen' => true, 'tl_class' => 'w50 clr'], 'sql' => "varchar(64) NOT NULL default ''"];
+
+// The three axes of a style; a style sets them, each can be changed on its own.
+foreach (['nwPalette' => true, 'nwTypeset' => false, 'nwShape' => false] as $field => $reload) {
+    $GLOBALS['TL_DCA']['tl_theme']['fields'][$field] = ['label' => &$GLOBALS['TL_LANG']['tl_theme'][$field], 'inputType' => 'select', 'eval' => ['includeBlankOption' => true, 'submitOnChange' => $reload, 'chosen' => true, 'tl_class' => 'w50'.('nwPalette' === $field ? ' clr' : '')], 'sql' => "varchar(64) NOT NULL default ''"];
+}
+// Switcher for visitors to try every style on the site; meant for demo sites.
+$GLOBALS['TL_DCA']['tl_theme']['fields']['nwStylePreview'] = ['label' => &$GLOBALS['TL_LANG']['tl_theme']['nwStylePreview'], 'inputType' => 'checkbox', 'eval' => ['tl_class' => 'w50 m12 clr'], 'sql' => "char(1) NOT NULL default ''"];
 $GLOBALS['TL_DCA']['tl_theme']['fields']['nwLogo'] = ['label' => &$GLOBALS['TL_LANG']['tl_theme']['nwLogo'], 'inputType' => 'fileTree', 'eval' => ['filesOnly' => true, 'fieldType' => 'radio', 'extensions' => implode(',', DesignSettings::LOGO_EXTENSIONS), 'tl_class' => 'clr'], 'sql' => 'binary(16) NULL'];
 // Empty uses the registered size _nw_logo (180 × 56 px box, 1x and 2x).
 $GLOBALS['TL_DCA']['tl_theme']['fields']['nwLogoSize'] = ['label' => &$GLOBALS['TL_LANG']['tl_theme']['nwLogoSize'], 'inputType' => 'imageSize', 'reference' => &$GLOBALS['TL_LANG']['MSC'], 'eval' => ['rgxp' => 'natural', 'includeBlankOption' => true, 'nospace' => true, 'helpwizard' => true, 'tl_class' => 'w50 clr'], 'sql' => "varchar(255) NOT NULL default ''"];
@@ -14,7 +24,7 @@ foreach (['nwAccent' => '#382f3d', 'nwSurface' => '#fffaf7', 'nwPaper' => '', 'n
 }
 $GLOBALS['TL_DCA']['tl_theme']['fields']['nwRadius'] = ['label' => &$GLOBALS['TL_LANG']['tl_theme']['nwRadius'], 'inputType' => 'select', 'options' => DesignSettings::RADII, 'reference' => &$GLOBALS['TL_LANG']['tl_theme']['nwRadiusOptions'], 'eval' => ['tl_class' => 'w50 clr'], 'sql' => "varchar(16) NOT NULL default ''"];
 $GLOBALS['TL_DCA']['tl_theme']['fields']['nwButtonShape'] = ['label' => &$GLOBALS['TL_LANG']['tl_theme']['nwButtonShape'], 'inputType' => 'select', 'options' => DesignSettings::BUTTON_SHAPES, 'reference' => &$GLOBALS['TL_LANG']['tl_theme']['nwButtonShapeOptions'], 'eval' => ['tl_class' => 'w50'], 'sql' => "varchar(16) NOT NULL default ''"];
-$GLOBALS['TL_DCA']['tl_theme']['fields']['nwFontPair'] = ['label' => &$GLOBALS['TL_LANG']['tl_theme']['nwFontPair'], 'default' => 'lora-source', 'inputType' => 'select', 'options' => array_keys(DesignSettings::FONT_PAIRS), 'reference' => &$GLOBALS['TL_LANG']['tl_theme']['nwFontPairOptions'], 'eval' => ['tl_class' => 'w50 clr'], 'sql' => "varchar(32) NOT NULL default 'lora-source'"];
+$GLOBALS['TL_DCA']['tl_theme']['fields']['nwFontPair'] = ['label' => &$GLOBALS['TL_LANG']['tl_theme']['nwFontPair'], 'default' => 'lora-source', 'inputType' => 'select', 'options' => array_keys(DesignSettings::FONT_PAIRS), 'reference' => &$GLOBALS['TL_LANG']['tl_theme']['nwFontPairOptions'], 'eval' => ['includeBlankOption' => true, 'blankOptionLabel' => &$GLOBALS['TL_LANG']['tl_theme']['nwFontPairDefault'], 'tl_class' => 'w50 clr'], 'sql' => "varchar(32) NOT NULL default 'lora-source'"];
 $GLOBALS['TL_DCA']['tl_theme']['fields']['nwHeaderStyle'] = ['label' => &$GLOBALS['TL_LANG']['tl_theme']['nwHeaderStyle'], 'default' => 'clear', 'inputType' => 'select', 'options' => DesignSettings::HEADER_STYLES, 'reference' => &$GLOBALS['TL_LANG']['tl_theme']['nwHeaderStyleOptions'], 'eval' => ['tl_class' => 'w50'], 'sql' => "varchar(16) NOT NULL default 'clear'"];
 $GLOBALS['TL_DCA']['tl_theme']['fields']['nwAnnouncement'] = ['label' => &$GLOBALS['TL_LANG']['tl_theme']['nwAnnouncement'], 'inputType' => 'text', 'eval' => ['maxlength' => 120, 'tl_class' => 'clr'], 'sql' => "varchar(120) NOT NULL default ''"];
 // Key of the theme package (nordwerk-shop-v1, seminar) and the import log of its

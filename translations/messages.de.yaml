@@ -10,3 +10,19 @@ nw_theme:
     footer:
         legal: Rechtliches
         demo_note: Demo-Website einer fiktiven Firma. Betreiberangaben, Inhalte und Rechtstexte vor der Veröffentlichung ersetzen.
+    style_preview:
+        caption: Stil
+        title: Stil ausprobieren
+        text: Vorschau mit den Inhalten dieser Seite. Ein Stil als Startpunkt, Farbe, Schrift und Form lassen sich einzeln mischen. Festgelegt wird später einmal im Backend.
+        original: Original
+        original_note: So wie dieses Theme eingerichtet ist
+        styles: Stile
+        palette: Farbe
+        typeset: Schrift
+        shape: Form
+        mix: Eigene Mischung
+        backend: 'Im Backend unter Layout → Themes:'
+        field_palette: Farbwelt
+        field_typeset: Schrift
+        field_shape: Form
+        field_style: Stil

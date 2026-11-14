@@ -7,6 +7,8 @@ services:
     Nordwerk\ThemeBaseBundle\Design\LayoutContext: ~
     Nordwerk\ThemeBaseBundle\Design\FooterContent: ~
     Nordwerk\ThemeBaseBundle\Design\DesignCallbacks: ~
+    Nordwerk\ThemeBaseBundle\Design\StyleCallbacks: ~
+    Nordwerk\ThemeBaseBundle\Design\StyleCatalog: ~
     Nordwerk\ThemeBaseBundle\Demo\DemoImporter:
         public: true
     Nordwerk\ThemeBaseBundle\Theme\ThemePackages:
