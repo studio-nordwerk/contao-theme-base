@@ -14,3 +14,7 @@ Ein Theme-Paket registriert einen Dienst mit `Nordwerk\ThemeBaseBundle\Theme\The
 Farben und Schrift wählen Sie im Theme-Formular; weitergehende Anpassungen sind über `--nw-*`-CSS-Variablen und Contao Template Studio möglich. Dokumentation im Monorepo: `docs/theming.md`. Größere Anpassungen: [Studio Nordwerk](https://www.nordwerk.studio/contao#entwicklung).
 
 Code: MIT. Schriftlizenzen im Basispaket unter `public/fonts/`. Bildherkunft im Shop-Paket unter `demo/IMAGE-SOURCES.md`.
+
+## Fehler und Wünsche
+
+Bitte als Issue in [studio-nordwerk/contao-pakete](https://github.com/studio-nordwerk/contao-pakete/issues) melden. Der Quellcode auf GitHub ist ein schreibgeschützter Spiegel; entwickelt wird das Paket intern bei Studio Nordwerk, Pull Requests dort werden nicht übernommen.
